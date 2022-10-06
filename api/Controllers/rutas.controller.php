@@ -5,7 +5,7 @@ class RutaController {
     public function inicio() {
 
         Cors::useHeaders();  //Evitar Cors
-        include '././paths/paths.php';
+        include '././paths/rutas.php';
 
     }
 

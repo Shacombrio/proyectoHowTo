@@ -12,12 +12,11 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
     if ( count( array_filter( $arrayRutas ) ) == 2 )
  {
 
-        if ( array_filter( $arrayRutas )[ 2 ] == '?u=ObtenerUsuarios' ) {
+        if ( array_filter( $arrayRutas )[ 2 ] == '?u=Prueba' ) {
             //Post en Alumnos
             if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
-                $objUsuarios = new AdministradorController();
-                $objUsuarios->index();
-
+                $objUsuarios = new PruebaController();
+                $objUsuarios->pruebita();
             }
 
         } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=RegistrarUsuario' ) {
@@ -27,6 +26,6 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
             echo 'No existe la ruta especifica!';
         }
     }
-
+}
 
 ?>
