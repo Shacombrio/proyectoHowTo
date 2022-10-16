@@ -1,26 +1,23 @@
 
-.nav {
-background: #66A548;
-}
 
 .iconoCasa svg{
-    width: 35;
-    height: 35;
+    width: 20px;
+    height: 20px;
 }
 
 .iconoMail svg{
-    width: 35;
-    height: 35;
+    width: 20px;
+    height: 20px;
 }
 
 .iconoUser svg{
-    width: 35;
-    height: 35;
+    width: 20px;
+    height: 20px;
 }
 
 .iconoConfi svg{
-    width: 35;
-    height: 35;
+    width: 20px;
+    height: 20px;
 }
 .nav-item:hover{
     background-color: rgb(0, 21, 99);

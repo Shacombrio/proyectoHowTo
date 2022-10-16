@@ -9,6 +9,7 @@ import {RegistroComponent} from './registro/registro.component';
 import { EditarperfilComponent } from './editarperfil/editarperfil.component';
 import { ChatComponent } from './chat/chat.component';
 import { PreChatComponent } from './pre-chat/pre-chat.component';
+import { PostsComponent } from './posts/posts.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { PreChatComponent } from './pre-chat/pre-chat.component';
     RegistroComponent,
     EditarperfilComponent,
     ChatComponent,
-    PreChatComponent
+    PreChatComponent,
+    PostsComponent
   ],
   imports: [
     BrowserModule,
