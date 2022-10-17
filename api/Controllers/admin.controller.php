@@ -103,6 +103,52 @@ class adminController {
 
     }
 
+    public function deletemedia($data){
+        if(isset($data["idPost"])){
+
+            $datos=adminModel::bajaMediaAdmin($data);
+            $json=array('message'=>'Operacion correcta','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'Error al eliminar media';
+        }
+
+    }
+
+    public function insertTipoUsuario($data){
+        if(isset($data["nombreTipo"])){
+
+            $datos=adminModel::addTipoUsuario($data);
+            $json=array('message'=>'Operacion buena','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'compañero te falta un dato';
+        }
+
+    }
+
+    public function consultaTipoUsers(){
+
+        try {
+
+            $datos = adminModel::selectTipoUsers();
+
+            $json = array( 'message'=>'¡Operacion Exitosa!', 'status'=>200, 'data'=> $datos );
+            echo json_encode( $json );
+            return;
+        } catch( Exception $e1 ) {
+            self::Error( $e1 );
+        }
+    }
+
 }
 ?>
 

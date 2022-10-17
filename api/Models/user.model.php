@@ -99,6 +99,44 @@ class userModel{
 
     }
 
+    static public function grdchat($data){
+        $stmt=Connection::connect()->prepare('insert into chat values (:idChat,:idUsuario,:fechaYhora,:Mensaje)');
+        $stmt->bindParam(':idChat',$data['idChat']);
+        $stmt->bindParam(':idUsuario',$data['idUsuario']);
+        $stmt->bindParam(':fechaYhora',$data['fechaYhora']);
+        $stmt->bindParam(':Mensaje',$data['Mensaje']);
+        $stmt->execute();
+
+        return 'chat almacenado';
+
+    }
+
+    static public function mstchat($data) {
+        
+        $stmt = Connection::connect()->prepare( 'Select Mensaje, fechaYhora from chat where idUsuario = :idUsuario' );
+        $stmt->bindParam(':idUsuario',$data['idUsuario']);
+       // $stmt->bindParam(':fechaYhora',$data['fechaYhora']);
+        $stmt->execute();
+    
+        return $stmt->fetch( PDO::FETCH_ASSOC );
+        $stmt->close();
+        $stmt=null;
+   
+    }
+
+    static public function mstmedia($data){
+        $stmt=Connection::connect()->prepare('select link from mediaposts where idPost = :idPost');
+        $stmt->bindParam(':idPost',$data['idPost']);
+        $stmt->execute();
+        return $stmt->fetch( PDO::FETCH_ASSOC );
+        $stmt->close();
+        $stmt=null;
+
+    
+
+    }
+       
+    
     
 }
 

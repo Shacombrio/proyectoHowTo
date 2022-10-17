@@ -135,6 +135,66 @@ class userController {
 
     }
 
+    public function guardarchat($data){
+        if(isset($data["Mensaje"])){
+
+            $datos=userModel::grdchat($data);
+            $json=array('message'=>'Chat almacenado','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+         }else{
+            header('HTTP/1.0 500');
+            echo 'Error al guardar el chat';
+        }
+
+    }
+
+    public function mostrarchat($data){
+
+        try {
+
+            $datos = userModel::mstchat($data);
+
+            $json = array( 'message'=>'¡Operacion Exitosa!', 'status'=>200, 'data'=> $datos );
+            echo json_encode( $json );
+            return;
+        } catch( Exception $e1 ) {
+            self::Error( $e1 );
+        }
+    }
+
+    public function insertarmediausuario($data){
+        if(isset($data["idPost"])){
+
+            $datos=userModel::addMediaUser($data);
+            $json=array('message'=>'Operacion buena','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'compañero te falta un dato';
+        }
+
+    }
+
+    public function mostrarmedia($data){
+
+        try {
+
+            $datos = userModel::mstmedia($data);
+
+            $json = array( 'message'=>'¡Operacion Exitosa!', 'status'=>200, 'data'=> $datos );
+            echo json_encode( $json );
+            return;
+        } catch( Exception $e1 ) {
+            self::Error( $e1 );
+        }
+    }
+
 
 }
 ?>

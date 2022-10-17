@@ -135,6 +135,62 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
                 $objUsuarios = new userController();
                 $objUsuarios->updatePost($datosarrary);
                 }
+            
+            } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=GuardarChat' ) {
+                if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+                $json=file_get_contents('php://input');
+                $datosarrary=json_decode($json,true);
+                $objUsuarios = new userController();
+                $objUsuarios->guardarchat($datosarrary);
+                }
+
+            } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=MostrarChat' ) {
+                if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+                $json=file_get_contents('php://input');
+                $datosarrary=json_decode($json,true);
+                $objUsuarios = new userController();
+                $objUsuarios->mostrarchat($datosarrary);
+                }
+            
+            } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=EliminarMedia' ) {
+
+
+                if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+                $json=file_get_contents('php://input');
+                $datosarrary=json_decode($json,true);
+                $objUsuarios = new adminController();
+                $objUsuarios->deletemedia($datosarrary);
+                }
+            } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=InsertarMediaUser' ) {
+                if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+                $json=file_get_contents('php://input');
+                $datosarrary=json_decode($json,true);
+                $objUsuarios = new userController();
+                $objUsuarios->insertarmediausuario($datosarrary);
+                }
+            } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=InsertarTipoUsuario' ) {
+                if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+                $json=file_get_contents('php://input');
+                $datosarrary=json_decode($json,true);
+                $objUsuarios = new adminController();
+                $objUsuarios->insertTipoUsuario($datosarrary);
+                }
+            } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=consultaTipoUsuario' ) {
+                
+                if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+                    $objUsuarios = new adminController();
+                    $objUsuarios->consultaTipoUsers();
+                }
+            } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=MostrarMedia' ) {
+                
+                if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+                    $json=file_get_contents('php://input');
+                    $datosarrary=json_decode($json,true);
+                    $objUsuarios = new userController();
+                    $objUsuarios->mostrarmedia($datosarrary);
+                }
+
+
 
         } else {
             echo 'No existe la ruta especifica!';

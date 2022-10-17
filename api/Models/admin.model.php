@@ -81,6 +81,35 @@ class adminModel{
 
     }
 
+    static public function bajaMediaAdmin($data){
+        $stmt=Connection::connect()->prepare('update mediaposts set Estatus = 2 where idPost = :idPost');
+        $stmt->bindParam(':idPost',$data['idPost']);
+        $stmt->execute();
+
+        return 'MediaPost Eliminado';
+
+    }
+
+    static public function addTipoUsuario($data){
+        $stmt=Connection::connect()->prepare('insert into tipousuario values (null,:nombreTipo)');
+        $stmt->bindParam(':nombreTipo',$data['nombreTipo']);
+        
+        $stmt->execute();
+
+        return 'tipo de usuario registrado';
+
+    }
+
+    static public function selectTipoUsers() {
+        $stmt = Connection::connect()->prepare( 'Select * from tipousuario' );
+    
+        $stmt->execute();
+    
+        return $stmt->fetchAll( PDO::FETCH_ASSOC );
+        $stmt->close();
+        $stmt=null;
+    
+    }
 
 }
 
