@@ -1,5 +1,6 @@
 <?php
 require_once 'conexion.php';
+use Firebase\JWT\JWT;
 class userModel{
 
     static public function addUser($data){
@@ -40,7 +41,7 @@ class userModel{
     static public function selectPerso($data) {
     try{
         $stmt = Connection::connect()->prepare( 'Select * from usuarios where idUsuario = :idUsuario' );
-    
+
         $stmt->bindParam(':idUsuario',$data['idUsuario']);
         $stmt->execute();
         if($stmt != null)
@@ -54,13 +55,13 @@ class userModel{
 
     static public function GetPosts() {
         $stmt = Connection::connect()->prepare( 'Select * from posts' );
-    
+
         $stmt->execute();
-    
+
         return $stmt->fetchAll( PDO::FETCH_ASSOC );
         $stmt->close();
         $stmt=null;
-    
+
     }
 
     static public function Postear($data){
@@ -112,16 +113,16 @@ class userModel{
     }
 
     static public function mstchat($data) {
-        
+
         $stmt = Connection::connect()->prepare( 'Select Mensaje, fechaYhora from chat where idUsuario = :idUsuario' );
         $stmt->bindParam(':idUsuario',$data['idUsuario']);
        // $stmt->bindParam(':fechaYhora',$data['fechaYhora']);
         $stmt->execute();
-    
+
         return $stmt->fetch( PDO::FETCH_ASSOC );
         $stmt->close();
         $stmt=null;
-   
+
     }
 
     static public function mstmedia($data){
@@ -160,9 +161,139 @@ class userModel{
         $stmt->execute();
         return 'Favorito eliminado';
     }
-       
-    
-    
+
+    static public function login($datos){
+      try {
+        if ( isset( $datos[ 'Correo' ] ) && isset( $datos[ 'Password' ] ) ) {
+            $pass = hash( 'sha512', $datos[ 'Password' ] );
+            $stmt = Connection::connect()->prepare( 'select * from usuarios where Correo=:Correo and Contraseña=:Password ' );
+            $stmt->bindParam( ':Correo', $datos[ 'Correo' ] );
+            $stmt->bindParam( ':Password', $pass );
+            $stmt->execute();
+
+            if ( $stmt->rowCount()>0 ) {
+                $datos2 = userModel::ObtenerIDUsuario( $datos[ 'Correo' ] );
+
+                if ( !userModel::ExisteToken( $datos2[ 'idUsuario' ] ) ) {
+
+                    $datos = userModel::MostrarUsuarioEspecifico( $datos[ 'Correo' ] );
+                    $json = array( 'message'=>'¡Operacion Exitosa!', 'status'=>200, 'data'=> userModel::InsertarToken( $datos ) );
+                    echo json_encode( $json );
+                } else {
+
+                    $datos = userModel::MostrarUsuarioEspecifico( $datos[ 'Correo' ] );
+
+                    $json = array( 'message'=>'¡Operacion Exitosa!', 'status'=>200, 'data'=> userModel::ActualizarToken( $datos ) );
+                    echo json_encode( $json );
+                }
+
+            } else {
+                header( 'HTTP/1.0 401 Not Authorized ' );
+                echo 'El Correo o la Contraseña no Coinciden!';
+            }
+        } else {
+            header( 'HTTP/1.0 401 Not Authorized ' );
+            echo 'No deje los Campos Vacios!';
+        }
+
+    } catch( Exception $e1 ) {
+        return 'Error'.$e1->getMessage();
+    }
+    }
+    static public function ObtenerIDUsuario( $data ) {
+      try {
+
+          $stmt = Connection::connect()->prepare( 'select idUsuario from usuarios where Correo=:Correo' );
+          $stmt->bindParam( ':Correo', $data );
+          $stmt->execute();
+          if ( $stmt != null )
+          return $stmt->fetch();
+          return null;
+
+      } catch( Exception $e1 ) {
+          return 'Error'.$e1->getMessage();
+      }
+
+  }
+
+  static public function ExisteToken( $datos ) {
+    try {
+
+        $stmt = Connection::connect()->prepare( "select token from usuariostoken where id_usuario=:ID_USUARIO and estatus='A'" );
+        $stmt->bindParam( ':ID_USUARIO', $datos );
+        $stmt->execute();
+
+        if ( $stmt->rowCount()>0 ) {
+
+            return true;
+
+        } else {
+            return false;
+        }
+    } catch( Exception $e1 ) {
+        return 'Error'.$e1->getMessage();
+    }
+
+}
+
+//Mostrar Usuario Especifico
+static  public function MostrarUsuarioEspecifico( $id ) {
+  $stmt = Connection::connect()->prepare( 'SELECT idUsuario,Correo,nombreUsuario,Estatus,Imagen,tipoUsuario FROM usuarios where Correo=:correo' );
+  $stmt->bindParam( ':correo', $id );
+  $stmt->execute();
+  if ( $stmt != null )
+
+  return $stmt->fetch( PDO::FETCH_ASSOC );
+
+  return null;
+  $stmt->close();
+  $stmt = null;
+
+}
+
+static public function InsertarToken( $datos ) {
+  try {
+
+      $time = time();
+      $token = array( 'message'=>'¡Operacion con Exito!', 'status'=>200, 'data'=>
+      $datos );
+      $jwt = JWT::encode( $token, Enviroment::getJWT_Key(), 'HS256' );
+
+      $stmt = Connection::connect()->prepare( "insert into  usuariostoken values(:ID_USUARIO,:token,default,'A')" );
+
+      $stmt->bindParam( ':ID_USUARIO', $datos[ 'idUsuario' ] );
+
+      $stmt->bindParam( ':token', $jwt );
+      $stmt->execute();
+      return $jwt;
+  } catch( Exception $e1 ) {
+      return 'Error:'.$e1->getMessage();
+  }
+
+}
+
+static public function ActualizarToken( $datos ) {
+  try {
+
+      $time = time();
+      $token = array( 'message'=>'¡Operacion con Exito!', 'status'=>200, 'data'=>
+      $datos );
+      $jwt = JWT::encode( $token, Enviroment::getJWT_Key(), 'HS256' );
+
+      $stmt = Connection::connect()->prepare( "update usuariostoken set id_usuario=:ID_USUARIO,token=:token,Estatus='A' where id_usuario=:ID_USUARIO" );
+      $stmt->bindParam( ':ID_USUARIO', $datos[ 'idUsuario' ] );
+
+      $stmt->bindParam( ':token', $jwt );
+      $stmt->execute();
+      return $jwt;
+  } catch( Exception $e1 ) {
+      return 'Error:'.$e1->getMessage();
+  }
+}
+
+
+
+
 }
 
 ?>

@@ -242,7 +242,13 @@ class userController {
         }
 
     }
+    public function login($data){
 
+      $datos=userModel::login($data);
+
+
+
+    }
 
 }
 ?>

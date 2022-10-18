@@ -75,7 +75,7 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
             }
 
         } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=consultaUsuarios' ) {
-                
+
                 if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
                     $objUsuarios = new adminController();
                     $objUsuarios->consultaUsers();
@@ -135,7 +135,7 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
                 $objUsuarios = new userController();
                 $objUsuarios->updatePost($datosarrary);
                 }
-            
+
             } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=GuardarChat' ) {
                 if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
                 $json=file_get_contents('php://input');
@@ -151,7 +151,7 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
                 $objUsuarios = new userController();
                 $objUsuarios->mostrarchat($datosarrary);
                 }
-            
+
             } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=EliminarMedia' ) {
 
 
@@ -176,14 +176,14 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
                 $objUsuarios->insertTipoUsuario($datosarrary);
                 }
             } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=consultaTipoUsuario' ) {
-                
+
                 if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
                     $objUsuarios = new adminController();
                     $objUsuarios->consultaTipoUsers();
                 }
 
             } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=MostrarMedia' ) {
-                
+
                 if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
                     $json=file_get_contents('php://input');
                     $datosarrary=json_decode($json,true);
@@ -192,7 +192,7 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
                 }
 
             } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=registrarFavorito' ) {
-                
+
                 if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
                     $json=file_get_contents('php://input');
                     $datosarrary=json_decode($json,true);
@@ -201,7 +201,7 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
                 }
 
             } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=MostrarFav' ) {
-                
+
                 if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
                     $json=file_get_contents('php://input');
                     $datosarrary=json_decode($json,true);
@@ -210,15 +210,24 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
                 }
 
             } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=eliminarFav' ) {
-                
+
                 if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
                     $json=file_get_contents('php://input');
                     $datosarrary=json_decode($json,true);
                     $objUsuarios = new userController();
                     $objUsuarios->deleteFav($datosarrary);
-                }
+              }
 
-        } else {
+        }else if ( array_filter( $arrayRutas )[ 2 ] == '?u=Login' ) {
+
+          if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+              $json=file_get_contents('php://input');
+              $datosarrary=json_decode($json,true);
+              $objUsuarios = new userController();
+              $objUsuarios->login($datosarrary);
+        }
+
+        }else {
             echo 'No existe la ruta especifica!';
         }
     }
