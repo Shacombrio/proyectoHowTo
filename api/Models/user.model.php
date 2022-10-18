@@ -131,9 +131,34 @@ class userModel{
         return $stmt->fetch( PDO::FETCH_ASSOC );
         $stmt->close();
         $stmt=null;
+    }
 
-    
+    static public function addFav($data){
+        $stmt=Connection::connect()->prepare('insert into favoritos values (:idUsuario,:idPosts)');
+        $stmt->bindParam(':idUsuario',$data['idUsuario']);
+        $stmt->bindParam(':idPosts',$data['idPosts']);
 
+        $stmt->execute();
+
+        return 'Favorito Registrado';
+
+    }
+
+    static public function showFavoritos($data){
+        $stmt=Connection::connect()->prepare('SELECT posts.idPosts, posts.Titulo, posts.textoPost, posts.likes, posts.dislikes FROM favoritos INNER JOIN posts INNER JOIN usuarios WHERE posts.idPosts = favoritos.idPost AND favoritos.idUsuario = usuarios.idUsuario AND usuarios.idUsuario = :idUsuario');
+        $stmt->bindParam(':idUsuario',$data['idUsuario']);
+        $stmt->execute();
+        return $stmt->fetch( PDO::FETCH_ASSOC );
+        $stmt->close();
+        $stmt=null;
+    }
+
+    static public function deleteFavorito($data){
+        $stmt=Connection::connect()->prepare('delete from favoritos where idUsuario= :idUsuario and idPost = :idPosts');
+        $stmt->bindParam(':idUsuario',$data['idUsuario']);
+        $stmt->bindParam(':idPosts',$data['idPosts']);
+        $stmt->execute();
+        return 'Favorito eliminado';
     }
        
     

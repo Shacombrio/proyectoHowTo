@@ -195,6 +195,54 @@ class userController {
         }
     }
 
+    public function registrarFav($data){
+        if(isset($data["idUsuario"])){
+
+            $datos=userModel::addFav($data);
+            $json=array('message'=>'Operacion buena','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'compañero te falta un dato';
+        }
+
+    }
+
+    public function showFav($data){
+        if(isset($data["idUsuario"])){
+
+            $datos=userModel::showFavoritos($data);
+            $json=array('message'=>'Operacion buena','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'compañero te falta un dato';
+        }
+
+    }
+
+    public function deleteFav($data){
+        if(isset($data["idUsuario"])){
+
+            $datos=userModel::deleteFavorito($data);
+            $json=array('message'=>'Operacion buena','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'compañero te falta un dato';
+        }
+
+    }
+
 
 }
 ?>

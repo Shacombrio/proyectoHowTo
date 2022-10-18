@@ -181,6 +181,7 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
                     $objUsuarios = new adminController();
                     $objUsuarios->consultaTipoUsers();
                 }
+
             } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=MostrarMedia' ) {
                 
                 if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
@@ -190,7 +191,32 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
                     $objUsuarios->mostrarmedia($datosarrary);
                 }
 
+            } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=registrarFavorito' ) {
+                
+                if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+                    $json=file_get_contents('php://input');
+                    $datosarrary=json_decode($json,true);
+                    $objUsuarios = new userController();
+                    $objUsuarios->registrarFav($datosarrary);
+                }
 
+            } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=MostrarFav' ) {
+                
+                if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+                    $json=file_get_contents('php://input');
+                    $datosarrary=json_decode($json,true);
+                    $objUsuarios = new userController();
+                    $objUsuarios->showFav($datosarrary);
+                }
+
+            } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=eliminarFav' ) {
+                
+                if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+                    $json=file_get_contents('php://input');
+                    $datosarrary=json_decode($json,true);
+                    $objUsuarios = new userController();
+                    $objUsuarios->deleteFav($datosarrary);
+                }
 
         } else {
             echo 'No existe la ruta especifica!';
