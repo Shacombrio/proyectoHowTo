@@ -227,6 +227,24 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
               $objUsuarios->login($datosarrary);
         }
 
+    }else if ( array_filter( $arrayRutas )[ 2 ] == '?u=comentarPost' ) {
+
+        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+            $json=file_get_contents('php://input');
+            $datosarrary=json_decode($json,true);
+            $objUsuarios = new userController();
+            $objUsuarios->comentarPost($datosarrary);
+      }
+
+    }else if ( array_filter( $arrayRutas )[ 2 ] == '?u=eliminarComentario' ) {
+
+        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+            $json=file_get_contents('php://input');
+            $datosarrary=json_decode($json,true);
+            $objUsuarios = new userController();
+            $objUsuarios->eliminarComentario($datosarrary);
+      }
+
         }else {
             echo 'No existe la ruta especifica!';
         }
