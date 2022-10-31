@@ -72,6 +72,7 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
             $datosarrary=json_decode($json,true);
             $objUsuarios = new adminController();
             $objUsuarios->modificarUser($datosarrary);
+            
             }
 
         } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=consultaUsuarios' ) {
@@ -79,6 +80,7 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
                 if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
                     $objUsuarios = new adminController();
                     $objUsuarios->consultaUsers();
+                    
                 }
 
         } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=consultaPersonal' ) {

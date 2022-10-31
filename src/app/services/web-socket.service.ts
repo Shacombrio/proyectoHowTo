@@ -26,4 +26,10 @@ export class WebSocketService {
    emit(eventName:String,data:any){
     this.socket.emit(eventName,data);
    }
-}
+
+   //servicio de prueba unitaria
+  public getValue(): string{
+    return this.server;
+  }
+  }
+
