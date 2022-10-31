@@ -18,7 +18,6 @@ const routes: Routes = [
   {path:'crearPost',component:CrearPostComponent}
 ];
 
-export const APP_ROUTING = RouterModule.forRoot(routes);
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
