@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -27,8 +28,7 @@ export class LoginComponent implements OnInit {
   submit(){
    // alert(this.FrmLogin.controls['Correo'].value);
     if(this.FrmLogin.valid)
-    return false;
-    return true;
+
   }
 
 
