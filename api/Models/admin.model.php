@@ -46,7 +46,7 @@ class adminModel{
     }
 
     static public function updateUser($data){
-        $stmt=Connection::connect()->prepare('update usuarios set Correo = :Correo, NombreUsuario = :NombreUsuario, Contraseña = :Contra, Estatus = :Estatus, Imagen = :Imagen, tipoUsusario = :Tipo where idUsuario = :idUsuario');
+        $stmt=Connection::connect()->prepare('update usuarios set Correo = :Correo, NombreUsuario = :NombreUsuario, Contraseña = :Contra, Estatus = :Estatus, Imagen = :Imagen, tipoUsuario = :Tipo where idUsuario = :idUsuario');
         $stmt->bindParam(':idUsuario',$data['idUsuario']);
         $stmt->bindParam(':Correo',$data['Correo']);
         $stmt->bindParam(':NombreUsuario',$data['NombreUsuario']);

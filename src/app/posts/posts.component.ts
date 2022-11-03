@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CrearPostComponent } from '../crear-post/crear-post.component';
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostsComponent implements OnInit {
 
-  constructor() { }
 
+  @ViewChild('modal') modal !: CrearPostComponent;
+  constructor() { }
+  
   ngOnInit(): void {
   }
+
+  
+
 
 }

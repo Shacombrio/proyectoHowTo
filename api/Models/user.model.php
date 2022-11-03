@@ -38,6 +38,27 @@ class userModel{
 
     }
 
+    static public function comentarPost($data){
+        $stmt=Connection::connect()->prepare('insert into comentarios values (null,:idPost,:idUsuario,:Texto)');
+        $stmt->bindParam(':idPost',$data['idPost']);
+        $stmt->bindParam(':idUsuario',$data['idUsuario']);
+        $stmt->bindParam(':Texto',$data['Texto']);        
+        $stmt->execute();
+
+        return 'categoria Eliminada';
+
+    }
+
+    static public function eliminarComentario($data){
+        $stmt=Connection::connect()->prepare('delete from comenarios where idUsuario= :idUsuario and idPost = :idPost');
+        $stmt->bindParam(':idPost',$data['idPost']);
+        $stmt->bindParam(':idUsuario',$data['idUsuario']);      
+        $stmt->execute();
+
+        return 'comentario Eliminado';
+
+    }
+
     static public function selectPerso($data) {
     try{
         $stmt = Connection::connect()->prepare( 'Select * from usuarios where idUsuario = :idUsuario' );

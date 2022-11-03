@@ -242,6 +242,39 @@ class userController {
         }
 
     }
+
+    public function comentarPost($data){
+        if(isset($data["idPost"])){
+
+            $datos=userModel::comentarPost($data);
+            $json=array('message'=>'Operacion buena','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'compañero te falta un dato';
+        }
+
+    }
+
+    public function eliminarComentario($data){
+        if(isset($data["idPost"])){
+
+            $datos=userModel::eliminarComentario($data);
+            $json=array('message'=>'Operacion buena','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'compañero te falta un dato';
+        }
+
+    }
+
     public function login($data){
 
       $datos=userModel::login($data);
