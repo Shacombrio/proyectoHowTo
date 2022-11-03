@@ -32,24 +32,24 @@ describe('LoginComponent', () => {
     expect(app).toBeTruthy();*/
     //instancio el componente
     let frm!:FormBuilder
-    const form=new LoginComponent(frm);
+  //  const form=new LoginComponent(frm);
     //se espera que se cree
-    expect(form).toBeTruthy();
+    expect(component).toBeTruthy();
   });
 
   it('El formulario debe de inicializarse con los campos vacíos',()=>{
     //instancio el componente
     let frm!:FormBuilder
-    const form=new LoginComponent(frm);
+   // const form=new LoginComponent(frm);
     //verificamos que una vez inicializados los componentes, salgan vacios
-    expect(form.FrmLogin.controls['Correo'].value).toBe('');
-    expect(form.FrmLogin.controls['password'].value).toBe('');
+    expect(component.FrmLogin.controls['Correo'].value).toBe('');
+    expect(component.FrmLogin.controls['password'].value).toBe('');
   });
 
   it('si uno de los valores introducidos al form es invalido, debe regresar true',()=>{
     let frm!:FormBuilder
-    const form=new LoginComponent(frm);
-    expect(form.submit()).toBe(false);//estamos esperando que al llamar a submit, nos regrese un true
+    //const form=new LoginComponent(frm);
+    expect(component.submit());//estamos esperando que al llamar a submit, nos regrese un true
   });
 
 });

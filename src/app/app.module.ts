@@ -11,6 +11,7 @@ import { ChatComponent } from './chat/chat.component';
 import { PreChatComponent } from './pre-chat/pre-chat.component';
 import { PostsComponent } from './posts/posts.component';
 import { CrearPostComponent } from './crear-post/crear-post.component';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +28,8 @@ import { CrearPostComponent } from './crear-post/crear-post.component';
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
