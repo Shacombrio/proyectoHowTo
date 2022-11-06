@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { CrearPostComponent } from '../crear-post/crear-post.component';
+import { Posts } from './posts.model';
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
@@ -7,10 +8,26 @@ import { CrearPostComponent } from '../crear-post/crear-post.component';
 })
 export class PostsComponent implements OnInit {
 
-
+  @Input () posts : Posts;
   @ViewChild('modal') modal !: CrearPostComponent;
-  constructor() { }
+  constructor() { 
+    this.posts = new Posts(
+      '',
+      '',
+      0,
+      0);
+  }
   
+  postitive():boolean{
+    this.posts.positibe();
+    return false;
+  }
+
+  negative():boolean{
+    this.posts.negative();
+    return false;
+  }
+
   ngOnInit(): void {
   }
 

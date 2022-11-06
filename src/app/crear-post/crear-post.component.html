@@ -1,28 +1,36 @@
 <div class="modal-dialog" tabindex="-1" id="modal">
     <div class="modal-dialog">
+    <form [formGroup]="frmPost">
       <div class="modal-content">
         <div class="modal-header">
             <h4>Comparte tus ideas</h4>
         </div>
         <div class="modal-body">
+          
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Titulo</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1">
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="tituloPost" #newtitle>
               </div>
             <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">Contenido</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="tituloPost" #newtext>
               </div>
               <div class="mb-3">
                 <label for="formFileMultiple" class="form-label">Multiple files input example</label>
-                <input class="form-control" type="file" id="formFileMultiple" multiple>
+                <input class="form-control" type="file" id="formFileMultiple" multiple formControlName="filePost">
               </div>
+            
         </div>
+      
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary">Publicar</button>
+         <button type="submit" class="btn btn-primary" (click)="publicar(newtitle, newtext)">Publicar</button>  
         </div>
       </div>
+    </form>
     </div>
 <div>
+
+  <app-posts *ngFor="let posts of sortedArticles()" [posts]="posts">
+  </app-posts>
 

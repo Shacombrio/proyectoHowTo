@@ -29,6 +29,10 @@ export class UsrService {
         this.urlApi + '?u=Login',
         JSON.stringify(data),
         { headers: { 'Content-Type': 'application/json' } }
+      ).pipe(
+        tap(() => {
+          this.refresh.next();
+        })
       );
     }
     saveToken(data: any) {

@@ -1,8 +1,4 @@
 export interface Usuario {
-
-  
-
-
   idUsuario: string;
     Correo: string;
     nombreUsuario: String;
