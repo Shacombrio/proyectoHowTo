@@ -1,0 +1,1 @@
+select#categorias option [value="{{item.nombreCategoria}}"] {background-image: url(/api/api_recursos/dieta.png);}

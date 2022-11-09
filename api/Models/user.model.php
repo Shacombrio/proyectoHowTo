@@ -85,6 +85,17 @@ class userModel{
 
     }
 
+    static public function getCat() {
+        $stmt = Connection::connect()->prepare( 'Select * from categorias' );
+
+        $stmt->execute();
+
+        return $stmt->fetchAll( PDO::FETCH_ASSOC );
+        $stmt->close();
+        $stmt=null;
+
+    }
+
     static public function Postear($data){
         $stmt=Connection::connect()->prepare('insert into posts values (null,:Titulo,:textoPost,:idUsuario,:idCategoria,:likes,:dislikes,:Estatus)');
         $stmt->bindParam(':Titulo',$data['Titulo']);

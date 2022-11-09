@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="crear-post.component.css">
 <div class="modal-dialog" tabindex="-1" id="modal">
     <div class="modal-dialog">
     <form [formGroup]="frmPost">
@@ -6,31 +7,50 @@
             <h4>Comparte tus ideas</h4>
         </div>
         <div class="modal-body">
-          
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Titulo</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="tituloPost" #newtitle>
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="tituloPost" >
               </div>
             <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">Contenido</label>
-                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="tituloPost" #newtext>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" formControlName="textoPost"></textarea>
+               <!-- <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="textoPost" >-->
+            </div>
+            <div class="mb-3">
+              <label for="exampleFormControlTextarea1" class="form-label" >Categoria</label>
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Elija una categoria
+                </button>
+                
+                <ul class="dropdown-menu">
+                  <li *ngFor="let item of categoria;" [value]="item.idCategoria"><a (click)="selecCat(item.nombreCategoria,item.idCategoria)" class="dropdown-item"><img src={{item.Icono}} alt="">{{item.nombreCategoria}}</a></li>
+                </ul>
+                <label for="" style="margin-left: 10px; font-size: 20px;">  Categoria: </label>
+                <label for="" style="margin-left: 10px; font-size: 20px;" >  {{ncat}}  </label>
               </div>
+              
+              <!--<select class="form-select" aria-label="Default select example" formControlName="categoriaPost" id="categorias" >
+                <option *ngFor="let item of categoria;" [value]="item.idCategoria" >{{item.nombreCategoria}}</option>
+              </select>-->           <!-- <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="textoPost" >-->
+          </div>
+          
               <div class="mb-3">
                 <label for="formFileMultiple" class="form-label">Multiple files input example</label>
-                <input class="form-control" type="file" id="formFileMultiple" multiple formControlName="filePost">
+                <input class="form-control" type="file" id="formFileMultiple" accept="image/*" multiple formControlName="filePost">
               </div>
             
         </div>
       
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-         <button type="submit" class="btn btn-primary" (click)="publicar(newtitle, newtext)">Publicar</button>  
+         <button type="submit" class="btn btn-primary" (click)="publicar()">Publicar</button>  
         </div>
       </div>
     </form>
     </div>
 <div>
+  <!--  <app-posts *ngFor="let posts of sortedArticles()" [posts]="posts">
+  </app-posts> -->
 
-  <app-posts *ngFor="let posts of sortedArticles()" [posts]="posts">
-  </app-posts>
 

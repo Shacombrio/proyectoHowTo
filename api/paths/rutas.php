@@ -18,6 +18,13 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
                 $objUsuarios->pruebita();
             }
 
+        }else if ( array_filter( $arrayRutas )[ 2 ] == '?u=mostrarCategria' ) {
+        
+                if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+                    $objUsuarios = new userController();
+                    $objUsuarios->mostrarCat();
+                }
+
         } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=RegistrarCategoria' ) {
             if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
             $json=file_get_contents('php://input');
@@ -252,5 +259,6 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
         }
     }
 }
+
 
 ?>

@@ -87,6 +87,20 @@ class userController {
         }
     }
 
+    public function mostrarCat(){
+
+        try {
+
+            $datos = userModel::getCat();
+
+            $json = array( 'message'=>'¡Operacion Exitosa!', 'status'=>200, 'data'=> $datos );
+            echo json_encode( $json );
+            return;
+        } catch( Exception $e1 ) {
+            self::Error( $e1 );
+        }
+    }
+
     public function Posting($data){
         if(isset($data["idUsuario"])){
 

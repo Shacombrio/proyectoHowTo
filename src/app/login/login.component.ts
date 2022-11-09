@@ -11,6 +11,7 @@ import { UsrService } from '../services/User.service';
 })
 export class LoginComponent implements OnInit {
   FrmLogin!:FormGroup;
+  
   constructor(private fb:FormBuilder,private usuarioService:UsrService) { }
 
   ngOnInit(): void {
@@ -45,6 +46,14 @@ export class LoginComponent implements OnInit {
           this.usuarioService.saveToken(x.data);
           //window.location.reload();
           console.log("jalo we");
+          Swal.fire({
+            title: 'Logi correcto',
+            html: 'Acceso',
+            icon: 'success',
+            customClass: {
+              container: 'my-swal',
+            },
+          })
         },
         (error) =>
           Swal.fire({

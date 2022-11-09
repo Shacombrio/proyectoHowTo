@@ -12,6 +12,11 @@ import { PreChatComponent } from './pre-chat/pre-chat.component';
 import { PostsComponent } from './posts/posts.component';
 import { CrearPostComponent } from './crear-post/crear-post.component';
 import { HttpClientModule } from '@angular/common/http';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSliderModule } from '@angular/material/slider';
+import {MatCardModule} from '@angular/material/card';
+import {MatSelectModule} from '@angular/material/select';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +35,10 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NoopAnimationsModule,
+    MatSliderModule,
+    MatCardModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]
