@@ -14,14 +14,12 @@ import { categoria } from '../models/cotegoria.model';
 })
 export class CrearPostComponent implements OnInit {
   frmPost!:FormGroup;
-  posts : Posts[];
+ 
   categoria!: categoria[];
   ncat!:string;
   idcat!:string;
   constructor(private fb:FormBuilder, private userService: UsrService) { 
-    this.posts=[
-      new Posts ('Pokemon','Post de pokemon',0,0 )
-    ];
+
   }
 
   ngOnInit(): void {

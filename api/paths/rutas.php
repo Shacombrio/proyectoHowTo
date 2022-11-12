@@ -33,6 +33,22 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
             $objUsuarios->metercat($datosarrary);
             }
 
+        } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=Likes' ) {
+            if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+            $json=file_get_contents('php://input');
+            $datosarrary=json_decode($json,true);
+            $objUsuarios = new userController();
+            $objUsuarios->sumaLikes($datosarrary);
+            }
+
+        } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=conteoLikes' ) {
+            if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+            $json=file_get_contents('php://input');
+            $datosarrary=json_decode($json,true);
+            $objUsuarios = new userController();
+            $objUsuarios->conteoLikes($datosarrary);
+            }
+
         } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=EliminarCategoria' ) {
             if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
             $json=file_get_contents('php://input');

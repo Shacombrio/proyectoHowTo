@@ -73,6 +73,39 @@ class userController {
 
     }
 
+    public function sumaLikes($data){
+        if(isset($data["idUsuario"])){
+
+            $datos=userModel::sumaLikes($data);
+            $json=array('message'=>'Operacion correcta','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'compañero te falta un dato';
+        }
+
+    }
+
+    
+    public function conteoLikes($data){
+        if(isset($data["idPost"])){
+
+            $datos=userModel::conteoLikes($data);
+            $json=array('message'=>'Operacion correcta','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'compañero te falta un dato';
+        }
+
+    }
+
     public function showPosts(){
 
         try {

@@ -1,5 +1,5 @@
 export interface posts {
-    idPost: number;
+    idPosts: String;
       Titulo: string;
       textoPost: String;
       idUsuario:number;

@@ -120,6 +120,35 @@ class userModel{
 
     }
 
+    static public function sumaLikes($data){
+        $stmt=Connection::connect()->prepare('insert into reaccion values (:idUsuario,:Reaccion,:idPost,null)');
+        $stmt->bindParam(':idUsuario',$data['idUsuario']);
+        $stmt->bindParam(':Reaccion',$data['Reaccion']);
+        $stmt->bindParam(':idPost',$data['idPost']);
+        $stmt->execute();
+
+        if( $data['Reaccion'] == 1 ){
+            $stmt=Connection::connect()->prepare('select count(idPost) from reaccion where idPost = :idPost and Reaccion = 1');
+        }
+        if( $data['Reaccion'] == 2 ){
+            $stmt=Connection::connect()->prepare('select count(idPost) from reaccion where idPost = :idPost and Reaccion = 2');
+        }
+
+        return 'Reaccion capturada';
+
+    }
+
+    static public function conteoLikes($data){
+        $stmt=Connection::connect()->prepare('select count(idPost) from reaccion where idPost = :idPost and Reaccion = 1');
+        $stmt->bindParam(':idPost',$data['idPost']);
+        $stmt->execute();
+
+        return $stmt->fetchAll( PDO::FETCH_ASSOC );
+        $stmt->close();
+        $stmt=null;
+
+    }
+
     static public function updatePostUser($data){
         $stmt=Connection::connect()->prepare('update posts set Titulo = :Titulo, textoPost = :textoPost, idCategoria = :idCategoria where idUsuario = :idUsuario');
         $stmt->bindParam(':Titulo',$data['Titulo']);

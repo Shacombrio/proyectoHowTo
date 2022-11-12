@@ -5,7 +5,9 @@ import { Observable, Subject, tap } from 'rxjs';
 import { LoginModel } from "src/app/models/login.model";
 import { posts } from "../models/posts.model";
 import { Tcategoria } from "../models/Tcategoria.model";
+import { TconteoLikes } from "../models/TconteoLikes.model";
 import { Tposts } from "../models/Tposts.model";
+import { Treacciones } from "../models/Treacciones.model";
 
 /* Modelos */
 import { TUsuario } from "../models/TUsuario.model";
@@ -54,6 +56,30 @@ export class UsrService {
     ingresarPosts(data:any):Observable<Tposts>{
       return this.client.post<Tposts>(
         this.urlApi + '?u=ingresarPost',
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      ).pipe(
+        tap(() => {
+          this.refresh.next();
+        })
+      );
+    }
+
+    ingresarReaccion(data:any):Observable<Treacciones>{
+      return this.client.post<Treacciones>(
+        this.urlApi + '?u=Likes',
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      ).pipe(
+        tap(() => {
+          this.refresh.next();
+        })
+      );
+    }
+
+    conteoLikes(data:any):Observable<TconteoLikes>{
+      return this.client.post<TconteoLikes>(
+        this.urlApi + '?u=conteoLikes',
         JSON.stringify(data),
         { headers: { 'Content-Type': 'application/json' } }
       ).pipe(
