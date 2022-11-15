@@ -5,6 +5,7 @@ import { Observable, Subject, tap } from 'rxjs';
 import { LoginModel } from "src/app/models/login.model";
 import { posts } from "../models/posts.model";
 import { Tcategoria } from "../models/Tcategoria.model";
+import { Tchat } from "../models/Tchat.model";
 import { TconteoLikes } from "../models/TconteoLikes.model";
 import { Teditarperfil } from "../models/Teditarperfil.model";
 import { Tposts } from "../models/Tposts.model";
@@ -97,6 +98,37 @@ export class UsrService {
         this.urlApi + '?u=mostrarCategria',
         ''
       )
+    }
+
+    obtenerUser():Observable<TUsuario>{
+      return this.client.post<TUsuario>(
+        this.urlApi + "?u=obtenerUsuarios",
+        ''
+      )
+    }
+
+    obtenerChat(data:any):Observable<Tchat>{
+      return this.client.post<Tchat>(
+        this.urlApi + "?u=obtenerChat",
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      ).pipe(
+        tap(() => {
+          this.refresh.next();
+        })
+      );
+    }
+
+    ingresarChat(data:any):Observable<Tchat>{
+      return this.client.post<Tchat>(
+        this.urlApi + "?u=ingresarChat",
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      ).pipe(
+        tap(() => {
+          this.refresh.next();
+        })
+      );
     }
 
     registroUsuario(data:any):Observable<TregistroUsuario>{

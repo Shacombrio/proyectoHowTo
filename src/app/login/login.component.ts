@@ -4,6 +4,7 @@ import { Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { LoginModel } from '../models/login.model';
 import { UsrService } from '../services/User.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,7 +13,9 @@ import { UsrService } from '../services/User.service';
 export class LoginComponent implements OnInit {
   FrmLogin!:FormGroup;
   
-  constructor(private fb:FormBuilder,private usuarioService:UsrService) { }
+  constructor(private fb:FormBuilder,private usuarioService:UsrService,private router:Router) {
+
+   }
 
   ngOnInit(): void {
 
@@ -47,13 +50,16 @@ export class LoginComponent implements OnInit {
           //window.location.reload();
           console.log("jalo we");
           Swal.fire({
-            title: 'Logi correcto',
+            title: 'Login correcto',
             html: 'Acceso',
             icon: 'success',
             customClass: {
               container: 'my-swal',
             },
+            
           })
+
+          this.router.navigate(['/posts']); 
         },
         (error) =>
           Swal.fire({

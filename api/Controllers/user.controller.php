@@ -141,11 +141,57 @@ class userController {
 
     }
 
+    public function obtenerChat($data){
+        if(isset($data["idOrigen"])){
+
+            $datos=userModel::obtenerChat($data);
+            $json=array('message'=>'Operacion correcta','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'compañero te falta un dato';
+        }
+
+    }
+
+    public function ingresarChat($data){
+        if(isset($data["idOrigen"])){
+
+            $datos=userModel::ingresarChat($data);
+            $json=array('message'=>'Operacion correcta','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'compañero te falta un dato';
+        }
+
+    }
+
     public function showPosts(){
 
         try {
 
             $datos = userModel::GetPosts();
+
+            $json = array( 'message'=>'¡Operacion Exitosa!', 'status'=>200, 'data'=> $datos );
+            echo json_encode( $json );
+            return;
+        } catch( Exception $e1 ) {
+            self::Error( $e1 );
+        }
+    }
+
+    public function obtenerUsuarios(){
+
+        try {
+
+            $datos = userModel::GetUser();
 
             $json = array( 'message'=>'¡Operacion Exitosa!', 'status'=>200, 'data'=> $datos );
             echo json_encode( $json );

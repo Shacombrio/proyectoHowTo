@@ -1,14 +1,159 @@
 <link rel="stylesheet" href="chat.component.css"> 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<div style="width: 40%; margin: auto; margin-top: 100px;">
-  <div>
-      <label for="">Hola <span style="font-weight: bold;">{{userChat.user}}</span>... Escribe algo</label>
-      <input type="text" class="form-control"(change)="myMessage()"[(ngModel)]="userChat.text">
+<body>
+<section class="body-chat">
+  <div class="seccion-titulo">
+    
+      <h3>
+          <i class="fas fa-comments"></i>
+          Sistema de mensajeria howTo
+      </h3>
   </div>
-  <div class="mt-3">
-      <div *ngFor="let a of myMessages">
-        <label for="" style="font-weight: bold;">{{a.user}}</label>
-        <span> {{a.text}} </span>
+  <div class="seccion-usuarios">
+      <div class="seccion-buscar">
+          <div class="input-buscar">
+              <input type="search" placeholder="Buscar usuario">
+              <i class="fas fa-search"></i>
+          </div>
+      </div>
+      <div *ngFor="let data of usuario" class="seccion-lista-usuarios">
+        <a (click)="obtenerChat(data.idUsuario,data.nombreUsuario)">
+          <div class="usuario">
+              <div class="avatar">
+                  <img src="./assets/user.png" alt="img">
+                  <span class="estado-usuario enlinea"></span>
+              </div>
+              <div class="cuerpo">
+                  <span> {{data.nombreUsuario}}</span>
+                  <span>{{data.Estatus}}</span>
+              </div>
+              <span class="notificacion">
+                  3
+              </span>
+          </div>
+        </a>
       </div>
   </div>
-</div>
+  <div class="seccion-chat">
+      <div class="usuario-seleccionado">
+          <div class="avatar">
+              <img src="./assets/user.png" alt="img" >
+          </div>
+          <div class="cuerpo" >
+              <span>{{nameUser}}</span>
+              <span>Activo</span>
+          </div>
+          <div class="opciones">
+              <ul>
+                  <li>
+                      <button type="button"><i class="fas fa-video"></i></button>
+                  </li>
+                  <li>
+                      <button type="button"><i class="fas fa-phone-alt"></i></button>
+                  </li>
+              </ul>
+          </div>
+      </div>
+      <div class="panel-chat" >
+          <div  id="list" *ngFor="let datos of chat">
+            <div *ngIf="datos.idOrigen != user">
+            <div class="mensaje">
+              <div class="avatar">
+                  <img src="./assets/user.png" alt="img">
+              </div>
+              <div class="cuerpo" >
+                  <!-- <img src="http://localhost/multimedia/png/user-foto-3.png" alt=""> -->
+                  <div class="texto">
+                    
+                      {{datos.mensaje}}
+                  </div>
+                  <span class="tiempo">
+                    <i class="far fa-clock"></i>
+                    
+                  </span>
+                  <ul class="opciones-msj">
+                      <li>
+                          <button type="button">
+                              <i class="fas fa-times"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                              </svg></i>
+                          </button>
+                      </li>
+                      <li>
+                          <button type="button">
+                              <i class="fas fa-share-square"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16">
+                                <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"/>
+                              </svg></i>
+                          </button>
+                      </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          
+          <div id="list">
+            <div *ngIf="datos.idOrigen == user">
+              <div class="mensaje left">
+                <div class="cuerpo">
+                    <!-- <img src="http://localhost/multimedia/png/user-foto-3.png" alt=""> -->
+                    <div class="texto">
+                      {{datos.mensaje}}
+                        <span class="tiempo">
+                            <i class="far fa-clock"></i>
+                            
+                        </span>
+                    </div>
+                    <ul class="opciones-msj">
+                        <li>
+                            <button type="button">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button">
+                                <i class="fas fa-share-square"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="avatar">
+                    <img src="./assets/user_p.png" alt="img">
+                </div>
+            </div>
+          </div>
+        </div>
+          </div>
+      </div>
+      <div class="panel-escritura">
+          <form class="textarea" [formGroup]="frmMsj">
+              <div class="opcines">
+                  <button type="button">
+                      <i class="fas fa-file"></i>
+                      <label for="file"></label>
+                      <input type="file" id="file">
+                  </button>
+                  <button type="button">
+                      <i class="far fa-image"></i>
+                      <label for="img"></label>
+                      <input type="file" id="img">
+                  </button>
+              </div>
+              <textarea placeholder="Escribir mensaje" formControlName="msjChat"></textarea>
+              <button type="button"  class="enviar" (click)="ingresarChat()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+  <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
+</svg>
+                  <i class="fas fa-paper-plane"></i>
+              </button>
+          </form>
+      </div>
+  </div>
+</section>
+<!--====  End of html  ====-->
+
+
+
+
+<!--====  End of tarjeta  ====-->
+</body>
