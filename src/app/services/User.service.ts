@@ -113,16 +113,11 @@ export class UsrService {
     }
 
     editarperfil(data:any):Observable<Teditarperfil>{
-      console.log(data)
+      console.log(data);
       return this.client.post<Teditarperfil>(
         this.urlApi + '?u=modificarUsuario',
         JSON.stringify(data),
-        { headers: { 'Content-Type': 'application/json' } }
-      ).pipe(
-        tap(() => {
-          this.refresh.next();
-        })
-      );
+      )
     }
 
     bajaUsuario(data:any):Observable<any>{

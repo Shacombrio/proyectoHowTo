@@ -1,6 +1,18 @@
 <?php
 class userController {
 
+
+  static function base64img($base64_image_string)
+  {
+      list($data, $base64_image_string) = explode(';', $base64_image_string);
+      list(, $extension) = explode('/', $data);
+      $output_file_with_extension = uniqid() . '.' . $extension;
+      list(, $imageData)      = explode(',', $base64_image_string);
+      file_put_contents('../api/api_recursos/fotos_perfil/' . $output_file_with_extension, base64_decode($imageData));
+      return "http://$_SERVER[HTTP_HOST]/api/api_recursos/fotos_perfil/" . $output_file_with_extension;
+  }
+
+
     public function Error( $e ) {
         header( 'HTTP/1.0 500' );
         //Cabecera que Indica que hay un error en el Servidor
@@ -25,8 +37,16 @@ class userController {
 
     }
     public function modificarUser($data){
-        if(isset($data["idUsuario"])){
 
+      //en caso de que venga con algún dato la cabecera de imagen en el json
+
+
+        if(isset($data["idUsuario"])){
+          if(isset($data['Imagen'])){
+            $rutaimg=self::base64img($data['Imagen']);
+            $arrchimg=array('id_usuario'=>$data['idUsuario'],'urlimg'=>$rutaimg);
+            userModel::ModificarImgUsuario($arrchimg);
+          }
             $datos=userModel::updateUser($data);
             $json=array('message'=>'Operacion Exitosa','status'=>200,'data'=>$datos);
             echo json_encode($json);
@@ -104,7 +124,7 @@ class userController {
 
     }
 
-    
+
     public function conteoLikes($data){
         if(isset($data["idPost"])){
 
