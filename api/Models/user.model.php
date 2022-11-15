@@ -74,8 +74,46 @@ class userModel{
         }
     }
 
+    static public function obtenerChat($data) {
+        
+            $stmt = Connection::connect()->prepare( 'SELECT * FROM chat LEFT JOIN usuarios ON usuarios.idUsuario = chat.idOrigen WHERE (idOrigen = :idOrigen AND idDestino = :idDestino) OR (idOrigen = :idDestino AND idDestino = :idOrigen) ORDER BY idChat' );
+    
+            $stmt->bindParam(':idOrigen',$data['idOrigen']);
+            $stmt->bindParam(':idDestino',$data['idDestino']);
+            $stmt->execute();
+            
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt->close();
+            $stmt=null;
+    
+        }
+
+        static public function ingresarChat($data){
+            $stmt=Connection::connect()->prepare('insert into chat values (null,:idOrigen,:idDestino,:mensaje,NOW())');
+            $stmt->bindParam(':idOrigen',$data['idOrigen']);
+            $stmt->bindParam(':idDestino',$data['idDestino']);
+            $stmt->bindParam(':mensaje',$data['mensaje']);
+                  
+
+            $stmt->execute();
+    
+            return 'mensaje ingresado';
+    
+        }
+
     static public function GetPosts() {
         $stmt = Connection::connect()->prepare( 'Select * from posts' );
+
+        $stmt->execute();
+
+        return $stmt->fetchAll( PDO::FETCH_ASSOC );
+        $stmt->close();
+        $stmt=null;
+
+    }
+
+    static public function GetUser() {
+        $stmt = Connection::connect()->prepare( 'Select * from usuarios' );
 
         $stmt->execute();
 

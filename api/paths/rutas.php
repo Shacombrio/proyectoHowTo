@@ -17,7 +17,13 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
                 $objUsuarios = new PruebaController();
                 $objUsuarios->pruebita();
             }
-
+        }
+        else  if ( array_filter( $arrayRutas )[ 2 ] == '?u=obtenerUsuarios' ) {
+                //Post en Alumnos
+                if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+                    $objUsuarios = new userController();
+                    $objUsuarios->obtenerUsuarios();
+                }
         }else if ( array_filter( $arrayRutas )[ 2 ] == '?u=mostrarCategria' ) {
         
                 if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
@@ -31,6 +37,22 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
             $datosarrary=json_decode($json,true);
             $objUsuarios = new adminController();
             $objUsuarios->metercat($datosarrary);
+            }
+
+        } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=obtenerChat' ) {
+            if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+            $json=file_get_contents('php://input');
+            $datosarrary=json_decode($json,true);
+            $objUsuarios = new userController();
+            $objUsuarios->obtenerChat($datosarrary);
+            }
+
+        } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=ingresarChat' ) {
+            if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+            $json=file_get_contents('php://input');
+            $datosarrary=json_decode($json,true);
+            $objUsuarios = new userController();
+            $objUsuarios->ingresarChat($datosarrary);
             }
 
         } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=Likes' ) {

@@ -1,33 +1,99 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { WebSocketService } from '../services/web-socket.service';
+import { Usuario } from '../models/usuario.model';
+import { UsrService } from '../services/User.service';
+import { chat } from '../models/chat.model';
+import { Subscription } from 'rxjs';
+import { ListKeyManager } from '@angular/cdk/a11y';
+import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-  userChat={
-    user: '',
-    text: ''
-  }
-  myMessages:any;
-  eventName="send-message";
-  constructor(private activated: ActivatedRoute, private webService: WebSocketService) { }
+  sub!:Subscription;
+  usuario!:Usuario[];
+  nameUser!:any;
+  chat!:chat[];
+  clase!:string;
+  user!:number;
+  idDestino!:any;
+  frmMsj!:FormGroup;
+  constructor(private fb:FormBuilder, private userService: UsrService) { }
 
   ngOnInit(): void {
-    const id = this.activated.snapshot.params['id'];
-    this.userChat.user=id;
+    this.createform();
+    this.obtenerUsuarios();
+  }
 
-    this.webService.listen('text-event').subscribe((data) => {
-      this.myMessages = data;
+  createform(){
+    this.frmMsj=this.fb.group({
+      msjChat:['',Validators.required]
+    });
+
+  }
+
+  mensage(dato:any){
+    alert(dato);
+  }
+
+  obtenerUsuarios(){
+    this.userService.obtenerUser().subscribe((x)=>
+    {
+      this.usuario=x.data;
+      console.log(this.usuario);
+    }
+    )
+  }
+
+  ingresarChat(){
+    this.userService.ingresarChat(
+      {
+        idOrigen:JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario,
+        idDestino : this.idDestino,
+        mensaje: this.frmMsj.controls['msjChat'].value
+      }
+    ).subscribe((x)=>
+    {
+      console.log(this.idDestino);
+      this.obtenerChat(this.idDestino,this.nameUser);
+      this.sub = this.userService.refresh.subscribe(() => {
+        this.obtenerChat(this.idDestino,this.nameUser);
+      })
     })
   }
 
-  myMessage(){
-    this.webService.emit(this.eventName,this.userChat);
-    this.userChat.text = '';
+  obtenerChat(idDestino:any,nu:any){
+
+    this.nameUser = nu;
+    this.idDestino = idDestino;
+    this.userService.obtenerChat(
+      {
+        idOrigen:JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario,
+        idDestino:idDestino 
+      }
+    ).subscribe((x)=>
+    {
+      this.chat=x.data;
+      console.log(this.chat);
+      this.user= JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario
+    }
+    )
   }
+
+  obtenerClase(){
+    let content  = `  <div class="seccion-titulo">
+    <h3>
+        <i class="fas fa-comments"></i>
+        Sistema de mensajeria howTo
+    </h3>
+</div>`
+  
+  }
+
+
 
 }
 
