@@ -4,7 +4,8 @@ use Firebase\JWT\JWT;
 class userModel{
 
     static public function addUser($data){
-        $stmt=Connection::connect()->prepare('insert into usuarios values (null,:Correo,:nombreUsuario,:Contra,:Estatus,:Imagen,:tipoUsuario)');
+        $stmt=Connection::connect()->prepare('insert into usuarios values (null,:Nombre,:Correo,:nombreUsuario,:Contra,:Estatus,:Imagen,:tipoUsuario)');
+        $stmt->bindParam(':Nombre',$data['Nombre']);
         $stmt->bindParam(':Correo',$data['Correo']);
         $stmt->bindParam(':nombreUsuario',$data['nombreUsuario']);
         $pass = hash( 'sha512',$data['Contra']);
@@ -15,6 +16,23 @@ class userModel{
         $stmt->execute();
 
         return 'Usuario registrado';
+
+    }
+
+    static public function updateUser($data){
+        $stmt=Connection::connect()->prepare('update usuarios set  Nombre = :Nombre, Correo = :Correo, nombreUsuario = :nombreUsuario, Contra = :Contra, Estatus = :Estatus, Imagen = :Imagen, tipoUsuario = :tipoUsuario where idUsuario = :idUsuario');
+        $stmt->bindParam(':idUsuario',$data['idUsuario']);
+        $stmt->bindParam(':Nombre',$data['Nombre']);
+        $stmt->bindParam(':Correo',$data['Correo']);
+        $stmt->bindParam(':nombreUsuario',$data['nombreUsuario']);
+        $pass = hash( 'sha512',$data['Contra']);
+        $stmt->bindParam(':Contra',$pass);
+        $stmt->bindParam(':Estatus',$data['Estatus']);
+        $stmt->bindParam(':Imagen',$data['Imagen']);
+        $stmt->bindParam(':tipoUsuario',$data['tipoUsuario']);
+        $stmt->execute();
+
+        return 'Usuario Modificado';
 
     }
 
@@ -42,7 +60,7 @@ class userModel{
         $stmt=Connection::connect()->prepare('insert into comentarios values (null,:idPost,:idUsuario,:Texto)');
         $stmt->bindParam(':idPost',$data['idPost']);
         $stmt->bindParam(':idUsuario',$data['idUsuario']);
-        $stmt->bindParam(':Texto',$data['Texto']);        
+        $stmt->bindParam(':Texto',$data['Texto']);
         $stmt->execute();
 
         return 'categoria Eliminada';
@@ -52,7 +70,7 @@ class userModel{
     static public function eliminarComentario($data){
         $stmt=Connection::connect()->prepare('delete from comenarios where idUsuario= :idUsuario and idPost = :idPost');
         $stmt->bindParam(':idPost',$data['idPost']);
-        $stmt->bindParam(':idUsuario',$data['idUsuario']);      
+        $stmt->bindParam(':idUsuario',$data['idUsuario']);
         $stmt->execute();
 
         return 'comentario Eliminado';
@@ -318,7 +336,7 @@ class userModel{
   static public function ExisteToken( $datos ) {
     try {
 
-        $stmt = Connection::connect()->prepare( "select token from usuariostoken where id_usuario=:ID_USUARIO and estatus='A'" );
+        $stmt = Connection::connect()->prepare( "select token from usuariostoken where idUsuario=:ID_USUARIO and estatus=1" );
         $stmt->bindParam( ':ID_USUARIO', $datos );
         $stmt->execute();
 
@@ -358,7 +376,7 @@ static public function InsertarToken( $datos ) {
       $datos );
       $jwt = JWT::encode( $token, Enviroment::getJWT_Key(), 'HS256' );
 
-      $stmt = Connection::connect()->prepare( "insert into  usuariostoken values(:ID_USUARIO,:token,default,'A')" );
+      $stmt = Connection::connect()->prepare( "insert into  usuariostoken values(:ID_USUARIO,:token,default,1)" );
 
       $stmt->bindParam( ':ID_USUARIO', $datos[ 'idUsuario' ] );
 
@@ -379,7 +397,7 @@ static public function ActualizarToken( $datos ) {
       $datos );
       $jwt = JWT::encode( $token, Enviroment::getJWT_Key(), 'HS256' );
 
-      $stmt = Connection::connect()->prepare( "update usuariostoken set id_usuario=:ID_USUARIO,token=:token,Estatus='A' where id_usuario=:ID_USUARIO" );
+      $stmt = Connection::connect()->prepare( "update usuariostoken set idUsuario=:ID_USUARIO,token=:token,Estatus=1 where idUsuario=:ID_USUARIO" );
       $stmt->bindParam( ':ID_USUARIO', $datos[ 'idUsuario' ] );
 
       $stmt->bindParam( ':token', $jwt );

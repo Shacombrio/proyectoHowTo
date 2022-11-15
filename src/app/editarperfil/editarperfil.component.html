@@ -57,49 +57,41 @@
       </style>
 
 <body class="bg-light">
-    
     <div class="container">
       <main style="align-items: center">
         <div class="py-5 text-center">
           <h2>Editar perfil de usuario</h2>
           <img class="d-block mx-auto mb-4" src="../assets/usuario.PNG" alt="" width="200" height="160" style="border-radius: 210px"> 
         </div>
-    
-       
+        <div class="mb-3">
+          <label for="formFileMultiple" class="form-label">Subir nueva foto de perfil</label>
+          <input class="form-control" type="file" id="formFileMultiple" accept="image/*" multiple formControlName="filePost">
+        </div>
           <div class="col-md-7 col-lg-8">
             <h4 class="mb-3">Información personal</h4>
-            <form class="needs-validation" novalidate>
+            <form [formGroup]="frmEditar">
               <div class="row g-3 " style="margin:auto">
-                <div class="col-sm-6 text-center" >
+                <div class="col-sm-6 " >
                   <label for="firstName" class="form-label" >Nombre</label>
-                  <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
-                  <div class="invalid-feedback">
-                    Se requiere un nombre válido.
-                  </div>
+                  <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="nombreEditar" >
                 </div>
         
                 <div class="col-12">
                   <label for="username" class="form-label">Nombre de usuario</label>
                   <div class="input-group has-validation">
                     <span class="input-group-text">@</span>
-                    <input type="text" class="form-control" id="username" placeholder="usuario" required>
-                  <div class="invalid-feedback">
-                      Your username is required.
-                    </div>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="usuarioEditar" >
                   </div>
                 </div>
     
                 <div class="col-12">
                   <label for="email" class="form-label">Correo electrónico <span class="text-muted"></span></label>
-                  <input type="email" class="form-control" id="email" placeholder="you@example.com">
-                  <div class="invalid-feedback">
-                    Please enter a valid email address for shipping updates.
-                  </div>
+                  <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="correoEditar" >
                 </div>
 
                 <div class="col-sm-6">
                     <label for="lastName" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" id="password" placeholder="" value="" required>
+                    <input type="password" class="form-control" id="exampleFormControlInput1" formControlName="contraseñaEditar" >
                     <div class="invalid-feedback">
                       Valid last name is required.
                     </div>
@@ -107,14 +99,11 @@
 
                   <div class="col-sm-6">
                     <label for="lastName" class="form-label">Confirmar contraseña</label>
-                    <input type="password" class="form-control" id="password" placeholder="" value="" required>
-                    <div class="invalid-feedback">
-                      Valid last name is required.
-                    </div>
+                    <input type="password" class="form-control" id="exampleFormControlInput1" formControlName="contraseña2Editar" >
                   </div>
 
-                  <button class="w-100 btn btn-lg btn-primary" type="submit" style="background-color: #66A548; border-color: #66A548;">Actualizar</button>
-            
+                  <button type="submit" (click)="actualizar()"class="w-100 btn btn-lg btn-primary"  style="background-color: #66A548; border-color: #66A548;">Actualizar</button>
+                  <button type="submit" (click)="baja()"class="w-100 btn btn-lg btn-primary"  style="background-color: #ed4238; border-color: #ed4238;">Eliminar cuenta</button>
           </div>
 
 
@@ -126,4 +115,5 @@
     </div>
     </main>
     </div>
+</body>
 </body>

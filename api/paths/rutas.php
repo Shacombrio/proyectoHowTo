@@ -115,7 +115,7 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
             if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
             $json=file_get_contents('php://input');
             $datosarrary=json_decode($json,true);
-            $objUsuarios = new adminController();
+            $objUsuarios = new userController();
             $objUsuarios->modificarUser($datosarrary);
             
             }

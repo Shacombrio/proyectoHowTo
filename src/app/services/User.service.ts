@@ -7,8 +7,11 @@ import { posts } from "../models/posts.model";
 import { Tcategoria } from "../models/Tcategoria.model";
 import { Tchat } from "../models/Tchat.model";
 import { TconteoLikes } from "../models/TconteoLikes.model";
+import { Teditarperfil } from "../models/Teditarperfil.model";
 import { Tposts } from "../models/Tposts.model";
 import { Treacciones } from "../models/Treacciones.model";
+import { TregistroUsuario } from "../models/TregistroUsuario.model";
+
 
 /* Modelos */
 import { TUsuario } from "../models/TUsuario.model";
@@ -119,6 +122,45 @@ export class UsrService {
     ingresarChat(data:any):Observable<Tchat>{
       return this.client.post<Tchat>(
         this.urlApi + "?u=ingresarChat",
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      ).pipe(
+        tap(() => {
+          this.refresh.next();
+        })
+      );
+    }
+
+    registroUsuario(data:any):Observable<TregistroUsuario>{
+      console.log(data)
+      return this.client.post<TregistroUsuario>(
+        this.urlApi + '?u=ingresarUsuario',
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      ).pipe(
+        tap(() => {
+          this.refresh.next();
+        })
+      );
+    }
+
+    editarperfil(data:any):Observable<Teditarperfil>{
+      console.log(data)
+      return this.client.post<Teditarperfil>(
+        this.urlApi + '?u=modificarUsuario',
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      ).pipe(
+        tap(() => {
+          this.refresh.next();
+        })
+      );
+    }
+
+    bajaUsuario(data:any):Observable<any>{
+      console.log(data)
+      return this.client.post<any>(
+        this.urlApi + '?u=eliminarUsuario',
         JSON.stringify(data),
         { headers: { 'Content-Type': 'application/json' } }
       ).pipe(

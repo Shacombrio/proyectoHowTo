@@ -45,21 +45,7 @@ class adminModel{
 
     }
 
-    static public function updateUser($data){
-        $stmt=Connection::connect()->prepare('update usuarios set Correo = :Correo, NombreUsuario = :NombreUsuario, Contraseña = :Contra, Estatus = :Estatus, Imagen = :Imagen, tipoUsuario = :Tipo where idUsuario = :idUsuario');
-        $stmt->bindParam(':idUsuario',$data['idUsuario']);
-        $stmt->bindParam(':Correo',$data['Correo']);
-        $stmt->bindParam(':NombreUsuario',$data['NombreUsuario']);
-        $pass = hash( 'sha512',$data['Contra']);
-        $stmt->bindParam(':Contra',$pass);
-        $stmt->bindParam(':Estatus',$data['Estatus']);
-        $stmt->bindParam(':Imagen',$data['Imagen']);
-        $stmt->bindParam(':Tipo',$data['tipoUsusario']);
-        $stmt->execute();
 
-        return 'Usuario Modificado';
-
-    }
 
     static public function selectUsers() {
         $stmt = Connection::connect()->prepare( 'Select * from usuarios' );
