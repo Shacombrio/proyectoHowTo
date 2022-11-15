@@ -57,21 +57,7 @@ class adminController {
 
     }
 
-    public function modificarUser($data){
-        if(isset($data["idUsuario"])){
 
-            $datos=adminModel::updateUser($data);
-            $json=array('message'=>'Operacion Exitosa','status'=>200,'data'=>$datos);
-            echo json_encode($json);
-            return;
-
-
-        }else{
-            header('HTTP/1.0 500');
-            echo 'compañero te falta un dato';
-        }
-
-    }
 
     public function consultaUsers(){
 

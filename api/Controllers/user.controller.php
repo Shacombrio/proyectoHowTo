@@ -24,6 +24,21 @@ class userController {
         }
 
     }
+    public function modificarUser($data){
+        if(isset($data["idUsuario"])){
+
+            $datos=userModel::updateUser($data);
+            $json=array('message'=>'Operacion Exitosa','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'compañero te falta un dato';
+        }
+
+    }
 
     public function eliminarUser($data){
         if(isset($data["idUsuario"])){

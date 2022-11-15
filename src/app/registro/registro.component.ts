@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms'
 import { ReactiveFormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { UsrService } from '../services/User.service';
-import { Registro } from '../registro/registro.model';
+import { registro } from '../models/registroUsuario.model';
 import Swal from 'sweetalert2';
 @Component({
   selector: 'app-registro',
@@ -13,50 +13,77 @@ import Swal from 'sweetalert2';
 export class RegistroComponent implements OnInit {
   frmRegistro!:FormGroup;
   sub!: Subscription;
-  registrar : Registro[];
+  registro!: registro[];
+  
   constructor(private fb:FormBuilder, private userService: UsrService) { 
-    this.registrar=[
-      new Registro('Pokemon','Post de pokemon',0,0 )
-    ];
+    
   }
 
   ngOnInit(): void {
     this.createform();
-
-    this.sub = this.userService.refresh.subscribe(() => {
-      
-    })
   }
 
   createform(){
     this.frmRegistro=this.fb.group({
-      tituloPost:['',Validators.required],
-      textPost:['',Validators.required],
-      filePost:[''],
-
+      nombreRegistro:['',Validators.required],
+      usuarioRegistro:['',Validators.required],
+      correoRegistro:['',Validators.required],
+      contraseñaRegistro:['', Validators.required],
+      contraseña2Registro:['', Validators.required]
     });
 
   }
 
-  registrarse(title: HTMLInputElement, text: HTMLInputElement){
-    this.nuevoregistro(title,text);
-   // if(this.frmPost.valid)
-   {this.submit();}
-   //else{alert("ta mal");}
+  registrar(){
+    if(this.frmRegistro.controls['contraseñaRegistro'].value == this.frmRegistro.controls['contraseña2Registro'].value){
+      this.submit();
+    }else{
+      Swal.fire({
+        title: 'Las contraseñas no coinciden',
+        html: 'Verifica los datos',
+        icon: 'error',
+        customClass: {
+          container: 'my-swal',
+        },
+      })
+    }
+  
+
+
+  }
+
+ submit(){
+      this.userService.registroUsuario(
+      {
+        Nombre:this.frmRegistro.controls['nombreRegistro'].value,
+        Correo: this.frmRegistro.controls['correoRegistro'].value,
+        nombreUsuario: this.frmRegistro.controls['usuarioRegistro'].value,
+        Contra: this.frmRegistro.controls['contraseñaRegistro'].value,
+        Estatus: 1,
+        Imagen: "imagen.png",
+        tipoUsuario: 1
+      }
+
+    ).subscribe( (x) =>{
+      console.log(x)
+      Swal.fire({
+       title: 'Registro exitoso',
+       html: 'Bienvenido',
+       icon: 'success',
+       customClass: {
+         container: 'my-swal',
+       },
+     })
+    
+    } ) 
+  }
+
+ 
+    
+  
+
+
+
    
-  }
 
-  submit(){
-    alert("Registro exitoso: ¡Bienvenido!");
-  }
-
-  nuevoregistro(title: HTMLInputElement, text: HTMLInputElement):boolean{
-    this.registrar.push(new Registro(title.value,text.value,0))
-    console.log(this.registrar);
-    return false;
-  }
-
-  sortedArticles(): Registro[] {
-    return this.registrar.sort((a:Registro,b:Registro)=>b.likes-a.likes);
-  }
 }

@@ -4,7 +4,8 @@ use Firebase\JWT\JWT;
 class userModel{
 
     static public function addUser($data){
-        $stmt=Connection::connect()->prepare('insert into usuarios values (null,:Correo,:nombreUsuario,:Contra,:Estatus,:Imagen,:tipoUsuario)');
+        $stmt=Connection::connect()->prepare('insert into usuarios values (null,:Nombre,:Correo,:nombreUsuario,:Contra,:Estatus,:Imagen,:tipoUsuario)');
+        $stmt->bindParam(':Nombre',$data['Nombre']);
         $stmt->bindParam(':Correo',$data['Correo']);
         $stmt->bindParam(':nombreUsuario',$data['nombreUsuario']);
         $pass = hash( 'sha512',$data['Contra']);
@@ -15,6 +16,23 @@ class userModel{
         $stmt->execute();
 
         return 'Usuario registrado';
+
+    }
+
+    static public function updateUser($data){
+        $stmt=Connection::connect()->prepare('update usuarios set  Nombre = :Nombre, Correo = :Correo, nombreUsuario = :nombreUsuario, Contra = :Contra, Estatus = :Estatus, Imagen = :Imagen, tipoUsuario = :tipoUsuario where idUsuario = :idUsuario');
+        $stmt->bindParam(':idUsuario',$data['idUsuario']);
+        $stmt->bindParam(':Nombre',$data['Nombre']);
+        $stmt->bindParam(':Correo',$data['Correo']);
+        $stmt->bindParam(':nombreUsuario',$data['nombreUsuario']);
+        $pass = hash( 'sha512',$data['Contra']);
+        $stmt->bindParam(':Contra',$pass);
+        $stmt->bindParam(':Estatus',$data['Estatus']);
+        $stmt->bindParam(':Imagen',$data['Imagen']);
+        $stmt->bindParam(':tipoUsuario',$data['tipoUsuario']);
+        $stmt->execute();
+
+        return 'Usuario Modificado';
 
     }
 
