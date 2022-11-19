@@ -8,7 +8,8 @@ import Swal from 'sweetalert2';
 import { bajaUsuario } from '../models/TbajaUsuario.model';
 import { Usuario } from '../models/usuario.model';
 import { ConfigComponent } from '../config/config.component';
-
+import { Teditarperfil } from '../models/Teditarperfil.model';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-editarperfil',
   templateUrl: './editarperfil.component.html',
@@ -17,32 +18,36 @@ import { ConfigComponent } from '../config/config.component';
 export class EditarperfilComponent implements OnInit {
   frmEditar!:FormGroup;
   sub!: Subscription;
-  editarperfil!: editarperfil[];
+  editarperfil!: Teditarperfil;
   arrayDatos!: Usuario;
   imgurl:any;
   public rutafoto:any;
   public message!:string;
   reader = new FileReader();
-  @ViewChild('modalconf') modalconf !: ConfigComponent;
+  @ViewChild('modal') modal !: ConfigComponent;
   constructor(private fb:FormBuilder, private userService: UsrService) {
 
   }
 
   ngOnInit(): void {
 
-    if(localStorage.getItem("data")){
-      this.arrayDatos= JSON.parse(localStorage.getItem('data')!);
-      this.imgurl= this.arrayDatos.Imagen;
+    if(localStorage.getItem('data') && localStorage.getItem('token')){
+      this.editarperfil= JSON.parse(localStorage.getItem("data")!);
+      this.imgurl= this.editarperfil.data.Imagen;
+
+    }else{
 
     }
+    console.log(this.editarperfil.data.Correo);
+
     this.createform();
   }
 
   createform(){
     this.frmEditar=this.fb.group({
-      nombreEditar:[this.arrayDatos.Nombre,Validators.required],
-      usuarioEditar:[this.arrayDatos.nombreUsuario,Validators.required],
-      correoEditar:[this.arrayDatos.Correo,Validators.required],
+      nombreEditar:[this.editarperfil.data.Nombre,Validators.required],
+      usuarioEditar:[this.editarperfil.data.nombreUsuario,Validators.required],
+      correoEditar:[this.editarperfil.data.Correo,Validators.required],
       filePost:[''],
 
   });
@@ -69,12 +74,14 @@ export class EditarperfilComponent implements OnInit {
 
 
   meterdatos(){
-    this.frmEditar.controls["nombreEditar"].setValue(this.arrayDatos.Nombre);
-    this.frmEditar.controls["usuarioEditar"].setValue(this.arrayDatos.nombreUsuario);
-    this.frmEditar.controls["correoEditar"].setValue(this.arrayDatos.Correo);
+    this.frmEditar.controls["nombreEditar"].setValue(this.editarperfil.data.Nombre);
+    this.frmEditar.controls["usuarioEditar"].setValue(this.editarperfil.data.nombreUsuario);
+    this.frmEditar.controls["correoEditar"].setValue(this.editarperfil.data.Correo);
 
   }
+mostrarmodal(){
 
+}
  submit(){
       this.userService.editarperfil(
       {

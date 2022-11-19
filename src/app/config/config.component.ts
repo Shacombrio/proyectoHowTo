@@ -20,6 +20,7 @@ export class ConfigComponent implements OnInit {
   sub!: Subscription;
   conf!: conf[];
   arrayDatos!: Usuario;
+  public show=false;
   public message!:string;
   reader = new FileReader();
   constructor(private fb:FormBuilder, private userService: UsrService) {
@@ -30,6 +31,13 @@ export class ConfigComponent implements OnInit {
 
     this.createform();
   }
+  mostrarmodal(){
+    this.show=true;
+  }
+  escondermodal(){
+    this.show=false;
+  }
+
 
   createform(){
     this.frmConf=this.fb.group({
@@ -56,7 +64,7 @@ export class ConfigComponent implements OnInit {
 
   }
 
-  //eliminar cuenta 
+  //eliminar cuenta
   baja(){
     this.submit2();
   }
@@ -87,7 +95,7 @@ submit2(){
         idUsuario: JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario,
         Contra: this.frmConf.controls['contraseñaconf'].value
         }
-    
+
     ).subscribe( (x) =>{
       console.log(x);
 
@@ -104,7 +112,7 @@ submit2(){
   }
 
 
-  
+
 
 }
 

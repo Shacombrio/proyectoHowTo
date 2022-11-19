@@ -1,12 +1,12 @@
 <link rel="stylesheet" href="config.component.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/sign-in/">
-
+<div *ngIf="show">
 <div class="modal modal-signin position-static d-block" tabindex="-1" role="dialog" id="modalconf"  style="overflow:hidden;">
   <div class="modal-dialog" role="document">
     <div class="modal-content rounded-4 shadow" id="modalconf">
 
-      
+
         <form [formGroup]="frmConf">
             <div class="modal-content">
               <div class="modal-header">
@@ -15,19 +15,19 @@
               <div class="modal-body">
                   <div class="col-12">
                       <label for="email" class="form-label">Cambiar contraseña<span class="text-muted"></span></label>
-                      <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="contraseñaconf" >
+                      <input type="password" class="form-control" id="exampleFormControlInput1" formControlName="contraseñaconf" >
                     </div>
-      
+
                     <div class="col-12">
                       <label for="email" class="form-label">Confirmar contraseña<span class="text-muted"></span></label>
-                      <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="contraseña2conf" >
+                      <input type="password" class="form-control" id="exampleFormControlInput1" formControlName="contraseña2conf" >
                     </div>
             <br>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" (click)="escondermodal()"class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
               <br>
-               <button type="submit" class="btn btn-primary" style="background-color: #66A548; border-color: #66A548;" (click)="actualizar()">Actualizar</button> 
-               <button type="submit" class="w-100 btn btn-lg btn-primary"  style="background-color: #ed4238; border-color: #ed4238;" (click)="baja()">Eliminar cuenta</button> 
+               <button type="submit" class="btn btn-primary" style="background-color: #66A548; border-color: #66A548;" (click)="actualizar()">Actualizar</button>
+               <button type="submit" class="w-100 btn btn-lg btn-primary"  style="background-color: #ed4238; border-color: #ed4238;" (click)="baja()">Eliminar cuenta</button>
               </div>
             </div>
             </div>
@@ -35,7 +35,7 @@
     </div>
   </div>
 </div>
-
+</div>
 <div class="b-example-divider"></div>
 
 
