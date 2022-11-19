@@ -16,6 +16,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import {MatCardModule} from '@angular/material/card';
 import {MatSelectModule} from '@angular/material/select';
+import { ConfigComponent } from './config/config.component';
+
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import {MatSelectModule} from '@angular/material/select';
     ChatComponent,
     PreChatComponent,
     PostsComponent,
-    CrearPostComponent
+    CrearPostComponent,
+    ConfigComponent,
   ],
   imports: [
     BrowserModule,

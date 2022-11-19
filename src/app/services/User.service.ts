@@ -165,6 +165,20 @@ export class UsrService {
       );
     }
 
+    cambiarcontraseña(data:any):Observable<any>{
+      console.log(data)
+      return this.client.post<any>(
+        this.urlApi + '?u=cambiarContra',
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      ).pipe(
+        tap(() => {
+          this.refresh.next();
+        })
+      );
+    }
+
+  
   }
 
 

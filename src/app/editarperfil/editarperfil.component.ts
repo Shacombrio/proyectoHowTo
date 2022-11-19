@@ -1,4 +1,4 @@
-import { Component, createPlatform, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -6,7 +6,8 @@ import { UsrService } from '../services/User.service';
 import { editarperfil } from '../models/editarperfil.model';
 import Swal from 'sweetalert2';
 import { bajaUsuario } from '../models/TbajaUsuario.model';
-import { TUsuario } from '../models/TUsuario.model';
+import { Usuario } from '../models/usuario.model';
+import { ConfigComponent } from '../config/config.component';
 
 @Component({
   selector: 'app-editarperfil',
@@ -17,11 +18,12 @@ export class EditarperfilComponent implements OnInit {
   frmEditar!:FormGroup;
   sub!: Subscription;
   editarperfil!: editarperfil[];
-  arrayDatos!: TUsuario ;
+  arrayDatos!: Usuario;
   imgurl:any;
   public rutafoto:any;
   public message!:string;
   reader = new FileReader();
+  @ViewChild('modalconf') modalconf !: ConfigComponent;
   constructor(private fb:FormBuilder, private userService: UsrService) {
 
   }
@@ -30,7 +32,7 @@ export class EditarperfilComponent implements OnInit {
 
     if(localStorage.getItem("data")){
       this.arrayDatos= JSON.parse(localStorage.getItem('data')!);
-      this.imgurl= this.arrayDatos.data.Imagen;
+      this.imgurl= this.arrayDatos.Imagen;
 
     }
     this.createform();
@@ -38,11 +40,9 @@ export class EditarperfilComponent implements OnInit {
 
   createform(){
     this.frmEditar=this.fb.group({
-      nombreEditar:[this.arrayDatos.data.Nombre,Validators.required],
-      usuarioEditar:[this.arrayDatos.data.nombreUsuario,Validators.required],
-      correoEditar:[this.arrayDatos.data.Correo,Validators.required],
-      contraseñaEditar:['', Validators.required],
-      contraseña2Editar:['', Validators.required],
+      nombreEditar:[this.arrayDatos.Nombre,Validators.required],
+      usuarioEditar:[this.arrayDatos.nombreUsuario,Validators.required],
+      correoEditar:[this.arrayDatos.Correo,Validators.required],
       filePost:[''],
 
   });
@@ -69,34 +69,12 @@ export class EditarperfilComponent implements OnInit {
 
 
   meterdatos(){
-    this.frmEditar.controls["nombreEditar"].setValue(this.arrayDatos.data.Nombre);
-    this.frmEditar.controls["usuarioEditar"].setValue(this.arrayDatos.data.nombreUsuario);
-    this.frmEditar.controls["correoEditar"].setValue(this.arrayDatos.data.Correo);
+    this.frmEditar.controls["nombreEditar"].setValue(this.arrayDatos.Nombre);
+    this.frmEditar.controls["usuarioEditar"].setValue(this.arrayDatos.nombreUsuario);
+    this.frmEditar.controls["correoEditar"].setValue(this.arrayDatos.Correo);
 
   }
 
-
-  baja(){
-    this.submit2();
-  }
-submit2(){
-  this.userService.bajaUsuario(
-    new bajaUsuario(
-      JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario
-    )
-    ).subscribe( (x) =>{
-      console.log(x)
-      Swal.fire({
-       title: 'Se ha eliminado la cuenta',
-       html: 'Vuelve pronto :)',
-       icon: 'success',
-       customClass: {
-         container: 'my-swal',
-       },
-     })
-
-    } )
-}
  submit(){
       this.userService.editarperfil(
       {
@@ -104,7 +82,6 @@ submit2(){
         Nombre:this.frmEditar.controls['nombreEditar'].value,
         Correo: this.frmEditar.controls['correoEditar'].value,
         nombreUsuario: this.frmEditar.controls['usuarioEditar'].value,
-        Estatus: 1,
         Imagen: this.reader.result,
         }
     ).subscribe( (x) =>{

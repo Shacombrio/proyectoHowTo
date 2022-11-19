@@ -20,12 +20,11 @@ class userModel{
     }
 
     static public function updateUser($data){
-        $stmt=Connection::connect()->prepare('update usuarios set  Nombre = :Nombre, Correo = :Correo, nombreUsuario = :nombreUsuario, Estatus = :Estatus where idUsuario = :idUsuario');
+        $stmt=Connection::connect()->prepare('update usuarios set  Nombre = :Nombre, Correo = :Correo, nombreUsuario = :nombreUsuario where idUsuario = :idUsuario');
         $stmt->bindParam(':idUsuario',$data['idUsuario']);
         $stmt->bindParam(':Nombre',$data['Nombre']);
         $stmt->bindParam(':Correo',$data['Correo']);
         $stmt->bindParam(':nombreUsuario',$data['nombreUsuario']);
-        $stmt->bindParam(':Estatus',$data['Estatus']);
         $stmt->execute();
 
         $datosUser = UserModel::MostrarUsuarioEspecifico( $data[ 'Correo' ] );
@@ -58,11 +57,11 @@ class userModel{
     static public function updatePass($data){
         $stmt=Connection::connect()->prepare('update usuarios set Contraseña = :Contra where idUsuario = :idUsuario');
         $stmt->bindParam(':idUsuario',$data['idUsuario']);
-        $pass = hash( 'sha512',$data['Contra']);
+        $pass = hash('sha512',$data['Contra']);
         $stmt->bindParam(':Contra',$pass);
         $stmt->execute();
 
-        return 'categoria Eliminada';
+        return 'contraseña actualizada';
 
     }
 

@@ -31,7 +31,6 @@ export class RegistroComponent implements OnInit {
       contraseñaRegistro:['', Validators.required],
       contraseña2Registro:['', Validators.required]
     });
-
   }
 
   registrar(){
@@ -53,6 +52,7 @@ export class RegistroComponent implements OnInit {
   }
 
  submit(){
+  
       this.userService.registroUsuario(
       {
         Nombre:this.frmRegistro.controls['nombreRegistro'].value,
