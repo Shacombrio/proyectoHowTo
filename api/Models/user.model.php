@@ -20,21 +20,30 @@ class userModel{
     }
 
     static public function updateUser($data){
-        $stmt=Connection::connect()->prepare('update usuarios set  Nombre = :Nombre, Correo = :Correo, nombreUsuario = :nombreUsuario, Contra = :Contra, Estatus = :Estatus, Imagen = :Imagen, tipoUsuario = :tipoUsuario where idUsuario = :idUsuario');
+        $stmt=Connection::connect()->prepare('update usuarios set  Nombre = :Nombre, Correo = :Correo, nombreUsuario = :nombreUsuario where idUsuario = :idUsuario');
         $stmt->bindParam(':idUsuario',$data['idUsuario']);
         $stmt->bindParam(':Nombre',$data['Nombre']);
         $stmt->bindParam(':Correo',$data['Correo']);
         $stmt->bindParam(':nombreUsuario',$data['nombreUsuario']);
-        $pass = hash( 'sha512',$data['Contra']);
-        $stmt->bindParam(':Contra',$pass);
-        $stmt->bindParam(':Estatus',$data['Estatus']);
-        $stmt->bindParam(':Imagen',$data['Imagen']);
-        $stmt->bindParam(':tipoUsuario',$data['tipoUsuario']);
         $stmt->execute();
 
-        return 'Usuario Modificado';
+        $datosUser = UserModel::MostrarUsuarioEspecifico( $data[ 'Correo' ] );
+
+        return userModel::ActualizarToken( $datosUser );
 
     }
+
+    static public function ModificarImgUsuario( $datos ) {
+
+      $stmt = Connection::connect()->prepare( 'update usuarios set Imagen=:img where idUsuario=:ID_USUARIO' );
+      $stmt->bindParam( ':ID_USUARIO', $datos[ 'id_usuario' ] );
+      $stmt->bindParam( ':img', $datos[ 'urlimg' ] );
+      $stmt->execute();
+
+      return '  Se modifico correctamente  la Imagen';
+  }
+
+
 
     static public function deleteUser($data){
         $stmt=Connection::connect()->prepare('update usuarios set Estatus = 2 where idUsuario = :idUsuario');
@@ -48,11 +57,11 @@ class userModel{
     static public function updatePass($data){
         $stmt=Connection::connect()->prepare('update usuarios set Contraseña = :Contra where idUsuario = :idUsuario');
         $stmt->bindParam(':idUsuario',$data['idUsuario']);
-        $pass = hash( 'sha512',$data['Contra']);
+        $pass = hash('sha512',$data['Contra']);
         $stmt->bindParam(':Contra',$pass);
         $stmt->execute();
 
-        return 'categoria Eliminada';
+        return 'contraseña actualizada';
 
     }
 
@@ -376,7 +385,7 @@ class userModel{
 
 //Mostrar Usuario Especifico
 static  public function MostrarUsuarioEspecifico( $id ) {
-  $stmt = Connection::connect()->prepare( 'SELECT idUsuario,Correo,nombreUsuario,Estatus,Imagen,tipoUsuario FROM usuarios where Correo=:correo' );
+  $stmt = Connection::connect()->prepare( 'SELECT idUsuario,Correo,Nombre,nombreUsuario,Estatus,Imagen,tipoUsuario FROM usuarios where Correo=:correo' );
   $stmt->bindParam( ':correo', $id );
   $stmt->execute();
   if ( $stmt != null )
