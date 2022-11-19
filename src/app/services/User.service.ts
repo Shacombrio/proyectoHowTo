@@ -8,6 +8,7 @@ import { Tcategoria } from "../models/Tcategoria.model";
 import { Tchat } from "../models/Tchat.model";
 import { TconteoLikes } from "../models/TconteoLikes.model";
 import { Teditarperfil } from "../models/Teditarperfil.model";
+import { Tpost } from "../models/Tpost.model";
 import { Tposts } from "../models/Tposts.model";
 import { Treacciones } from "../models/Treacciones.model";
 import { TregistroUsuario } from "../models/TregistroUsuario.model";
@@ -112,6 +113,14 @@ export class UsrService {
         this.urlApi + "?u=obtenerChat",
         JSON.stringify(data),
         { headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    ingresarChat(data:any):Observable<Tchat>{
+      return this.client.post<Tchat>(
+        this.urlApi + "?u=ingresarChat",
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
       ).pipe(
         tap(() => {
           this.refresh.next();
@@ -119,9 +128,21 @@ export class UsrService {
       );
     }
 
-    ingresarChat(data:any):Observable<Tchat>{
-      return this.client.post<Tchat>(
-        this.urlApi + "?u=ingresarChat",
+    guardarPost(data:any):Observable<Tpost>{
+      return this.client.post<Tpost>(
+        this.urlApi + "?u=guardarPost",
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      ).pipe(
+        tap(() => {
+          this.refresh.next();
+        })
+      );
+    }
+
+    verPost(data:any):Observable<Tpost>{
+      return this.client.post<Tpost>(
+        this.urlApi + "?u=verPost",
         JSON.stringify(data),
         { headers: { 'Content-Type': 'application/json' } }
       ).pipe(

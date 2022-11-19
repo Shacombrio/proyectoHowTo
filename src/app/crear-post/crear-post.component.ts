@@ -7,6 +7,10 @@ import { Posts } from '../posts/posts.model';
 import Swal from 'sweetalert2';
 import { JsonPipe } from '@angular/common';
 import { categoria } from '../models/cotegoria.model';
+import { angularEditorConfig } from '@kolkov/angular-editor/lib/config';
+import { config } from 'rxjs';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+
 @Component({
   selector: 'app-crear-post',
   templateUrl: './crear-post.component.html',
@@ -14,7 +18,8 @@ import { categoria } from '../models/cotegoria.model';
 })
 export class CrearPostComponent implements OnInit {
   frmPost!:FormGroup;
- 
+  name = 'Angular 6';
+  htmlContent = '';
   categoria!: categoria[];
   ncat!:string;
   idcat!:string;
@@ -26,6 +31,28 @@ export class CrearPostComponent implements OnInit {
     this.createform();
     this.obtenerCategoria();
   }
+
+  config: AngularEditorConfig = {
+    
+    editable: true,
+    spellcheck: true,
+    height: '30rem',
+    minHeight: '5rem',
+    placeholder: 'Enter text in this rich text editor....',
+    defaultParagraphSeparator: 'p',
+    defaultFontName: 'Arial',
+    customClasses: [
+      {
+        name: 'Quote',
+        class: 'quoteClass',
+      },
+      {
+        name: 'Title Heading',
+        class: 'titleHead',
+        tag: 'h1',
+      },
+    ],
+  };
 
   createform(){
     this.frmPost=this.fb.group({
@@ -47,6 +74,17 @@ export class CrearPostComponent implements OnInit {
   }
 
   submit(){
+
+    this.userService.guardarPost(
+      {
+        Contenido:this.htmlContent,
+        idUsuario: JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario,
+      }
+    ).subscribe((x)=>{
+
+    })
+
+
     this.userService.ingresarPosts(
       {Titulo:this.frmPost.controls['tituloPost'].value,
       textoPost: this.frmPost.controls['textoPost'].value,

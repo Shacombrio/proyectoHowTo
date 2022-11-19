@@ -16,6 +16,11 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import {MatCardModule} from '@angular/material/card';
 import {MatSelectModule} from '@angular/material/select';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { VerPostComponent } from './ver-post/ver-post.component';
+
+
+
 
 @NgModule({
   declarations: [
@@ -27,7 +32,9 @@ import {MatSelectModule} from '@angular/material/select';
     ChatComponent,
     PreChatComponent,
     PostsComponent,
-    CrearPostComponent
+    CrearPostComponent,
+    VerPostComponent,
+  
   ],
   imports: [
     BrowserModule,
@@ -38,7 +45,8 @@ import {MatSelectModule} from '@angular/material/select';
     NoopAnimationsModule,
     MatSliderModule,
     MatCardModule,
-    MatSelectModule
+    MatSelectModule,
+    AngularEditorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

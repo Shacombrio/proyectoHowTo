@@ -8,6 +8,8 @@ import { contLikes } from '../models/conteoLikes.model';
 import {FormControl} from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Posts } from './posts.model';
+import { VariablesService } from '../services/variables.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-posts',
@@ -20,6 +22,8 @@ export class PostsComponent implements OnInit {
 
   sub!: Subscription;
   post!: posts[];
+  tam:number=75;
+  masMenos:string="Leer mas";
   count!:contLikes;
   reaccion!:reaccion[];
   sumaLikes!: number;
@@ -28,8 +32,22 @@ export class PostsComponent implements OnInit {
   public isClicked: boolean = false;
   //public tonoLike: string = "";
   @ViewChild('modal') modal !: CrearPostComponent;
-  constructor(private userService: UsrService) { 
+  constructor(private userService: UsrService, private servVar:VariablesService,private router:Router) { 
 
+  }
+
+  view(){
+    this.tam = 200;
+  }
+
+  leerMas(){
+    if(this.masMenos=="Leer mas"){
+      this.tam = 200;  
+      this.masMenos="Leer menos";
+    }else{
+      this.tam=75;
+      this.masMenos="Leer mas";
+    }
   }
 
   positive(idpost:any){
@@ -49,7 +67,12 @@ export class PostsComponent implements OnInit {
     
  
   }
-
+  verid(idpost:any){
+    console.log(idpost);
+    console.log("hola");
+    this.servVar.disparador.emit(idpost);
+    this.router.navigate(['/verPost']); 
+  }
   negative(idpost:any){
     this.userService.ingresarReaccion(
       { idUsuario:JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario,

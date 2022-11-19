@@ -67,6 +67,27 @@ class userModel{
 
     }
 
+    static public function guardarPost($data){
+        $stmt=Connection::connect()->prepare('insert into postspagina values (null,:Contenido,:idUsuario)');
+        $stmt->bindParam(':Contenido',$data['Contenido']);
+        $stmt->bindParam(':idUsuario',$data['idUsuario']);
+        $stmt->execute();
+
+        return 'Post publicado';
+
+    }
+
+    static public function verPost($data){
+        $stmt=Connection::connect()->prepare('Select * from postspagina where idPost = :idPost');
+        $stmt->bindParam(':idPost',$data['idPost']);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt->close();
+        $stmt=null;
+
+    }
+
     static public function eliminarComentario($data){
         $stmt=Connection::connect()->prepare('delete from comenarios where idUsuario= :idUsuario and idPost = :idPost');
         $stmt->bindParam(':idPost',$data['idPost']);

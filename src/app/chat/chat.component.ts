@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { WebSocketService } from '../services/web-socket.service';
 import { Usuario } from '../models/usuario.model';
 import { UsrService } from '../services/User.service';
 import { chat } from '../models/chat.model';
@@ -13,7 +12,7 @@ import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms'
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-  sub!:Subscription;
+  sub!: Subscription;
   usuario!:Usuario[];
   nameUser!:any;
   chat!:chat[];
@@ -26,6 +25,10 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {
     this.createform();
     this.obtenerUsuarios();
+    this.obtenerChat(this.idDestino,this.nameUser);
+    this.sub = this.userService.refresh.subscribe(() => {
+      this.obtenerChat(this.idDestino,this.nameUser);
+    })
   }
 
   createform(){
@@ -59,9 +62,7 @@ export class ChatComponent implements OnInit {
     {
       console.log(this.idDestino);
       this.obtenerChat(this.idDestino,this.nameUser);
-      this.sub = this.userService.refresh.subscribe(() => {
-        this.obtenerChat(this.idDestino,this.nameUser);
-      })
+
     })
   }
 

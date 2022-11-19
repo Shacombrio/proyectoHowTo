@@ -211,6 +211,38 @@ class userController {
 
     }
 
+    public function guardarPost($data){
+        if(isset($data["idUsuario"])){
+
+            $datos=userModel::guardarPost($data);
+            $json=array('message'=>'Operacion correcta','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'compañero te falta un dato';
+        }
+
+    }
+
+    public function verPost($data){
+        if(isset($data["idPost"])){
+
+            $datos=userModel::verPost($data);
+            $json=array('message'=>'Operacion correcta','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'compañero te falta un dato';
+        }
+
+    }
+
     public function deletePost($data){
         if(isset($data["idUsuario"])){
 

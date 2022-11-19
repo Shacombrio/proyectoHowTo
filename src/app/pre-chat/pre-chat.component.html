@@ -1,10 +1,14 @@
 <link rel="stylesheet" href="pre-chat.component.css"> 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<div  style="width:30%; margin:auto; margin-top: 130px;">
-    <div class="card p-5">
-        <h4>Escribe tu nombre para unirte al chat</h4>
-        <input type="text" class="form-control" [(ngModel)] = "User.name">
-        <a href="" class="btn btn-primary btn-block mt-3" style="background-color: #66A548;" [routerLink]="['/chat',User.name]">Unirse al chat</a>
-    </div>
+<div class="container-lg">
+<h1>AngularEditor</h1>
+<angular-editor [(ngModel)]="htmlContent" [config]="config"></angular-editor>
+<h1>HTML Output</h1>
+<div class="html">
+  {{ htmlContent }}
 </div>
-
+<button class="btn btn-success">Subir</button>
+</div>
+<div class="container-lg">
+  
+</div>

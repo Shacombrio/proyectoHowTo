@@ -238,6 +238,24 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
                     $objUsuarios->mostrarmedia($datosarrary);
                 }
 
+            } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=guardarPost' ) {
+
+                if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+                    $json=file_get_contents('php://input');
+                    $datosarrary=json_decode($json,true);
+                    $objUsuarios = new userController();
+                    $objUsuarios->guardarPost($datosarrary);
+                }
+
+            } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=verPost' ) {
+
+                if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+                    $json=file_get_contents('php://input');
+                    $datosarrary=json_decode($json,true);
+                    $objUsuarios = new userController();
+                    $objUsuarios->verPost($datosarrary);
+                }
+
             } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=registrarFavorito' ) {
 
                 if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
