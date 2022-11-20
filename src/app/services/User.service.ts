@@ -178,7 +178,25 @@ export class UsrService {
       );
     }
 
-  
+    daraltausr(data:any){
+      return this.client.post(
+        this.urlApi+'?u=DarAltaUsuario',JSON.stringify(data)
+      ).pipe(
+        tap(()=>{
+          this.refresh.next();
+        })
+      );
+    }
+    darbajausr(data:any){
+      return this.client.post(
+        this.urlApi+'?u=eliminarUsuario',JSON.stringify(data)
+      ).pipe(
+        tap(()=>{
+          this.refresh.next();
+        })
+      );
+    }
+
   }
 
 

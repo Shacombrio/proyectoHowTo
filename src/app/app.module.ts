@@ -17,8 +17,11 @@ import { MatSliderModule } from '@angular/material/slider';
 import {MatCardModule} from '@angular/material/card';
 import {MatSelectModule} from '@angular/material/select';
 import { ConfigComponent } from './config/config.component';
-
-
+import { GestionUsuariosComponent } from './gestion-usuarios/gestion-usuarios.component';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import {MatIcon, MatIconModule} from '@angular/material/icon';
+import { MatTable, MatTableModule } from '@angular/material/table';
+import {MatFormFieldModule} from '@angular/material/form-field';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +34,7 @@ import { ConfigComponent } from './config/config.component';
     PostsComponent,
     CrearPostComponent,
     ConfigComponent,
+    GestionUsuariosComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,7 +45,11 @@ import { ConfigComponent } from './config/config.component';
     NoopAnimationsModule,
     MatSliderModule,
     MatCardModule,
-    MatSelectModule
+    MatSelectModule,
+    MatPaginatorModule,
+    MatIconModule,
+    MatTableModule,
+    MatFormFieldModule
   ],
   providers: [],
   bootstrap: [AppComponent]

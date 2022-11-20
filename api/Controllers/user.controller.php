@@ -76,6 +76,25 @@ class userController {
 
     }
 
+
+    public function altaUser($data){
+      if(isset($data["idUsuario"])){
+
+          $datos=userModel::altaUser($data);
+          $json=array('message'=>'Operacion buena','status'=>200,'data'=>$datos);
+          echo json_encode($json);
+          return;
+
+
+      }else{
+          header('HTTP/1.0 500');
+          echo 'compañero te falta un dato';
+      }
+
+  }
+
+
+
     public function cambiarContra($data){
         if(isset($data["idUsuario"])){
 
