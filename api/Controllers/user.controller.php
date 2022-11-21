@@ -11,6 +11,15 @@ class userController {
       file_put_contents('../api/api_recursos/fotos_perfil/' . $output_file_with_extension, base64_decode($imageData));
       return "http://$_SERVER[HTTP_HOST]/api/api_recursos/fotos_perfil/" . $output_file_with_extension;
   }
+  static function base64imgPreview($base64_image_string)
+  {
+      list($data, $base64_image_string) = explode(';', $base64_image_string);
+      list(, $extension) = explode('/', $data);
+      $output_file_with_extension = uniqid() . '.' . $extension;
+      list(, $imageData)      = explode(',', $base64_image_string);
+      file_put_contents('../api/api_recursos/previewImg/' . $output_file_with_extension, base64_decode($imageData));
+      return "http://$_SERVER[HTTP_HOST]/api/api_recursos/previewImg/" . $output_file_with_extension;
+  }
 
 
     public function Error( $e ) {
@@ -218,7 +227,10 @@ class userController {
     public function Posting($data){
         if(isset($data["idUsuario"])){
 
-            $datos=userModel::Postear($data);
+            $rutaimg=self::base64imgPreview($data['imagen']);
+            //$arrchimg=array('id_Post'=>$data['idPosts'],'urlimg'=>$rutaimg);
+            //userModel::ModificarImgPost($arrchimg);
+            $datos=userModel::Postear($data,$rutaimg);
             $json=array('message'=>'Operacion correcta','status'=>200,'data'=>$datos);
             echo json_encode($json);
             return;
@@ -419,10 +431,42 @@ class userController {
 
     }
 
-    public function eliminarComentario($data){
+    public function verComentarios($data){
         if(isset($data["idPost"])){
 
+            $datos=userModel::verComentarios($data);
+            $json=array('message'=>'Operacion buena','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'compañero te falta un dato';
+        }
+
+    }
+
+    public function eliminarComentario($data){
+        if(isset($data["idComentario"])){
+
             $datos=userModel::eliminarComentario($data);
+            $json=array('message'=>'Operacion buena','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'compañero te falta un dato';
+        }
+
+    }
+
+    public function postCategoria($data){
+        if(isset($data["idCategoria"])){
+
+            $datos=userModel::postCategoria($data);
             $json=array('message'=>'Operacion buena','status'=>200,'data'=>$datos);
             echo json_encode($json);
             return;

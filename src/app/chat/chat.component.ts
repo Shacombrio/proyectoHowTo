@@ -19,15 +19,16 @@ export class ChatComponent implements OnInit {
   clase!:string;
   user!:number;
   idDestino!:any;
+  imagenUser!:any;
   frmMsj!:FormGroup;
   constructor(private fb:FormBuilder, private userService: UsrService) { }
 
   ngOnInit(): void {
     this.createform();
     this.obtenerUsuarios();
-    this.obtenerChat(this.idDestino,this.nameUser);
+    this.obtenerChat(this.idDestino,this.nameUser,this.imagenUser);
     this.sub = this.userService.refresh.subscribe(() => {
-      this.obtenerChat(this.idDestino,this.nameUser);
+      this.obtenerChat(this.idDestino,this.nameUser, this.imagenUser);
     })
   }
 
@@ -61,15 +62,17 @@ export class ChatComponent implements OnInit {
     ).subscribe((x)=>
     {
       console.log(this.idDestino);
-      this.obtenerChat(this.idDestino,this.nameUser);
+      this.obtenerChat(this.idDestino,this.nameUser, this.imagenUser);
 
     })
   }
 
-  obtenerChat(idDestino:any,nu:any){
+  obtenerChat(idDestino:any,nu:any,img:any){
 
     this.nameUser = nu;
     this.idDestino = idDestino;
+    this.imagenUser = img;
+    
     this.userService.obtenerChat(
       {
         idOrigen:JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario,

@@ -17,10 +17,10 @@
           </div>
       </div>
       <div *ngFor="let data of usuario" class="seccion-lista-usuarios">
-        <a (click)="obtenerChat(data.idUsuario,data.nombreUsuario)">
+        <a (click)="obtenerChat(data.idUsuario,data.nombreUsuario,data.Imagen)">
           <div class="usuario">
               <div class="avatar">
-                  <img src="./assets/user.png" alt="img">
+                  <img src={{data.Imagen}} alt="img">
                   <span class="estado-usuario enlinea"></span>
               </div>
               <div class="cuerpo">
@@ -37,7 +37,7 @@
   <div class="seccion-chat">
       <div class="usuario-seleccionado">
           <div class="avatar">
-              <img src="./assets/user.png" alt="img" >
+              <img src={{imagenUser}} alt="img" >
           </div>
           <div class="cuerpo" >
               <span>{{nameUser}}</span>

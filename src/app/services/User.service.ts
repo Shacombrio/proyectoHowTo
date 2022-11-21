@@ -6,6 +6,7 @@ import { LoginModel } from "src/app/models/login.model";
 import { posts } from "../models/posts.model";
 import { Tcategoria } from "../models/Tcategoria.model";
 import { Tchat } from "../models/Tchat.model";
+import { Tcomentarios } from "../models/Tcomentarios.model";
 import { TconteoLikes } from "../models/TconteoLikes.model";
 import { Teditarperfil } from "../models/Teditarperfil.model";
 import { Tpost } from "../models/Tpost.model";
@@ -55,6 +56,14 @@ export class UsrService {
       return this.client.post<Tposts>(
         this.urlApi + '?u=mostrarPosts',
         ''
+      )
+    }
+
+    obtenerPostsCat(data:any):Observable<Tposts>{
+      return this.client.post<Tposts>(
+        this.urlApi + '?u=postCategoria',
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
       )
     }
 
@@ -126,6 +135,38 @@ export class UsrService {
           this.refresh.next();
         })
       );
+    }
+
+    ingresarComentario(data:any):Observable<Tcomentarios>{
+      return this.client.post<Tcomentarios>(
+        this.urlApi + "?u=comentarPost",
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      ).pipe(
+        tap(() => {
+          this.refresh.next();
+        })
+      );
+    }
+
+    eliminarComentario(data:any):Observable<Tcomentarios>{
+      return this.client.post<Tcomentarios>(
+        this.urlApi + "?u=eliminarComentario",
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      ).pipe(
+        tap(() => {
+          this.refresh.next();
+        })
+      );
+    }
+
+    obtenerComentarios(data:any):Observable<Tcomentarios>{
+      return this.client.post<Tcomentarios>(
+        this.urlApi + '?u=verComentarios',
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      )
     }
 
     guardarPost(data:any):Observable<Tpost>{

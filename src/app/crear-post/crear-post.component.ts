@@ -17,6 +17,9 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
   styleUrls: ['./crear-post.component.css']
 })
 export class CrearPostComponent implements OnInit {
+  public rutafoto:any;
+  imgurl:any;
+  reader = new FileReader();
   frmPost!:FormGroup;
   name = 'Angular 6';
   htmlContent = '';
@@ -30,6 +33,15 @@ export class CrearPostComponent implements OnInit {
   ngOnInit(): void {
     this.createform();
     this.obtenerCategoria();
+  }
+
+  preview(files: any){
+    this.rutafoto = files;
+    this.reader.readAsDataURL(files[0]);
+    this.reader.onload = (_event) => {
+      this.imgurl = this.reader.result;
+      console.log(this.reader.result);
+    };
   }
 
   config: AngularEditorConfig = {
@@ -58,7 +70,7 @@ export class CrearPostComponent implements OnInit {
     this.frmPost=this.fb.group({
       tituloPost:['',Validators.required],
       textoPost:['',Validators.required],
-      filePost:[''],
+      filePost:['',Validators.required],
       //categoriaPost:['',Validators.required],
 
     });
@@ -92,7 +104,9 @@ export class CrearPostComponent implements OnInit {
       idCategoria: this.idcat,
       likes:0,
       dislikes:0,
-      Estatus: 1}
+      Estatus: 1,
+      imagen: this.reader.result,
+    }
       
     ).subscribe( (x) =>{
       Swal.fire({

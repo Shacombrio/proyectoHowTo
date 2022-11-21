@@ -7,4 +7,5 @@ export interface posts {
       likes:number;
       dislikes:number;
       Estatus:number;
+      imagen:string;
   }

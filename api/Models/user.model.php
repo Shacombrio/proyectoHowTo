@@ -43,6 +43,17 @@ class userModel{
       return '  Se modifico correctamente  la Imagen';
   }
 
+  
+  static public function ModificarImgPost( $datos ) {
+
+    $stmt = Connection::connect()->prepare( 'update posts set imagen=:img where idPosts=:idPosts' );
+    $stmt->bindParam( ':idPosts', $datos[ 'id_Post' ] );
+    $stmt->bindParam( ':img', $datos[ 'urlimg' ] );
+    $stmt->execute();
+
+    return '  Se modifico correctamente  la Imagen';
+}
+
 
 
     static public function deleteUser($data){
@@ -66,13 +77,24 @@ class userModel{
     }
 
     static public function comentarPost($data){
-        $stmt=Connection::connect()->prepare('insert into comentarios values (null,:idPost,:idUsuario,:Texto)');
+        $stmt=Connection::connect()->prepare('insert into comentarios values (null,:texto,:idUsuario,:idPost)');
         $stmt->bindParam(':idPost',$data['idPost']);
         $stmt->bindParam(':idUsuario',$data['idUsuario']);
-        $stmt->bindParam(':Texto',$data['Texto']);
+        $stmt->bindParam(':texto',$data['texto']);
         $stmt->execute();
 
-        return 'categoria Eliminada';
+        return 'comentario añadido';
+
+    }
+
+    static public function verComentarios($data){
+        $stmt=Connection::connect()->prepare('select * from comentarios inner join usuarios on comentarios.idUsuario = usuarios.idUsuario where idPost = :idPost');
+        $stmt->bindParam(':idPost',$data['idPost']);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt->close();
+        $stmt=null;
 
     }
 
@@ -98,9 +120,9 @@ class userModel{
     }
 
     static public function eliminarComentario($data){
-        $stmt=Connection::connect()->prepare('delete from comenarios where idUsuario= :idUsuario and idPost = :idPost');
-        $stmt->bindParam(':idPost',$data['idPost']);
-        $stmt->bindParam(':idUsuario',$data['idUsuario']);
+        $stmt=Connection::connect()->prepare('delete from comentarios where idComentario=:idComentario');
+        $stmt->bindParam(':idComentario',$data['idComentario']);
+      
         $stmt->execute();
 
         return 'comentario Eliminado';
@@ -150,8 +172,19 @@ class userModel{
         }
 
     static public function GetPosts() {
-        $stmt = Connection::connect()->prepare( 'Select * from posts' );
+        $stmt = Connection::connect()->prepare( 'Select * from posts ORDER BY idPosts DESC' );
 
+        $stmt->execute();
+
+        return $stmt->fetchAll( PDO::FETCH_ASSOC );
+        $stmt->close();
+        $stmt=null;
+
+    }
+
+    static public function postCategoria($data) {
+        $stmt = Connection::connect()->prepare( 'Select * from posts where idCategoria=:idCategoria ORDER BY idPosts DESC ' );
+        $stmt->bindParam(':idCategoria',$data['idCategoria']);
         $stmt->execute();
 
         return $stmt->fetchAll( PDO::FETCH_ASSOC );
@@ -182,8 +215,8 @@ class userModel{
 
     }
 
-    static public function Postear($data){
-        $stmt=Connection::connect()->prepare('insert into posts values (null,:Titulo,:textoPost,:idUsuario,:idCategoria,:likes,:dislikes,:Estatus)');
+    static public function Postear($data,$ruta){
+        $stmt=Connection::connect()->prepare('insert into posts values (null,:Titulo,:textoPost,:idUsuario,:idCategoria,:likes,:dislikes,:Estatus,:imagen)');
         $stmt->bindParam(':Titulo',$data['Titulo']);
         $stmt->bindParam(':textoPost',$data['textoPost']);
         $stmt->bindParam(':idUsuario',$data['idUsuario']);
@@ -191,6 +224,8 @@ class userModel{
         $stmt->bindParam(':likes',$data['likes']);
         $stmt->bindParam(':dislikes',$data['dislikes']);
         $stmt->bindParam(':Estatus',$data['Estatus']);
+        $stmt->bindParam(':imagen',$ruta);
+        
         $stmt->execute();
 
         return 'Post registrado';

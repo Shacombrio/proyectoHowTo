@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { Posts } from './posts.model';
 import { VariablesService } from '../services/variables.service';
 import { Router } from '@angular/router';
+import { categoria } from '../models/cotegoria.model';
 
 @Component({
   selector: 'app-posts',
@@ -18,8 +19,10 @@ import { Router } from '@angular/router';
   
 })
 export class PostsComponent implements OnInit {
-
-
+  pibote:any = 1;
+  ncat!:string;
+  idcat!:string;
+  categoria!:categoria[];
   sub!: Subscription;
   post!: posts[];
   tam:number=75;
@@ -29,6 +32,8 @@ export class PostsComponent implements OnInit {
   sumaLikes!: number;
   dato!:number;
   idpost!:number;
+  color!:string;
+  idP:any="";
   public isClicked: boolean = false;
   //public tonoLike: string = "";
   @ViewChild('modal') modal !: CrearPostComponent;
@@ -51,6 +56,7 @@ export class PostsComponent implements OnInit {
   }
 
   positive(idpost:any){
+    this.idP = idpost;
     var colorlike = document.getElementById(idpost);
     //colorlike?.style.backgroundColor = 'rgb(0, 249, 0)';
     colorlike!.style.backgroundColor='rgb(0, 249, 0)';
@@ -67,7 +73,16 @@ export class PostsComponent implements OnInit {
     
  
   }
-  verid(idpost:any){
+
+  getColorCard(d: any,id:any) {
+    let color: string;
+    if (d = this.idP){
+      return color = '#008000';
+    }
+
+    return 0;
+  }
+  verid(idpost:any): void{
     console.log(idpost);
     console.log("hola");
     this.servVar.disparador.emit(idpost);
@@ -89,6 +104,7 @@ export class PostsComponent implements OnInit {
  
     
     this.obtenerposts();
+    this.obtenerCategoria();
     this.sub = this.userService.refresh.subscribe(() => {
       this.obtenerposts();
       
@@ -96,7 +112,7 @@ export class PostsComponent implements OnInit {
   }
 
 obtenerposts(){
-
+  if (this.pibote==1){
   this.userService.obtenerPosts().subscribe((x)=>
   {
 
@@ -105,6 +121,48 @@ obtenerposts(){
 
   }
   )
+  }else{
+    this.userService.obtenerPostsCat(
+      {
+        idCategoria: this.idcat
+      }
+    ).subscribe((x)=>
+    {
+  
+    this.post = x.data;
+    console.log(this.post);
+  
+    }
+    )
+  }
+}
+
+selecCat(nombre:any,id:any){
+  if(id==0){
+    this.pibote = 1;
+    this.obtenerposts();
+    this.ncat = "";
+  }else{
+  this.ncat=nombre;
+  this.idcat=id;
+  this.pibote = 2;
+  this.obtenerposts();
+  }
+}
+
+obtenerCategoria(){
+  this.userService.mostrarCat().subscribe((x)=>
+  {
+    this.categoria=x.data;
+    console.log(this.categoria);
+  }
+  )
+}
+
+grabarLocalStorage(idP:any){
+  let id:any = idP;
+  localStorage.setItem("idPost",id);
+  this.router.navigate(['/verPost']); 
 }
 
 

@@ -1,9 +1,9 @@
 <link rel="stylesheet" href="crear-post.component.css">
 <div class="container-lg" style="margin-top: 2%; margin-bottom: 4%;"> 
 
-<form [formGroup]="frmPost" >
+<form [formGroup]="frmPost">
         <h1>Preview del post</h1>
-    <div class="modal-body" style="width: 50%;">
+    <div class="modal-body" style="width: 50%; border: 10px solid #509b48; padding: 10px; border-radius: 10px;">
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Titulo</label>
             <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="tituloPost" >
@@ -26,15 +26,12 @@
             <label for="" style="margin-left: 10px; font-size: 20px;">  Categoria: </label>
             <label for="" style="margin-left: 10px; font-size: 20px;" >  {{ncat}}  </label>
           </div>
-          
-          <!--<select class="form-select" aria-label="Default select example" formControlName="categoriaPost" id="categorias" >
-            <option *ngFor="let item of categoria;" [value]="item.idCategoria" >{{item.nombreCategoria}}</option>
-          </select>-->           <!-- <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="textoPost" >-->
+        
       </div>
       
           <div class="mb-3">
             <label for="formFileMultiple" class="form-label">Multiple files input example</label>
-            <input class="form-control" type="file" id="formFileMultiple" accept="image/*" multiple formControlName="filePost">
+            <input #file class="form-control" type="file" id="formFileMultiple2" accept="image/*"  multiple formControlName="filePost" (change)="preview(file.files)">
           </div>
 
 
@@ -45,13 +42,10 @@
 </form>
 </div>
 
-<div class="container-lg">
+<div class="container-lg" style="border: 10px solid #509b48; padding: 10px; border-radius: 10px;">
   <h1>Contenido del post</h1>
   <angular-editor [(ngModel)]="htmlContent" [config]="config"></angular-editor>
   <h1>HTML Output</h1>
-  <div class="html">
-    {{ htmlContent }}
-  </div>
 
   </div>
   <div class="container-lg" style="margin-top: 2%;">

@@ -18,6 +18,8 @@ import {MatCardModule} from '@angular/material/card';
 import {MatSelectModule} from '@angular/material/select';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { VerPostComponent } from './ver-post/ver-post.component';
+//import { config } from 'process';
+import { ConfigComponent } from './config/config.component';
 
 
 
@@ -34,6 +36,8 @@ import { VerPostComponent } from './ver-post/ver-post.component';
     PostsComponent,
     CrearPostComponent,
     VerPostComponent,
+    ConfigComponent,
+    EditarperfilComponent
   
   ],
   imports: [

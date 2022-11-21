@@ -8,3 +8,45 @@
 <div class="container-lg" id="principal">
 
 </div>
+
+<div class="container-sm">
+<body>
+    <H1>Comentarios</H1>
+<section class="contenedor-comentarios">
+    <div class="area-comentar">
+        <div class="avatar">
+            <img src={{imagenUser}} alt="img">
+        </div>
+        <form  class="inputs-comentarios" [formGroup]="frmCom">
+            <textarea name="" class="area-comentario" formControlName="comentario"></textarea>
+            <div class="botones-comentar">
+
+                <button class="boton-enviar" (click)="ingresarComentario()">
+                    <i class="fas fa-paper-plane"></i>
+                    Enviar
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="publicacion-realizada" *ngFor="let data of comen">
+        <div class="usuario-publico">
+            <div class="avatar">
+                <img src={{data.Imagen}} alt="img">
+            </div>
+            <div class="contenido-publicacion">
+                <h4>{{data.nombreUsuario}}</h4>
+            </div>
+            <div class="menu-comentario" *ngIf=" data.idUsuario == idUser">
+                <a (click)="eliminarComentario(data.idComentario)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                  </svg></a>
+            </div>
+        </div>
+        <p>{{data.texto}}</p>
+    </div>
+
+
+   
+</section>
+</body>
+</div>
