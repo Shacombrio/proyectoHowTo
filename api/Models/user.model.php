@@ -65,6 +65,17 @@ class userModel{
 
     }
 
+
+
+    static public function altaUser($data){
+      $stmt=Connection::connect()->prepare('update usuarios set Estatus = 1 where idUsuario = :idUsuario');
+      $stmt->bindParam(':idUsuario',$data['idUsuario']);
+      $stmt->execute();
+
+      return 'categoria Eliminada';
+
+  }
+
     static public function updatePass($data){
         $stmt=Connection::connect()->prepare('update usuarios set Contraseña = :Contra where idUsuario = :idUsuario');
         $stmt->bindParam(':idUsuario',$data['idUsuario']);
@@ -145,17 +156,17 @@ class userModel{
     }
 
     static public function obtenerChat($data) {
-        
+
             $stmt = Connection::connect()->prepare( 'SELECT * FROM chat LEFT JOIN usuarios ON usuarios.idUsuario = chat.idOrigen WHERE (idOrigen = :idOrigen AND idDestino = :idDestino) OR (idOrigen = :idDestino AND idDestino = :idOrigen) ORDER BY idChat' );
-    
+
             $stmt->bindParam(':idOrigen',$data['idOrigen']);
             $stmt->bindParam(':idDestino',$data['idDestino']);
             $stmt->execute();
-            
+
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
             $stmt->close();
             $stmt=null;
-    
+
         }
 
         static public function ingresarChat($data){
@@ -163,12 +174,12 @@ class userModel{
             $stmt->bindParam(':idOrigen',$data['idOrigen']);
             $stmt->bindParam(':idDestino',$data['idDestino']);
             $stmt->bindParam(':mensaje',$data['mensaje']);
-                  
+
 
             $stmt->execute();
-    
+
             return 'mensaje ingresado';
-    
+
         }
 
     static public function GetPosts() {
@@ -194,7 +205,7 @@ class userModel{
     }
 
     static public function GetUser() {
-        $stmt = Connection::connect()->prepare( 'Select * from usuarios' );
+        $stmt = Connection::connect()->prepare( 'select idUsuario,Imagen,Correo,nombreUsuario,Nombre,Estatus, tipousuario.nombreTipo from usuarios INNER join tipousuario on usuarios.tipoUsuario=tipoUsuario.idTipo' );
 
         $stmt->execute();
 

@@ -25,7 +25,7 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
                     $objUsuarios->obtenerUsuarios();
                 }
         }else if ( array_filter( $arrayRutas )[ 2 ] == '?u=mostrarCategria' ) {
-        
+
                 if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
                     $objUsuarios = new userController();
                     $objUsuarios->mostrarCat();
@@ -103,7 +103,15 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
             $objUsuarios->eliminarUser($datosarrary);
             }
 
-        } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=cambiarContra' ) {
+        }  else if ( array_filter( $arrayRutas )[ 2 ] == '?u=DarAltaUsuario' ) {
+          if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+          $json=file_get_contents('php://input');
+          $datosarrary=json_decode($json,true);
+          $objUsuarios = new userController();
+          $objUsuarios->altaUser($datosarrary);
+          }
+
+         } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=cambiarContra' ) {
             if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
             $json=file_get_contents('php://input');
             $datosarrary=json_decode($json,true);
@@ -117,7 +125,7 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
             $datosarrary=json_decode($json,true);
             $objUsuarios = new userController();
             $objUsuarios->modificarUser($datosarrary);
-            
+
             }
 
         } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=consultaUsuarios' ) {
@@ -125,7 +133,7 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
                 if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
                     $objUsuarios = new adminController();
                     $objUsuarios->consultaUsers();
-                    
+
                 }
 
         } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=consultaPersonal' ) {

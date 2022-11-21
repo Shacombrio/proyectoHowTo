@@ -20,8 +20,11 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { VerPostComponent } from './ver-post/ver-post.component';
 //import { config } from 'process';
 import { ConfigComponent } from './config/config.component';
-
-
+import { GestionUsuariosComponent } from './gestion-usuarios/gestion-usuarios.component';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import {MatIcon, MatIconModule} from '@angular/material/icon';
+import { MatTable, MatTableModule } from '@angular/material/table';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 
 @NgModule({
@@ -37,6 +40,7 @@ import { ConfigComponent } from './config/config.component';
     CrearPostComponent,
     VerPostComponent,
     ConfigComponent,
+    GestionUsuariosComponent,
     EditarperfilComponent
   
   ],
@@ -50,7 +54,11 @@ import { ConfigComponent } from './config/config.component';
     MatSliderModule,
     MatCardModule,
     MatSelectModule,
-    AngularEditorModule
+    AngularEditorModule,
+    MatPaginatorModule,
+    MatIconModule,
+    MatTableModule,
+    MatFormFieldModule
   ],
   providers: [],
   bootstrap: [AppComponent]

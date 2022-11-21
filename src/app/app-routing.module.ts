@@ -12,6 +12,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { VerPostComponent } from './ver-post/ver-post.component';
+import { GestionUsuariosComponent } from './gestion-usuarios/gestion-usuarios.component';
 
 const routes: Routes = [
   {path:"registro",component:RegistroComponent},
@@ -22,7 +23,8 @@ const routes: Routes = [
   {path:'posts', component: PostsComponent},
   {path:'crearPost',component:CrearPostComponent},
   {path:'posts',component:PostsComponent},
-  {path:'verPost',component:VerPostComponent}
+  {path:'verPost',component:VerPostComponent},
+  {path:'gestionusers',component:GestionUsuariosComponent},
 ];
 
 
