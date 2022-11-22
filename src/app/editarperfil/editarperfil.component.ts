@@ -73,15 +73,8 @@ export class EditarperfilComponent implements OnInit {
   }
 
 
-  meterdatos(){
-    this.frmEditar.controls["nombreEditar"].setValue(this.editarperfil.data.Nombre);
-    this.frmEditar.controls["usuarioEditar"].setValue(this.editarperfil.data.nombreUsuario);
-    this.frmEditar.controls["correoEditar"].setValue(this.editarperfil.data.Correo);
 
-  }
-mostrarmodal(){
 
-}
  submit(){
       this.userService.editarperfil(
       {
@@ -127,6 +120,8 @@ mostrarmodal(){
       this.imgurl = this.reader.result;
     };
   }
+
+  
 
 }
 

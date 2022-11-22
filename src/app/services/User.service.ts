@@ -67,9 +67,41 @@ export class UsrService {
       )
     }
 
+    obtenerPostsUnico(data:any):Observable<Tposts>{
+      return this.client.post<Tposts>(
+        this.urlApi + '?u=verPostEditar',
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      )
+    }
+
     ingresarPosts(data:any):Observable<Tposts>{
       return this.client.post<Tposts>(
         this.urlApi + '?u=ingresarPost',
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      ).pipe(
+        tap(() => {
+          this.refresh.next();
+        })
+      );
+    }
+
+    modificarPosts(data:any):Observable<Tposts>{
+      return this.client.post<Tposts>(
+        this.urlApi + '?u=modificarPost',
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      ).pipe(
+        tap(() => {
+          this.refresh.next();
+        })
+      );
+    }
+
+    modificarPostsPagina(data:any):Observable<Tposts>{
+      return this.client.post<Tposts>(
+        this.urlApi + '?u=modificarPostPagina',
         JSON.stringify(data),
         { headers: { 'Content-Type': 'application/json' } }
       ).pipe(

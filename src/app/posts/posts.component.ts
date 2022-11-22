@@ -12,6 +12,9 @@ import { VariablesService } from '../services/variables.service';
 import { Router } from '@angular/router';
 import { categoria } from '../models/cotegoria.model';
 
+
+
+
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
@@ -19,6 +22,9 @@ import { categoria } from '../models/cotegoria.model';
   
 })
 export class PostsComponent implements OnInit {
+  toastTrigger!:any;
+  toastLiveExample!:any;
+  bootstrap!:any;
   pibote:any = 1;
   ncat!:string;
   idcat!:string;
@@ -34,12 +40,16 @@ export class PostsComponent implements OnInit {
   idpost!:number;
   color!:string;
   idP:any="";
+  idUser!:any;
   public isClicked: boolean = false;
   //public tonoLike: string = "";
   @ViewChild('modal') modal !: CrearPostComponent;
   constructor(private userService: UsrService, private servVar:VariablesService,private router:Router) { 
 
   }
+
+  
+
 
   view(){
     this.tam = 200;
@@ -112,6 +122,7 @@ export class PostsComponent implements OnInit {
   }
 
 obtenerposts(){
+  this.idUser = JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario;
   if (this.pibote==1){
   this.userService.obtenerPosts().subscribe((x)=>
   {
@@ -164,6 +175,14 @@ grabarLocalStorage(idP:any){
   localStorage.setItem("idPost",id);
   this.router.navigate(['/verPost']); 
 }
+
+grabarLocalStorage2(idP:any){
+  let id:any = idP;
+  localStorage.setItem("idPost",id);
+  this.router.navigate(['/editarPost']); 
+}
+
+
 
 
 }

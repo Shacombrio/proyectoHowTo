@@ -25,6 +25,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import {MatIcon, MatIconModule} from '@angular/material/icon';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { EditarPostComponent } from './editar-post/editar-post.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     VerPostComponent,
     ConfigComponent,
     GestionUsuariosComponent,
-    EditarperfilComponent
+    EditarperfilComponent,
+    EditarPostComponent
   
   ],
   imports: [

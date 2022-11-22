@@ -1,0 +1,61 @@
+<link rel="stylesheet" href="editar-post.component.css">
+<div class="container-lg" style="margin-top: 2%; margin-bottom: 4%;"> 
+
+<form [formGroup]="frmPost">
+        <h1>Preview del post</h1>
+    <div class="modal-body" style="width: 50%; border: 10px solid #509b48; padding: 10px; border-radius: 10px;">
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Titulo</label>
+            <input type="text" value="{{titulo}}" class="form-control" id="exampleFormControlInput1" formControlName="tituloPost" >
+          </div>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Contenido</label>
+            <textarea class="form-control" value="{{contenido}}" id="exampleFormControlTextarea1" rows="3" formControlName="textoPost"></textarea>
+           <!-- <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="textoPost" >-->
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlTextarea1" class="form-label" >Categoria</label>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Elija una categoria
+            </button>
+            
+            <ul class="dropdown-menu">
+              <li *ngFor="let item of categoria;" [value]="item.idCategoria"><a (click)="selecCat(item.nombreCategoria,item.idCategoria)" class="dropdown-item"><img src={{item.Icono}} alt="">{{item.nombreCategoria}}</a></li>
+            </ul>
+            <label for="" style="margin-left: 10px; font-size: 20px;">  Categoria: </label>
+            <label for="" style="margin-left: 10px; font-size: 20px;" >  {{ncat}}  </label>
+          </div>
+        
+      </div>
+      
+          <div class="mb-3">
+            <label for="formFileMultiple" class="form-label">Multiple files input example</label>
+            <input #file class="form-control" type="file" value="{{imagen}}" id="formFileMultiple2" accept="image/*"  multiple formControlName="filePost" (change)="preview(file.files)">
+            <img src={{imagen}} width="100" height="100" style="margin-top: 2%;">
+          </div>
+
+
+        
+          </div>
+
+
+</form>
+</div>
+
+<div class="container-lg" style="border: 10px solid #509b48; padding: 10px; border-radius: 10px;">
+  <h1>Contenido del post</h1>
+  <angular-editor value="seeeeesssss" [(ngModel)]="htmlContent" [config]="config"></angular-editor>
+  <h1>HTML Output</h1>
+
+  </div>
+  <div  class="container-lg" style="margin-top: 2%;">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+    <button type="submit" class="btn btn-primary" (click)="publicar(titulo,contenido,imagen)">Publicar</button> 
+  </div>
+
+  <!--  <app-posts *ngFor="let posts of sortedArticles()" [posts]="posts">
+  </app-posts> -->
+
+
+

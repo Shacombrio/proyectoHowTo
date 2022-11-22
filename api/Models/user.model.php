@@ -204,6 +204,17 @@ class userModel{
 
     }
 
+    static public function verPostEditar($data) {
+        $stmt = Connection::connect()->prepare( 'Select * from posts where idPosts = :idPosts' );
+        $stmt->bindParam(':idPosts',$data['idPosts']);
+        $stmt->execute();
+
+        return $stmt->fetchAll( PDO::FETCH_ASSOC );
+        $stmt->close();
+        $stmt=null;
+
+    }
+
     static public function GetUser() {
         $stmt = Connection::connect()->prepare( 'select idUsuario,Imagen,Correo,nombreUsuario,Nombre,Estatus, tipousuario.nombreTipo from usuarios INNER join tipousuario on usuarios.tipoUsuario=tipoUsuario.idTipo' );
 
@@ -281,12 +292,24 @@ class userModel{
 
     }
 
-    static public function updatePostUser($data){
-        $stmt=Connection::connect()->prepare('update posts set Titulo = :Titulo, textoPost = :textoPost, idCategoria = :idCategoria where idUsuario = :idUsuario');
+    static public function updatePostUser($data,$ruta){
+        $stmt=Connection::connect()->prepare('update posts set Titulo = :Titulo, textoPost = :textoPost, idCategoria = :idCategoria, imagen = :imagen where idPosts = :idPosts');
         $stmt->bindParam(':Titulo',$data['Titulo']);
         $stmt->bindParam(':textoPost',$data['textoPost']);
         $stmt->bindParam(':idCategoria',$data['idCategoria']);
-        $stmt->bindParam(':idUsuario',$data['idUsuario']);
+        $stmt->bindParam(':imagen',$ruta);
+        $stmt->bindParam(':idPosts',$data['idPosts']);
+        $stmt->execute();
+
+        return 'Post Modificado';
+
+    }
+
+    static public function updatePostPagina($data){
+        $stmt=Connection::connect()->prepare('update postspagina set Contenido = :Contenido where idPost = :idPost');
+        $stmt->bindParam(':Contenido',$data['Contenido']);
+        $stmt->bindParam(':idPost',$data['idPost']);
+
         $stmt->execute();
 
         return 'Post Modificado';

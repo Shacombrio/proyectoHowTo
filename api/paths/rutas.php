@@ -191,6 +191,26 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
                 $objUsuarios->updatePost($datosarrary);
                 }
 
+            } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=modificarPostPagina' ) {
+
+
+                if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+                $json=file_get_contents('php://input');
+                $datosarrary=json_decode($json,true);
+                $objUsuarios = new userController();
+                $objUsuarios->updatePostPagina($datosarrary);
+                }
+
+            } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=verPostEditar' ) {
+
+
+                if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+                $json=file_get_contents('php://input');
+                $datosarrary=json_decode($json,true);
+                $objUsuarios = new userController();
+                $objUsuarios->verPostEditar($datosarrary);
+                }
+
             } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=GuardarChat' ) {
                 if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
                 $json=file_get_contents('php://input');

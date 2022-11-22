@@ -311,9 +311,43 @@ class userController {
     }
 
     public function updatePost($data){
-        if(isset($data["idUsuario"])){
+        if(isset($data["idPosts"])){
+            $rutaimg=self::base64imgPreview($data['imagen']);
+            //$arrchimg=array('id_Post'=>$data['idPosts'],'urlimg'=>$rutaimg);
+            //userModel::ModificarImgPost($arrchimg);
+            $datos=userModel::updatePostUser($data,$rutaimg);
+            $json=array('message'=>'Operacion correcta','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
 
-            $datos=userModel::updatePostUser($data);
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'compañero te falta un dato';
+        }
+
+    }
+
+    public function updatePostPagina($data){
+        if(isset($data["idPost"])){
+
+            $datos=userModel::updatePostPagina($data);
+            $json=array('message'=>'Operacion correcta','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'compañero te falta un dato';
+        }
+
+    }
+
+    public function verPostEditar($data){
+        if(isset($data["idPosts"])){
+
+            $datos=userModel::verPostEditar($data);
             $json=array('message'=>'Operacion correcta','status'=>200,'data'=>$datos);
             echo json_encode($json);
             return;
