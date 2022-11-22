@@ -3,7 +3,6 @@ import { Injectable } from "@angular/core";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { Observable, Subject, tap } from 'rxjs';
 import { LoginModel } from "src/app/models/login.model";
-import { posts } from "../models/posts.model";
 import { Tcategoria } from "../models/Tcategoria.model";
 import { Tchat } from "../models/Tchat.model";
 import { Tcomentarios } from "../models/Tcomentarios.model";
@@ -290,6 +289,16 @@ export class UsrService {
         })
       );
     }
+
+    islogin(){
+      return localStorage.getItem('token') != null;
+    }
+
+    isadmin(){
+      return localStorage.getItem('data')!=null;
+    }
+
+
 
   }
 

@@ -13,19 +13,20 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { VerPostComponent } from './ver-post/ver-post.component';
 import { GestionUsuariosComponent } from './gestion-usuarios/gestion-usuarios.component';
-import { EditarPostComponent } from './editar-post/editar-post.component';
+import { GuardianLoginGuard } from './guardianes/guardian-login.guard';
+import { GuardianAdminGuard } from './guardianes/guardian-admin.guard';import { EditarPostComponent } from './editar-post/editar-post.component';
 
 const routes: Routes = [
   {path:"registro",component:RegistroComponent},
-  {path:"editarperfil",component:EditarperfilComponent},
+  {path:"editarperfil",component:EditarperfilComponent,canActivate:[GuardianLoginGuard]},
   {path:"login",component:LoginComponent},
-  {path:"preChat",component:PreChatComponent},
-  {path:'chat',component:ChatComponent},
+  {path:"preChat",component:PreChatComponent,canActivate:[GuardianLoginGuard]},
+  {path:'chat/:id',component:ChatComponent,canActivate:[GuardianLoginGuard]},
   {path:'posts', component: PostsComponent},
-  {path:'crearPost',component:CrearPostComponent},
+  {path:'crearPost',component:CrearPostComponent,canActivate:[GuardianLoginGuard]},
   {path:'posts',component:PostsComponent},
   {path:'verPost',component:VerPostComponent},
-  {path:'gestionusers',component:GestionUsuariosComponent},
+  {path:'gestionusers',component:GestionUsuariosComponent,canActivate:[GuardianAdminGuard]},
   {path:'editarPost',component:EditarPostComponent}
 ];
 

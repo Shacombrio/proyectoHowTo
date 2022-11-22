@@ -382,7 +382,7 @@ class userModel{
       try {
         if ( isset( $datos[ 'Correo' ] ) && isset( $datos[ 'Password' ] ) ) {
             $pass = hash( 'sha512', $datos[ 'Password' ] );
-            $stmt = Connection::connect()->prepare( 'select * from usuarios where Correo=:Correo and Contraseña=:Password ' );
+            $stmt = Connection::connect()->prepare( 'select * from usuarios where Correo=:Correo and Contraseña=:Password and Estatus=1 ' );
             $stmt->bindParam( ':Correo', $datos[ 'Correo' ] );
             $stmt->bindParam( ':Password', $pass );
             $stmt->execute();
