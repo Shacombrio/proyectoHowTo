@@ -8,16 +8,17 @@ import { PreChatComponent } from './pre-chat/pre-chat.component';
 import { PostsComponent } from './posts/posts.component';
 import { CrearPostComponent } from './crear-post/crear-post.component';
 import { GestionUsuariosComponent } from './gestion-usuarios/gestion-usuarios.component';
-
+import { GuardianLoginGuard } from './guardianes/guardian-login.guard';
+import { GuardianAdminGuard } from './guardianes/guardian-admin.guard';
 const routes: Routes = [
   {path:"home",component:RegistroComponent},
-  {path:"editarperfil",component:EditarperfilComponent},
+  {path:"editarperfil",component:EditarperfilComponent,canActivate:[GuardianLoginGuard]},
   {path:"login",component:LoginComponent},
-  {path:"preChat",component:PreChatComponent},
-  {path:'chat/:id',component:ChatComponent},
+  {path:"preChat",component:PreChatComponent,canActivate:[GuardianLoginGuard]},
+  {path:'chat/:id',component:ChatComponent,canActivate:[GuardianLoginGuard]},
   {path:'posts', component: PostsComponent},
-  {path:'crearPost',component:CrearPostComponent},
-  {path:'gestionusers',component:GestionUsuariosComponent},
+  {path:'crearPost',component:CrearPostComponent,canActivate:[GuardianLoginGuard]},
+  {path:'gestionusers',component:GestionUsuariosComponent,canActivate:[GuardianAdminGuard]},
 ];
 
 
