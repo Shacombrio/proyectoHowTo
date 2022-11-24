@@ -312,10 +312,13 @@ class userController {
 
     public function updatePost($data){
         if(isset($data["idPosts"])){
-            $rutaimg=self::base64imgPreview($data['imagen']);
-            //$arrchimg=array('id_Post'=>$data['idPosts'],'urlimg'=>$rutaimg);
-            //userModel::ModificarImgPost($arrchimg);
-            $datos=userModel::updatePostUser($data,$rutaimg);
+            if(isset($data['imagen'])){
+                $rutaimg=self::base64imgPreview($data['imagen']);
+                $arrchimg=array('id_post'=>$data['idPosts'],'urlimg'=>$rutaimg);
+                userModel::ModificarImgPost($arrchimg);
+            }
+           
+            $datos=userModel::updatePostUser($data);
             $json=array('message'=>'Operacion correcta','status'=>200,'data'=>$datos);
             echo json_encode($json);
             return;

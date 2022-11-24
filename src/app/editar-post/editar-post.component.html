@@ -6,11 +6,11 @@
     <div class="modal-body" style="width: 50%; border: 10px solid #509b48; padding: 10px; border-radius: 10px;">
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Titulo</label>
-            <input type="text" value="{{titulo}}" class="form-control" id="exampleFormControlInput1" formControlName="tituloPost" >
+            <input #title type="text" value="{{titulo}}" class="form-control" id="exampleFormControlInput1" formControlName="tituloPost" >
           </div>
         <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Contenido</label>
-            <textarea class="form-control" value="{{contenido}}" id="exampleFormControlTextarea1" rows="3" formControlName="textoPost"></textarea>
+            <textarea #conte class="form-control" value="{{contenido}}" id="exampleFormControlTextarea1" rows="3" formControlName="textoPost"></textarea>
            <!-- <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="textoPost" >-->
         </div>
         <div class="mb-3">
@@ -31,7 +31,7 @@
       
           <div class="mb-3">
             <label for="formFileMultiple" class="form-label">Multiple files input example</label>
-            <input #file class="form-control" type="file" value="{{imagen}}" id="formFileMultiple2" accept="image/*"  multiple formControlName="filePost" (change)="preview(file.files)">
+            <input #file class="form-control" type="file" src={{imagen}} value="{{imagen}}" id="formFileMultiple2" accept="image/*"  multiple formControlName="filePost" (change)="preview(file.files)">
             <img src={{imagen}} width="100" height="100" style="margin-top: 2%;">
           </div>
 
@@ -51,7 +51,7 @@
   </div>
   <div  class="container-lg" style="margin-top: 2%;">
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-    <button type="submit" class="btn btn-primary" (click)="publicar(titulo,contenido,imagen)">Publicar</button> 
+    <button type="submit" class="btn btn-primary" (click)="publicar(title.value,conte.value)">Publicar</button> 
   </div>
 
   <!--  <app-posts *ngFor="let posts of sortedArticles()" [posts]="posts">

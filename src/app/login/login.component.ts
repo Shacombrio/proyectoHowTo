@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { LoginModel } from '../models/login.model';
 import { UsrService } from '../services/User.service';
 import { Router } from '@angular/router';
+import { NavbarComponent } from '../navbar/navbar.component';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   FrmLogin!:FormGroup;
-  
+  nav!:NavbarComponent;
   constructor(private fb:FormBuilder,private usuarioService:UsrService,private router:Router) {
 
    }
@@ -58,8 +59,10 @@ export class LoginComponent implements OnInit {
             },
             
           })
-
+          //window.location.reload();
+          
           this.router.navigate(['/posts']); 
+          
         },
         (error) =>
           Swal.fire({

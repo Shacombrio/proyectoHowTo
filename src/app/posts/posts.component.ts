@@ -129,7 +129,6 @@ obtenerposts(){
 
   this.post = x.data;
   //console.log(this.post);
-
   }
   )
   }else{

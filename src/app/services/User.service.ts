@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { EventEmitter, Injectable, Output } from "@angular/core";
 import { JwtHelperService } from "@auth0/angular-jwt";
-import { Observable, Subject, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
 import { LoginModel } from "src/app/models/login.model";
 import { Tcategoria } from "../models/Tcategoria.model";
 import { Tchat } from "../models/Tchat.model";
@@ -16,6 +16,7 @@ import { TregistroUsuario } from "../models/TregistroUsuario.model";
 
 /* Modelos */
 import { TUsuario } from "../models/TUsuario.model";
+import { Usuario } from "../models/usuario.model";
 
 @Injectable( {
 
@@ -24,6 +25,18 @@ import { TUsuario } from "../models/TUsuario.model";
 })
 
 export class UsrService {
+  @Output() admin : EventEmitter<any> = new EventEmitter<any>();
+
+  getUserLoggedInStatus(): Observable<any> {
+    //console.log('returning' + this.loggedInUser);
+      return this.admin.asObservable();
+    }
+
+    
+  profile: Subject<any> = new BehaviorSubject<any>({});
+  emit(value: any) {
+    this.profile.next(value);
+  }   
 
     urlApi: string = 'http://localhost/api/';
     private _refresh$ = new Subject <void> ();
@@ -42,6 +55,7 @@ export class UsrService {
       ).pipe(
         tap(() => {
           this.refresh.next();
+          
         })
       );
     }
@@ -49,6 +63,11 @@ export class UsrService {
       localStorage.setItem('token', data);
       const helper = new JwtHelperService();
       localStorage.setItem('data', JSON.stringify(helper.decodeToken(data)));
+      const x = JSON.parse(JSON.stringify(helper.decodeToken(data)));
+      
+      //localStorage.setItem('tipoUsuario',v.TipoUsuario);
+      localStorage.setItem('tipoUser', x.data.tipoUsuario);
+      this.admin.emit(true);
     }
 
     obtenerPosts():Observable<Tposts>{

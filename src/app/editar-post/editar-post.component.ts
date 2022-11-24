@@ -6,6 +6,7 @@ import { UsrService } from '../services/User.service';
 import Swal from 'sweetalert2';
 import { posts } from '../models/posts.model';
 import { post } from '../models/post.model';
+import { Tposts } from '../models/Tposts.model';
 @Component({
   selector: 'app-editar-post',
   templateUrl: './editar-post.component.html',
@@ -16,6 +17,7 @@ export class EditarPostComponent implements OnInit {
   post2!: post[];
   conte = "Hola" ;
   conte2 = ".";
+  editarPost!:Tposts;
   public rutafoto:any;
   imgurl:any;
   reader = new FileReader();
@@ -37,9 +39,9 @@ export class EditarPostComponent implements OnInit {
   ngOnInit(): void {
     this.obtenerLocalStorage();
     this.obtenerPostEditar();
-    
     this.obtenerCategoria();
     this.verpost();
+    //this.createform();
   }
 
   preview(files: any){
@@ -73,30 +75,33 @@ export class EditarPostComponent implements OnInit {
     ],
   };
 
-  createform(){
-    console.log(this.titulo);
-    console.log(this.contenido);
-    this.frmPost=this.fb.group({
-      tituloPost:["",Validators.required],
-      textoPost:["",Validators.required],
-      filePost:["",Validators.required],
-      //categoriaPost:['',Validators.required],
+  // createform(){
+  //   console.log(this.post[0].Titulo);
+  //   console.log(this.post[0].textoPost);
+  //   console.log(this.imagen);
+  //   this.frmPost=this.fb.group({
+  //     tituloPost:[this.imagen,Validators.required],
+  //     textoPost:[this.imagen,Validators.required],
+  //     filePost:["",Validators.required],
+  //     //categoriaPost:['',Validators.required],
 
-    });
+  //   });
 
-  }
+  // }
 
-  publicar(t:any,c:any,i:any){
-    console.log(i);
+  publicar(t:any,c:any){
+    //console.log(i);
+    
     this.frmPost=this.fb.group({
       tituloPost:[t,Validators.required],
       textoPost:[c,Validators.required],
-      filePost:[i,Validators.required],
-      //categoriaPost:['',Validators.required],
+      filePost:["",Validators.required],
+      categoriaPost:['',Validators.required],
 
     });
    // if(this.frmPost.valid)
    this.submit();
+   
    //else{alert("ta mal");}
    
   }
@@ -156,11 +161,7 @@ export class EditarPostComponent implements OnInit {
     }).subscribe((x)=>{
       this.post=x.data;
       console.log(this.post);
-      this.titulo = this.post[0].Titulo;
-      this.contenido = this.post[0].textoPost;
-      this.idcat = this.post[0].idCategoria;
-      this.imagen = this.post[0].imagen;
-      
+    
     })
   }
 
@@ -178,15 +179,21 @@ export class EditarPostComponent implements OnInit {
       }
     ).subscribe((x)=>
     {
+      
       this.post2=x.data
       console.log(this.post);
       console.log(this.post);
       this.conte = this.post2[0].Contenido;
-      //console.log(this.post[0].Contenido);
       this.conte2 = this.conte;
       this.conversion();
-      console.log(this.conte2);
       this.htmlContent = this.conte2;
+      this.imagen = this.post[0].imagen;
+      this.titulo = this.post[0].Titulo;
+      this.contenido = this.post[0].textoPost;
+      console.log(this.imagen);
+      console.log(this.contenido);
+      console.log(this.titulo);
+      this.idcat = this.post[0].idCategoria;
       //document.getElementById("principal")!.innerHTML=this.conte;
     }
     )

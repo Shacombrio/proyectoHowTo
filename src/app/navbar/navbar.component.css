@@ -25,3 +25,8 @@
     transition: 0.25s;
     cursor: pointer;
 }
+
+.iconAdmin svg{
+    width: 35px;
+    height: 35px;
+}

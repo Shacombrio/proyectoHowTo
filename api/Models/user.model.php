@@ -47,7 +47,7 @@ class userModel{
   static public function ModificarImgPost( $datos ) {
 
     $stmt = Connection::connect()->prepare( 'update posts set imagen=:img where idPosts=:idPosts' );
-    $stmt->bindParam( ':idPosts', $datos[ 'id_Post' ] );
+    $stmt->bindParam( ':idPosts', $datos[ 'id_post' ] );
     $stmt->bindParam( ':img', $datos[ 'urlimg' ] );
     $stmt->execute();
 
@@ -292,12 +292,11 @@ class userModel{
 
     }
 
-    static public function updatePostUser($data,$ruta){
-        $stmt=Connection::connect()->prepare('update posts set Titulo = :Titulo, textoPost = :textoPost, idCategoria = :idCategoria, imagen = :imagen where idPosts = :idPosts');
+    static public function updatePostUser($data){
+        $stmt=Connection::connect()->prepare('update posts set Titulo = :Titulo, textoPost = :textoPost, idCategoria = :idCategoria where idPosts = :idPosts');
         $stmt->bindParam(':Titulo',$data['Titulo']);
         $stmt->bindParam(':textoPost',$data['textoPost']);
         $stmt->bindParam(':idCategoria',$data['idCategoria']);
-        $stmt->bindParam(':imagen',$ruta);
         $stmt->bindParam(':idPosts',$data['idPosts']);
         $stmt->execute();
 
