@@ -282,13 +282,34 @@ class userModel{
     }
 
     static public function conteoLikes($data){
-        $stmt=Connection::connect()->prepare('select count(idPost) from reaccion where idPost = :idPost and Reaccion = 1');
+        $stmt=Connection::connect()->prepare('select count(idPost) as conteo from reaccion where idPost = :idPost and Reaccion = :Reaccion');
         $stmt->bindParam(':idPost',$data['idPost']);
+        $stmt->bindParam(':Reaccion',$data['Reaccion']);
         $stmt->execute();
 
         return $stmt->fetchAll( PDO::FETCH_ASSOC );
         $stmt->close();
         $stmt=null;
+
+    }
+
+    static public function actLikes($data){
+        $stmt=Connection::connect()->prepare('update posts set likes = :likes where idPosts = :idPosts');
+        $stmt->bindParam(':idPosts',$data['idPosts']);
+        $stmt->bindParam(':likes',$data['likes']);
+        $stmt->execute();
+
+        return 'likes añadidos';
+
+    }
+
+    static public function actDislikes($data){
+        $stmt=Connection::connect()->prepare('update posts set dislikes = :likes where idPosts = :idPosts');
+        $stmt->bindParam(':idPosts',$data['idPosts']);
+        $stmt->bindParam(':likes',$data['likes']);
+        $stmt->execute();
+
+        return 'dislikes añadidos';
 
     }
 

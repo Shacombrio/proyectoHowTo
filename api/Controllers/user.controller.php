@@ -169,6 +169,28 @@ class userController {
 
     }
 
+    public function actLikes($data){
+        if(isset($data["idPosts"])){
+            if(($data["Reaccion"])==1){
+                
+                $datos=userModel::actLikes($data);
+                $json=array('message'=>'Operacion correcta','status'=>200,'data'=>$datos);
+                echo json_encode($json);
+                return;
+            }else{
+                
+                $datos=userModel::actDislikes($data);
+                $json=array('message'=>'Operacion correcta','status'=>200,'data'=>$datos);
+                echo json_encode($json);
+                return;
+            }
+        }else{
+            header('HTTP/1.0 500');
+            echo 'compañero te falta un dato';
+        }
+
+    }
+
     public function obtenerChat($data){
         if(isset($data["idOrigen"])){
 

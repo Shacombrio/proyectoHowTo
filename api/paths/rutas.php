@@ -71,6 +71,14 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
             $objUsuarios->conteoLikes($datosarrary);
             }
 
+        } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=actLikes' ) {
+            if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+            $json=file_get_contents('php://input');
+            $datosarrary=json_decode($json,true);
+            $objUsuarios = new userController();
+            $objUsuarios->actLikes($datosarrary);
+            }
+
         } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=EliminarCategoria' ) {
             if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
             $json=file_get_contents('php://input');

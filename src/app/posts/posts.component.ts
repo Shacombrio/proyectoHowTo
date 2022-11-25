@@ -15,6 +15,7 @@ import { categoria } from '../models/cotegoria.model';
 
 
 
+
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
@@ -23,6 +24,7 @@ import { categoria } from '../models/cotegoria.model';
 })
 export class PostsComponent implements OnInit {
   toastTrigger!:any;
+  nl:any;
   toastLiveExample!:any;
   bootstrap!:any;
   pibote:any = 1;
@@ -33,7 +35,7 @@ export class PostsComponent implements OnInit {
   post!: posts[];
   tam:number=75;
   masMenos:string="Leer mas";
-  count!:contLikes;
+  //count!:contLikes;
   reaccion!:reaccion[];
   sumaLikes!: number;
   dato!:number;
@@ -67,9 +69,7 @@ export class PostsComponent implements OnInit {
 
   positive(idpost:any){
     this.idP = idpost;
-    var colorlike = document.getElementById(idpost);
-    //colorlike?.style.backgroundColor = 'rgb(0, 249, 0)';
-    colorlike!.style.backgroundColor='rgb(0, 249, 0)';
+
     this.userService.ingresarReaccion(
     { idUsuario:JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario,
       Reaccion: 1,
@@ -78,6 +78,7 @@ export class PostsComponent implements OnInit {
       
     ).subscribe( (x) =>{
      console.log(JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario,idpost)
+     this.conteoLikes(idpost,1);
     } )
 
     
@@ -106,13 +107,13 @@ export class PostsComponent implements OnInit {
       }
         
       ).subscribe( (x) =>{
- 
+        this.conteoLikes(idpost,2);
       } )
   }
 
   ngOnInit(): void {
  
-    
+ 
     this.obtenerposts();
     this.obtenerCategoria();
     this.sub = this.userService.refresh.subscribe(() => {
@@ -169,6 +170,37 @@ obtenerCategoria(){
   )
 }
 
+conteoLikes(idp:any,R:any){
+  this.userService.conteoLikes(
+    {
+      idPost:idp,
+      Reaccion: R
+    }
+  ).subscribe((x)=>
+  {
+    
+    console.log(x.data);
+    this.nl = x.data;
+    console.log (this.nl[0].conteo);
+   this.nl = this.nl[0].conteo;
+   this.updatelikes(this.nl,idp,R);
+  }
+  )
+}
+updatelikes(num:any,idp:any,R:any){
+  console.log(num);
+  this.userService.actLikes(
+    {
+      idPosts:idp,
+      Reaccion: R,
+      likes:num
+    }
+  ).subscribe((x)=>
+  {
+    console.log("bien");
+  }
+  )
+}
 grabarLocalStorage(idP:any){
   let id:any = idP;
   localStorage.setItem("idPost",id);

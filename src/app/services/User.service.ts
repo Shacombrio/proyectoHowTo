@@ -8,6 +8,7 @@ import { Tchat } from "../models/Tchat.model";
 import { Tcomentarios } from "../models/Tcomentarios.model";
 import { TconteoLikes } from "../models/TconteoLikes.model";
 import { Teditarperfil } from "../models/Teditarperfil.model";
+import { TmodLikes } from "../models/TmodLikes.model";
 import { Tpost } from "../models/Tpost.model";
 import { Tposts } from "../models/Tposts.model";
 import { Treacciones } from "../models/Treacciones.model";
@@ -156,6 +157,18 @@ export class UsrService {
     modificarPostsPagina(data:any):Observable<Tposts>{
       return this.client.post<Tposts>(
         this.urlApi + '?u=modificarPostPagina',
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      ).pipe(
+        tap(() => {
+          this.refresh.next();
+        })
+      );
+    }
+
+      actLikes(data:any):Observable<TmodLikes>{
+      return this.client.post<TmodLikes>(
+        this.urlApi + '?u=actLikes',
         JSON.stringify(data),
         { headers: { 'Content-Type': 'application/json' } }
       ).pipe(
