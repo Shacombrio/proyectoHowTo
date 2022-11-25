@@ -13,11 +13,16 @@ import { Tpost } from "../models/Tpost.model";
 import { Tposts } from "../models/Tposts.model";
 import { Treacciones } from "../models/Treacciones.model";
 import { TregistroUsuario } from "../models/TregistroUsuario.model";
+import { Tfav } from "../models/Tfav.model";
+import { Teliminarfav } from "../models/Teliminarfav.model"
 
 
 /* Modelos */
 import { TUsuario } from "../models/TUsuario.model";
-import { Usuario } from "../models/usuario.model";
+import { Tmostrarfav } from "../models/Tmostrarfav.model";
+import { Tmisposts } from "../models/Tmisposts.model";
+import { TmostrarmisCatposts } from "../models/TmostrarmisCatposts.model";
+
 
 @Injectable( {
 
@@ -79,11 +84,14 @@ export class UsrService {
     }
 
     obtenerPostsCat(data:any):Observable<Tposts>{
-      return this.client.post<Tposts>(
-        this.urlApi + '?u=postCategoria',
-        JSON.stringify(data),
-        { headers: { 'Content-Type': 'application/json' } }
-      )
+
+        return this.client.post<Tposts>(
+          this.urlApi + '?u=postCategoria',
+          JSON.stringify(data),
+          { headers: { 'Content-Type': 'application/json' } }
+        )
+      
+
     }
 
     obtenerPostsUnico(data:any):Observable<Tposts>{
@@ -188,6 +196,68 @@ export class UsrService {
           this.refresh.next();
         })
       );
+    }
+
+    ingresarfav(data:any):Observable<Tfav>{
+      return this.client.post<Tfav>(
+        this.urlApi + '?u=registrarFavorito',
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      ).pipe(
+        tap(() => {
+          this.refresh.next();
+        })
+      );
+    
+    }
+
+    mostrarfav(data:any):Observable<Tmostrarfav>{
+      return this.client.post<Tmostrarfav>(
+        this.urlApi + '?u=MostrarFav',
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+  
+    }
+
+    mostrarCatFav(data:any):Observable<Tmostrarfav>{
+      return this.client.post<Tmostrarfav>(
+        this.urlApi + '?u=MostrarFav',
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+  
+    }
+
+    eliminarfav(data:any):Observable<Teliminarfav>{
+      return this.client.post<Teliminarfav>(
+        this.urlApi + '?u=eliminarFav',
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      ).pipe(
+        tap(() => {
+          this.refresh.next();
+        })
+      );
+    
+    }
+
+    mostrarmisposts(data:any):Observable<Tmisposts>{
+      return this.client.post<Tmisposts>(
+        this.urlApi + '?u=misPost',
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+  
+    }
+
+    mostrarmisCatposts(data:any):Observable<TmostrarmisCatposts>{
+      return this.client.post<TmostrarmisCatposts>(
+        this.urlApi + '?u=MostrarmisCatposts',
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+  
     }
 
     conteoLikes(data:any):Observable<TconteoLikes>{

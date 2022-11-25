@@ -130,6 +130,17 @@ class userModel{
 
     }
 
+    static public function misPost($data){
+        $stmt=Connection::connect()->prepare('Select * from posts where idUsuario = :idUsuario');
+        $stmt->bindParam(':idUsuario',$data['idUsuario']);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt->close();
+        $stmt=null;
+
+    }
+
     static public function eliminarComentario($data){
         $stmt=Connection::connect()->prepare('delete from comentarios where idComentario=:idComentario');
         $stmt->bindParam(':idComentario',$data['idComentario']);
@@ -194,6 +205,7 @@ class userModel{
     }
 
     static public function postCategoria($data) {
+        
         $stmt = Connection::connect()->prepare( 'Select * from posts where idCategoria=:idCategoria ORDER BY idPosts DESC ' );
         $stmt->bindParam(':idCategoria',$data['idCategoria']);
         $stmt->execute();
@@ -371,7 +383,7 @@ class userModel{
     }
 
     static public function addFav($data){
-        $stmt=Connection::connect()->prepare('insert into favoritos values (:idUsuario,:idPosts)');
+        $stmt=Connection::connect()->prepare('insert into favoritos values (null,:idUsuario,:idPosts)');
         $stmt->bindParam(':idUsuario',$data['idUsuario']);
         $stmt->bindParam(':idPosts',$data['idPosts']);
 
@@ -382,16 +394,39 @@ class userModel{
     }
 
     static public function showFavoritos($data){
-        $stmt=Connection::connect()->prepare('SELECT posts.idPosts, posts.Titulo, posts.textoPost, posts.likes, posts.dislikes FROM favoritos INNER JOIN posts INNER JOIN usuarios WHERE posts.idPosts = favoritos.idPost AND favoritos.idUsuario = usuarios.idUsuario AND usuarios.idUsuario = :idUsuario');
+        if( isset($data['idCat']) ){
+            $stmt=Connection::connect()->prepare('SELECT posts.* FROM posts INNER JOIN favoritos on posts.idPosts = favoritos.idPosts AND favoritos.idUsuario = :idUsuario AND posts.idCategoria = :idCat');
+            $stmt -> bindParam(':idCat', $data['idCat']);
+        }
+        else {
+            $stmt=Connection::connect()->prepare('SELECT posts.* FROM posts INNER JOIN favoritos on posts.idPosts = favoritos.idPosts AND favoritos.idUsuario = :idUsuario');
+        }
         $stmt->bindParam(':idUsuario',$data['idUsuario']);
         $stmt->execute();
-        return $stmt->fetch( PDO::FETCH_ASSOC );
-        $stmt->close();
-        $stmt=null;
+
+        return $stmt->fetchAll( PDO::FETCH_ASSOC );
+       
     }
 
+    static public function showmisCatposts($data){
+        if( isset($data['idCat']) ){
+            $stmt=Connection::connect()->prepare('SELECT  posts.* FROM posts where idUsuario = :idUsuario and idCategoria = :idCat');
+            $stmt -> bindParam(':idCat', $data['idCat']);
+        }
+        else {
+            $stmt=Connection::connect()->prepare('SELECT posts.* FROM posts INNER JOIN favoritos on posts.idPosts = favoritos.idPosts AND favoritos.idUsuario = :idUsuario');
+        }
+        $stmt->bindParam(':idUsuario',$data['idUsuario']);
+        $stmt->execute();
+
+        return $stmt->fetchAll( PDO::FETCH_ASSOC );
+       
+    }
+
+    
+
     static public function deleteFavorito($data){
-        $stmt=Connection::connect()->prepare('delete from favoritos where idUsuario= :idUsuario and idPost = :idPosts');
+        $stmt=Connection::connect()->prepare('delete from favoritos where idUsuario= :idUsuario and idPosts = :idPosts');
         $stmt->bindParam(':idUsuario',$data['idUsuario']);
         $stmt->bindParam(':idPosts',$data['idPosts']);
         $stmt->execute();

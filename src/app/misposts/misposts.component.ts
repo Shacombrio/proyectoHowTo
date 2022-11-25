@@ -7,35 +7,34 @@ import { reaccion } from '../models/reacciones.model';
 import { contLikes } from '../models/conteoLikes.model';
 import {FormControl} from '@angular/forms';
 import Swal from 'sweetalert2';
-import { Posts } from './posts.model';
 import { VariablesService } from '../services/variables.service';
 import { Router } from '@angular/router';
 import { categoria } from '../models/cotegoria.model';
-
-
-
+import { mostrarfav } from '../models/mostrarfav.model';
+import { CatfavModel } from '../models/catfav.model';
 
 
 @Component({
-  selector: 'app-posts',
-  templateUrl: './posts.component.html',
-  styleUrls: ['./posts.component.css']
-  
+  selector: 'app-misposts',
+  templateUrl: './misposts.component.html',
+  styleUrls: ['./misposts.component.css']
 })
-export class PostsComponent implements OnInit {
+export class MispostsComponent implements OnInit {
+
   toastTrigger!:any;
-  nl:any;
   toastLiveExample!:any;
   bootstrap!:any;
   pibote:any = 1;
   ncat!:string;
-  idcat!:string;
+  idcat!:number;
   categoria!:categoria[];
+  favoritos!:posts[];
+  misposts!:posts[];
   sub!: Subscription;
   post!: posts[];
   tam:number=75;
   masMenos:string="Leer mas";
-  //count!:contLikes;
+  count!:contLikes;
   reaccion!:reaccion[];
   sumaLikes!: number;
   dato!:number;
@@ -67,23 +66,7 @@ export class PostsComponent implements OnInit {
     }
   }
 
-  positive(idpost:any){
-    this.idP = idpost;
 
-    this.userService.ingresarReaccion(
-    { idUsuario:JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario,
-      Reaccion: 1,
-      idPost: idpost
-    }
-      
-    ).subscribe( (x) =>{
-     console.log(JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario,idpost)
-     this.conteoLikes(idpost,1);
-    } )
-
-    
- 
-  }
 
   getColorCard(d: any,id:any) {
     let color: string;
@@ -99,84 +82,61 @@ export class PostsComponent implements OnInit {
     this.servVar.disparador.emit(idpost);
     this.router.navigate(['/verPost']); 
   }
-  negative(idpost:any){
-    this.userService.ingresarReaccion(
-      { idUsuario:JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario,
-        Reaccion: 2,
-        idPost: idpost
-      }
-        
-      ).subscribe( (x) =>{
-        this.conteoLikes(idpost,2);
-      } )
-  }
 
-  obtenerfav(idpost:any){
-    this.userService.ingresarfav(
-      { 
-        idUsuario:JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario,
-        idPosts: idpost
-      }
-    ).subscribe( (x) =>{
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Añadido a favoritos',
-        showConfirmButton: false,
-        timer: 1500
-      })
-    } )
-    
-  }
+
+
 
   ngOnInit(): void {
  
-
- 
-    this.obtenerposts();
+    this.obtenermisposts();
     this.obtenerCategoria();
     this.sub = this.userService.refresh.subscribe(() => {
-      this.obtenerposts();
+      this.obtenermisposts();
       
     })
   }
 
-obtenerposts(){
-  this.idUser = JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario;
-  if (this.pibote==1){
-  this.userService.obtenerPosts().subscribe((x)=>
-  {
 
-  this.post = x.data;
-  //console.log(this.post);
-  }
-  )
-  }else{
-    this.userService.obtenerPostsCat(
-      {
-        idCategoria: this.idcat
-      }
+
+obtenermisposts(){
+  this.idUser = JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario;
+  //this.idUser = 2;
+  console.log(this.idcat);
+  if( this.pibote==1){
+    this.userService.mostrarmisposts({ 
+      idUsuario:JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario,
+      //idUsuario: 2,
+    }).subscribe((x)=>
+    {
+      this.misposts = x.data;
+  
+      //console.log("sdfsdfs",this.favoritos);
+    })
+  }else {
+    this.userService.mostrarmisCatposts(
+      new CatfavModel(
+        this.idUser, 
+        this.idcat
+      )
     ).subscribe((x)=>
     {
+      this.misposts = x.data;
   
-    this.post = x.data;
-    console.log(this.post);
-  
-    }
-    )
+      //console.log("sdfsdfs",this.favoritos);
+    })
   }
 }
 
 selecCat(nombre:any,id:any){
   if(id==0){
     this.pibote = 1;
-    this.obtenerposts();
+    this.obtenermisposts();
     this.ncat = "";
   }else{
   this.ncat=nombre;
   this.idcat=id;
   this.pibote = 2;
-  this.obtenerposts();
+  this.obtenermisposts();
   }
 }
 
@@ -189,37 +149,8 @@ obtenerCategoria(){
   )
 }
 
-conteoLikes(idp:any,R:any){
-  this.userService.conteoLikes(
-    {
-      idPost:idp,
-      Reaccion: R
-    }
-  ).subscribe((x)=>
-  {
-    
-    console.log(x.data);
-    this.nl = x.data;
-    console.log (this.nl[0].conteo);
-   this.nl = this.nl[0].conteo;
-   this.updatelikes(this.nl,idp,R);
-  }
-  )
-}
-updatelikes(num:any,idp:any,R:any){
-  console.log(num);
-  this.userService.actLikes(
-    {
-      idPosts:idp,
-      Reaccion: R,
-      likes:num
-    }
-  ).subscribe((x)=>
-  {
-    console.log("bien");
-  }
-  )
-}
+
+
 grabarLocalStorage(idP:any){
   let id:any = idP;
   localStorage.setItem("idPost",id);
@@ -231,8 +162,5 @@ grabarLocalStorage2(idP:any){
   localStorage.setItem("idPost",id);
   this.router.navigate(['/editarPost']); 
 }
-
-
-
 
 }
