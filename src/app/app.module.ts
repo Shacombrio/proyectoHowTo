@@ -26,6 +26,7 @@ import {MatIcon, MatIconModule} from '@angular/material/icon';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { EditarPostComponent } from './editar-post/editar-post.component';
+import { GestionCategoriasComponent } from './gestion-categorias/gestion-categorias.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { EditarPostComponent } from './editar-post/editar-post.component';
     ConfigComponent,
     GestionUsuariosComponent,
     EditarperfilComponent,
-    EditarPostComponent
+    EditarPostComponent,
+    GestionCategoriasComponent
   
   ],
   imports: [

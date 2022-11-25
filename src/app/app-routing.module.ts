@@ -15,7 +15,7 @@ import { VerPostComponent } from './ver-post/ver-post.component';
 import { GestionUsuariosComponent } from './gestion-usuarios/gestion-usuarios.component';
 import { GuardianLoginGuard } from './guardianes/guardian-login.guard';
 import { GuardianAdminGuard } from './guardianes/guardian-admin.guard';import { EditarPostComponent } from './editar-post/editar-post.component';
-
+import { GestionCategoriasComponent } from './gestion-categorias/gestion-categorias.component';
 const routes: Routes = [
   {path:"registro",component:RegistroComponent},
   {path:"editarperfil",component:EditarperfilComponent,canActivate:[GuardianLoginGuard]},
@@ -27,7 +27,8 @@ const routes: Routes = [
   {path:'posts',component:PostsComponent},
   {path:'verPost',component:VerPostComponent},
   {path:'gestionusers',component:GestionUsuariosComponent,canActivate:[GuardianAdminGuard]},
-  {path:'editarPost',component:EditarPostComponent}
+  {path:'editarPost',component:EditarPostComponent},
+  {path:"gestiosCategorias",component:GestionCategoriasComponent,canActivate:[GuardianAdminGuard]}
 ];
 
 

@@ -105,11 +105,47 @@ export class UsrService {
       );
     }
 
+    ingresarCat(data:any):Observable<Tcategoria>{
+      return this.client.post<Tcategoria>(
+        this.urlApi + '?u=RegistrarCategoria',
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      ).pipe(
+        tap(() => {
+          this.refresh.next();
+        })
+      );
+    }
+
+    EliminarCat(data:any):Observable<Tcategoria>{
+      return this.client.post<Tcategoria>(
+        this.urlApi + '?u=EliminarCategoria',
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      ).pipe(
+        tap(() => {
+          this.refresh.next();
+        })
+      );
+    }
+
     modificarPosts(data:any):Observable<Tposts>{
       return this.client.post<Tposts>(
         this.urlApi + '?u=modificarPost',
         JSON.stringify(data),
         { headers: { 'Content-Type': 'application/json' } }
+      ).pipe(
+        tap(() => {
+          this.refresh.next();
+        })
+      );
+    }
+
+    modificarCategoria(data:any):Observable<Tcategoria>{
+      return this.client.post<Tcategoria>(
+        this.urlApi + '?u=modificarCategoria',
+        JSON.stringify(data),
+      
       ).pipe(
         tap(() => {
           this.refresh.next();

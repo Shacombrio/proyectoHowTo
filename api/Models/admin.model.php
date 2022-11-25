@@ -13,11 +13,11 @@ class adminModel{
     
     }
     
-    static public function addcat($data){
-        $stmt=Connection::connect()->prepare('insert into categorias values (null,:desc,:estatus,:img)');
-        $stmt->bindParam(':desc',$data['desc']);
-        $stmt->bindParam(':estatus',$data['estatus']);
-        $stmt->bindParam(':img',$data['img']);
+    static public function addcat($data,$ruta){
+        $stmt=Connection::connect()->prepare('insert into categorias values (null,:nombreCategoria,:Estatus,:Icono)');
+        $stmt->bindParam(':nombreCategoria',$data['nombreCategoria']);
+        $stmt->bindParam(':Estatus',$data['Estatus']);
+        $stmt->bindParam(':Icono',$ruta);
         $stmt->execute();
 
         return 'categoria registrada';
@@ -25,8 +25,8 @@ class adminModel{
     }
 
     static public function deletecat($data){
-        $stmt=Connection::connect()->prepare('delete from categorias where idCategoria = :idCat');
-        $stmt->bindParam(':idCat',$data['id']);
+        $stmt=Connection::connect()->prepare('delete from categorias where idCategoria = :idCategoria');
+        $stmt->bindParam(':idCategoria',$data['idCategoria']);
         $stmt->execute();
 
         return 'categoria Eliminada';
@@ -34,11 +34,24 @@ class adminModel{
     }
 
     static public function updatecat($data){
-        $stmt=Connection::connect()->prepare('update categorias set nombreCategoria = :desc, Estatus = :estatus, Icono = :img where idCategoria = :idCat');
-        $stmt->bindParam(':idCat',$data['idCategoria']);
+        $stmt=Connection::connect()->prepare('update categorias set nombreCategoria = :desc where idCategoria = :idCat');
+       
         $stmt->bindParam(':desc',$data['nombreCategoria']);
-        $stmt->bindParam(':estatus',$data['Estatus']);
-        $stmt->bindParam(':img',$data['Icono']);
+       // $stmt->bindParam(':estatus',$data['Estatus']);
+        $stmt->bindParam(':idCat',$data['idCategoria']);
+
+        $stmt->execute();
+
+        return 'categoria Modificada';
+
+    }
+
+    static public function modificarEstatusCategoria($data){
+        $stmt=Connection::connect()->prepare('update categorias set Estatus = :Estatus where idCategoria = :idCat');
+       
+        $stmt->bindParam(':Estatus',$data['Estatus']);
+        $stmt->bindParam(':idCat',$data['idCategoria']);
+
         $stmt->execute();
 
         return 'categoria Modificada';
@@ -95,6 +108,16 @@ class adminModel{
         $stmt->close();
         $stmt=null;
     
+    }
+
+    static public function ModificarImgCat( $datos ) {
+
+        $stmt = Connection::connect()->prepare( 'update categorias set Icono=:img where idCategoria=:idCategoria' );
+        $stmt->bindParam( ':idCategoria', $datos[ 'id_cat' ] );
+        $stmt->bindParam( ':img', $datos[ 'urlimg' ] );
+        $stmt->execute();
+  
+        return '  Se modifico correctamente  la Imagen';
     }
 
 }

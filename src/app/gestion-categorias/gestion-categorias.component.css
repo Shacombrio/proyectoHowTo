@@ -1,0 +1,16 @@
+table {
+    width: 100%;
+  }
+
+.acciones{
+    float: right;
+}
+
+th{
+    width: 20%;
+}
+
+.point{
+    cursor: pointer;
+}
+
