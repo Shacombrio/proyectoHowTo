@@ -284,7 +284,15 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
                     $objUsuarios->verPost($datosarrary);
                 }
 
-            } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=registrarFavorito' ) {
+            } else if (array_filter( $arrayRutas )[ 2 ] == '?u=misPost'){
+                if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+                    $json=file_get_contents('php://input');
+                    $datosarrary=json_decode($json,true);
+                    $objUsuarios = new userController();
+                    $objUsuarios->misPost($datosarrary);
+                }
+
+            }else if ( array_filter( $arrayRutas )[ 2 ] == '?u=registrarFavorito' ) {
 
                 if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
                     $json=file_get_contents('php://input');
@@ -302,7 +310,15 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
                     $objUsuarios->showFav($datosarrary);
                 }
 
-            } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=eliminarFav' ) {
+            } else if( array_filter( $arrayRutas )[ 2 ] == '?u=MostrarmisCatposts'){
+                if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+                    $json=file_get_contents('php://input');
+                    $datosarrary=json_decode($json,true);
+                    $objUsuarios = new userController();
+                    $objUsuarios->showmisCatposts($datosarrary);
+                }
+
+            }else if ( array_filter( $arrayRutas )[ 2 ] == '?u=eliminarFav' ) {
 
                 if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
                     $json=file_get_contents('php://input');

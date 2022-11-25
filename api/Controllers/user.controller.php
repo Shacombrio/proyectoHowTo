@@ -294,6 +294,22 @@ class userController {
 
     }
 
+    public function misPost($data){
+        if(isset($data["idUsuario"])){
+
+            $datos=userModel::misPost($data);
+            $json=array('message'=>'Operacion correcta','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'compañero te falta un dato';
+        }
+
+    }
+
     public function deletePost($data){
         if(isset($data["idUsuario"])){
 
@@ -454,6 +470,23 @@ class userController {
         }
 
     }
+
+    public function showmisCatposts($data){
+        if(isset($data["idUsuario"])){
+
+            $datos=userModel::showmisCatposts($data);
+            $json=array('message'=>'Operacion buena','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'compañero te falta un dato';
+        }
+
+    }
+    
 
     public function deleteFav($data){
         if(isset($data["idUsuario"])){

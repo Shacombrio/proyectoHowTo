@@ -26,6 +26,10 @@ import {MatIcon, MatIconModule} from '@angular/material/icon';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { EditarPostComponent } from './editar-post/editar-post.component';
+import { FavsComponent } from './favs/favs.component';
+import { MispostsComponent } from './misposts/misposts.component';
+import { PrincipalComponent } from './principal/principal.component';
+
 
 
 @NgModule({
@@ -43,7 +47,10 @@ import { EditarPostComponent } from './editar-post/editar-post.component';
     ConfigComponent,
     GestionUsuariosComponent,
     EditarperfilComponent,
-    EditarPostComponent
+    EditarPostComponent,
+    FavsComponent,
+    MispostsComponent,
+    PrincipalComponent
   
   ],
   imports: [
@@ -62,6 +69,7 @@ import { EditarPostComponent } from './editar-post/editar-post.component';
     MatTableModule,
     MatFormFieldModule
   ],
+  
   providers: [],
   bootstrap: [AppComponent]
 })
