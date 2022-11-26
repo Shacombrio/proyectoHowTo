@@ -15,6 +15,12 @@ import { VerPostComponent } from './ver-post/ver-post.component';
 import { GestionUsuariosComponent } from './gestion-usuarios/gestion-usuarios.component';
 import { GuardianLoginGuard } from './guardianes/guardian-login.guard';
 import { GuardianAdminGuard } from './guardianes/guardian-admin.guard';import { EditarPostComponent } from './editar-post/editar-post.component';
+import { PrincipalComponent } from './principal/principal.component';
+import { fav } from './models/fav.model';
+import { FavsComponent } from './favs/favs.component';
+import { MispostsComponent } from './misposts/misposts.component';
+import { GestionCategoriasComponent } from './gestion-categorias/gestion-categorias.component';
+import { GestionPublicacionesComponent } from './gestion-publicaciones/gestion-publicaciones.component';
 
 const routes: Routes = [
   {path:"registro",component:RegistroComponent},
@@ -27,7 +33,12 @@ const routes: Routes = [
   {path:'posts',component:PostsComponent},
   {path:'verPost',component:VerPostComponent},
   {path:'gestionusers',component:GestionUsuariosComponent,canActivate:[GuardianAdminGuard]},
-  {path:'editarPost',component:EditarPostComponent}
+  {path:'editarPost',component:EditarPostComponent},
+  {path:'Home',component:PrincipalComponent},
+  {path:'favs',component:FavsComponent},
+  {path:'misposts',component:MispostsComponent},
+  {path:'gestiosCategorias',component:GestionCategoriasComponent},
+  {path:'gestionPosts',component:GestionPublicacionesComponent}
 ];
 
 

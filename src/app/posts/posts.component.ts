@@ -24,15 +24,18 @@ import { categoria } from '../models/cotegoria.model';
 })
 export class PostsComponent implements OnInit {
   toastTrigger!:any;
+  cond:any;
   nl:any;
   toastLiveExample!:any;
   bootstrap!:any;
   pibote:any = 1;
   ncat!:string;
   idcat!:string;
+  idReaccion:any;
   categoria!:categoria[];
   sub!: Subscription;
   post!: posts[];
+  val!:any[];
   tam:number=75;
   masMenos:string="Leer mas";
   //count!:contLikes;
@@ -40,7 +43,7 @@ export class PostsComponent implements OnInit {
   sumaLikes!: number;
   dato!:number;
   idpost!:number;
-  color!:string;
+  color:string = 'rgb(96, 217, 52)';
   idP:any="";
   idUser!:any;
   public isClicked: boolean = false;
@@ -69,7 +72,7 @@ export class PostsComponent implements OnInit {
 
   positive(idpost:any){
     this.idP = idpost;
-
+    //this.validarReac(idpost);
     this.userService.ingresarReaccion(
     { idUsuario:JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario,
       Reaccion: 1,
@@ -79,19 +82,61 @@ export class PostsComponent implements OnInit {
     ).subscribe( (x) =>{
      console.log(JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario,idpost)
      this.conteoLikes(idpost,1);
+     //this.validarReac();
     } )
 
     
  
   }
+  validarReac(idpost:any,re:any){
+    this.userService.validarReaccion(
+      {
+        idPost:idpost,
+        idUsuario: JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario,
+        Reaccion:re
+      }
+    ).subscribe((x)=>
+    {
+      //x.data[0].idReaccion=1;
+      console.log(x.data);
+      if (x.data[0] == null){
 
-  getColorCard(d: any,id:any) {
-    let color: string;
-    if (d = this.idP){
-      return color = '#008000';
+        console.log("hola");
+        this.cond = idpost;
+        if(re==1){
+          this.positive(idpost);
+        }else{
+          this.negative(idpost);
+        }
+      }else{
+        
+        console.log("adios");
+        if(re==1){
+          this.eliminarReac(idpost,1);
+        }else{
+          this.eliminarReac(idpost,2);
+        }
+        //console.log(x.data[0].idReaccion);
+      }
     }
+    )
+  }
 
-    return 0;
+  eliminarReac(idpost:any,reac:any){
+    this.userService.eliminarReaccion(
+      {
+        idPost: idpost,
+        idUsuario : JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario,
+        Reaccion: reac
+      }
+    ).subscribe((x)=>
+    {
+      this.conteoLikes(idpost,reac);
+    }
+    )
+  }
+  getColorCard(d: any,id:any) {
+
   }
   verid(idpost:any): void{
     console.log(idpost);
@@ -130,20 +175,39 @@ export class PostsComponent implements OnInit {
   }
 
   ngOnInit(): void {
- 
-
- 
+    
     this.obtenerposts();
     this.obtenerCategoria();
+
     this.sub = this.userService.refresh.subscribe(() => {
       this.obtenerposts();
       
     })
+    this.consulReaccion();
   }
+
+consulReaccion(){
+  this.userService.consulReaccion({
+    idUsuario: JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario,
+    Reaccion: 1
+  }).subscribe((x)=>
+  {
+    console.log(x.data);
+    this.val = x.data;
+    console.log(this.val);
+  }
+  )
+  for(let i = 0 ; i < this.post.length ; i++){
+    if (this.post[i] = this.val[i]){
+      console.log("si")
+    }
+}
+}
 
 obtenerposts(){
   this.idUser = JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario;
   if (this.pibote==1){
+    
   this.userService.obtenerPosts().subscribe((x)=>
   {
 

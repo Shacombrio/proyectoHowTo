@@ -169,6 +169,54 @@ class userController {
 
     }
 
+    public function verificarReaccion($data){
+        if(isset($data["idPost"])){
+
+            $datos=userModel::verificarReaccion($data);
+            $json=array('message'=>'Operacion correcta','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'compañero te falta un dato';
+        }
+
+    }
+
+    public function eliminarReaccion($data){
+        if(isset($data["idPost"])){
+
+            $datos=userModel::eliminarReaccion($data);
+            $json=array('message'=>'Operacion correcta','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'compañero te falta un dato';
+        }
+
+    }
+
+    public function consulReaccion($data){
+        if(isset($data["idUsuario"])){
+
+            $datos=userModel::consulReaccion($data);
+            $json=array('message'=>'Operacion correcta','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'compañero te falta un dato';
+        }
+
+    }
+
     public function actLikes($data){
         if(isset($data["idPosts"])){
             if(($data["Reaccion"])==1){
@@ -237,11 +285,39 @@ class userController {
         }
     }
 
+    public function showPostsAdmin(){
+
+        try {
+
+            $datos = userModel::GetPostsAdmin();
+
+            $json = array( 'message'=>'¡Operacion Exitosa!', 'status'=>200, 'data'=> $datos );
+            echo json_encode( $json );
+            return;
+        } catch( Exception $e1 ) {
+            self::Error( $e1 );
+        }
+    }
+
     public function obtenerUsuarios(){
 
         try {
 
             $datos = userModel::GetUser();
+
+            $json = array( 'message'=>'¡Operacion Exitosa!', 'status'=>200, 'data'=> $datos );
+            echo json_encode( $json );
+            return;
+        } catch( Exception $e1 ) {
+            self::Error( $e1 );
+        }
+    }
+
+    public function mostrarCatAdmin(){
+
+        try {
+
+            $datos = userModel::getCatAdmin();
 
             $json = array( 'message'=>'¡Operacion Exitosa!', 'status'=>200, 'data'=> $datos );
             echo json_encode( $json );

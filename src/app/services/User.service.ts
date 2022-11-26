@@ -22,6 +22,7 @@ import { TUsuario } from "../models/TUsuario.model";
 import { Tmostrarfav } from "../models/Tmostrarfav.model";
 import { Tmisposts } from "../models/Tmisposts.model";
 import { TmostrarmisCatposts } from "../models/TmostrarmisCatposts.model";
+import { TeliminarReac } from "../models/TeliminarReaccion.model";
 
 
 @Injectable( {
@@ -79,6 +80,13 @@ export class UsrService {
     obtenerPosts():Observable<Tposts>{
       return this.client.post<Tposts>(
         this.urlApi + '?u=mostrarPosts',
+        ''
+      )
+    }
+
+    obtenerPostsAdmin():Observable<Tposts>{
+      return this.client.post<Tposts>(
+        this.urlApi + '?u=mostrarPostsAdmin',
         ''
       )
     }
@@ -198,6 +206,42 @@ export class UsrService {
       );
     }
 
+    validarReaccion(data:any):Observable<Treacciones>{
+      return this.client.post<Treacciones>(
+        this.urlApi + '?u=verificarReaccion',
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      ).pipe(
+        tap(() => {
+          this.refresh.next();
+        })
+      );
+    }
+
+    consulReaccion(data:any):Observable<Treacciones>{
+      return this.client.post<Treacciones>(
+        this.urlApi + '?u=consulReaccion',
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      ).pipe(
+        tap(() => {
+          this.refresh.next();
+        })
+      );
+    }
+
+    eliminarReaccion(data:any):Observable<TeliminarReac>{
+      return this.client.post<TeliminarReac>(
+        this.urlApi + '?u=eliminarReaccion',
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      ).pipe(
+        tap(() => {
+          this.refresh.next();
+        })
+      );
+    }
+
     ingresarfav(data:any):Observable<Tfav>{
       return this.client.post<Tfav>(
         this.urlApi + '?u=registrarFavorito',
@@ -275,6 +319,13 @@ export class UsrService {
     mostrarCat():Observable<Tcategoria>{
       return this.client.post<Tcategoria>(
         this.urlApi + '?u=mostrarCategria',
+        ''
+      )
+    }
+
+    mostrarCatAdmin():Observable<Tcategoria>{
+      return this.client.post<Tcategoria>(
+        this.urlApi + '?u=mostrarCategriaAdmin',
         ''
       )
     }
@@ -421,6 +472,25 @@ export class UsrService {
     darbajausr(data:any){
       return this.client.post(
         this.urlApi+'?u=eliminarUsuario',JSON.stringify(data)
+      ).pipe(
+        tap(()=>{
+          this.refresh.next();
+        })
+      );
+    }
+
+    daraltaPosts(data:any){
+      return this.client.post(
+        this.urlApi+'?u=darAltaPost',JSON.stringify(data)
+      ).pipe(
+        tap(()=>{
+          this.refresh.next();
+        })
+      );
+    }
+    darbajaPosts(data:any){
+      return this.client.post(
+        this.urlApi+'?u=eliminarPost',JSON.stringify(data)
       ).pipe(
         tap(()=>{
           this.refresh.next();

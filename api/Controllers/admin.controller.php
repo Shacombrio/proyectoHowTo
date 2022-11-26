@@ -126,6 +126,38 @@ class adminController {
 
     }
 
+    public function darAltaPost($data){
+        if(isset($data["idPosts"])){
+
+            $datos=adminModel::darAltaPost($data);
+            $json=array('message'=>'Operacion correcta','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'Error al eliminar media';
+        }
+
+    }
+
+    public function deletePost($data){
+        if(isset($data["idPosts"])){
+
+            $datos=adminModel::bajaPost($data);
+            $json=array('message'=>'Operacion correcta','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'compañero te falta un dato';
+        }
+
+    }
+
     public function insertTipoUsuario($data){
         if(isset($data["nombreTipo"])){
 

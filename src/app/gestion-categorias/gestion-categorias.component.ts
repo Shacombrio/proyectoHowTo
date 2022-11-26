@@ -60,7 +60,7 @@ export class GestionCategoriasComponent implements OnInit {
   }
 
   obtenerCategoria(){
-    this.usrService.mostrarCat().subscribe({
+    this.usrService.mostrarCatAdmin().subscribe({
       error: (error) => {
         alert(error.error);
       },

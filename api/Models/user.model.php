@@ -194,7 +194,18 @@ class userModel{
         }
 
     static public function GetPosts() {
-        $stmt = Connection::connect()->prepare( 'Select * from posts ORDER BY idPosts DESC' );
+        $stmt = Connection::connect()->prepare( 'Select * from posts where Estatus = 1 ORDER BY idPosts DESC' );
+
+        $stmt->execute();
+
+        return $stmt->fetchAll( PDO::FETCH_ASSOC );
+        $stmt->close();
+        $stmt=null;
+
+    }
+
+    static public function GetPostsAdmin() {
+        $stmt = Connection::connect()->prepare( 'Select * from posts' );
 
         $stmt->execute();
 
@@ -239,6 +250,17 @@ class userModel{
     }
 
     static public function getCat() {
+        $stmt = Connection::connect()->prepare( 'Select * from categorias where Estatus = 1' );
+
+        $stmt->execute();
+
+        return $stmt->fetchAll( PDO::FETCH_ASSOC );
+        $stmt->close();
+        $stmt=null;
+
+    }
+
+    static public function getCatAdmin() {
         $stmt = Connection::connect()->prepare( 'Select * from categorias' );
 
         $stmt->execute();
@@ -275,7 +297,21 @@ class userModel{
 
     }
 
+    static public function verificarReaccion($data){
+        $stmt=Connection::connect()->prepare('SELECT * FROM reaccion WHERE idUsuario = :idUsuario AND Reaccion = :Reaccion AND idPost = :idPost');
+        $stmt->bindParam(':idUsuario',$data['idUsuario']);
+        $stmt->bindParam(':Reaccion',$data['Reaccion']);
+        $stmt->bindParam(':idPost',$data['idPost']);
+        $stmt->execute();
+
+        return $stmt->fetchAll( PDO::FETCH_ASSOC );
+        $stmt->close();
+        $stmt=null;
+
+    }
+
     static public function sumaLikes($data){
+        try{
         $stmt=Connection::connect()->prepare('insert into reaccion values (:idUsuario,:Reaccion,:idPost,null)');
         $stmt->bindParam(':idUsuario',$data['idUsuario']);
         $stmt->bindParam(':Reaccion',$data['Reaccion']);
@@ -290,12 +326,26 @@ class userModel{
         }
 
         return 'Reaccion capturada';
-
+        }catch(Exception $e1 ){
+            print($e1);
+        }
     }
 
     static public function conteoLikes($data){
         $stmt=Connection::connect()->prepare('select count(idPost) as conteo from reaccion where idPost = :idPost and Reaccion = :Reaccion');
         $stmt->bindParam(':idPost',$data['idPost']);
+        $stmt->bindParam(':Reaccion',$data['Reaccion']);
+        $stmt->execute();
+
+        return $stmt->fetchAll( PDO::FETCH_ASSOC );
+        $stmt->close();
+        $stmt=null;
+
+    }
+
+    static public function consulReaccion($data){
+        $stmt=Connection::connect()->prepare('select idPost from reaccion where idUsuario=:idUsuario and Reaccion = :Reaccion');
+        $stmt->bindParam(':idUsuario',$data['idUsuario']);
         $stmt->bindParam(':Reaccion',$data['Reaccion']);
         $stmt->execute();
 
@@ -312,6 +362,17 @@ class userModel{
         $stmt->execute();
 
         return 'likes añadidos';
+
+    }
+
+    static public function eliminarReaccion($data){
+        $stmt=Connection::connect()->prepare('delete from reaccion where idPost= :idPost and idUsuario = :idUsuario and Reaccion = :Reaccion');
+        $stmt->bindParam(':idPost',$data['idPost']);
+        $stmt->bindParam(':idUsuario',$data['idUsuario']);
+        $stmt->bindParam(':Reaccion',$data['Reaccion']);
+        $stmt->execute();
+
+        return 'Reaccion eliminada';
 
     }
 

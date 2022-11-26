@@ -31,6 +31,13 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
                     $objUsuarios->mostrarCat();
                 }
 
+            }else if ( array_filter( $arrayRutas )[ 2 ] == '?u=mostrarCategriaAdmin' ) {
+
+                if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+                    $objUsuarios = new userController();
+                    $objUsuarios->mostrarCatAdmin();
+                }
+
         } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=RegistrarCategoria' ) {
             if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
             $json=file_get_contents('php://input');
@@ -61,6 +68,30 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
             $datosarrary=json_decode($json,true);
             $objUsuarios = new userController();
             $objUsuarios->sumaLikes($datosarrary);
+            }
+
+        } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=verificarReaccion' ) {
+            if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+            $json=file_get_contents('php://input');
+            $datosarrary=json_decode($json,true);
+            $objUsuarios = new userController();
+            $objUsuarios->verificarReaccion($datosarrary);
+            }
+
+        } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=eliminarReaccion' ) {
+            if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+            $json=file_get_contents('php://input');
+            $datosarrary=json_decode($json,true);
+            $objUsuarios = new userController();
+            $objUsuarios->eliminarReaccion($datosarrary);
+            }
+        
+        } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=consulReaccion' ) {
+            if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+            $json=file_get_contents('php://input');
+            $datosarrary=json_decode($json,true);
+            $objUsuarios = new userController();
+            $objUsuarios->consulReaccion($datosarrary);
             }
 
         } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=conteoLikes' ) {
@@ -159,6 +190,13 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
                     $objUsuarios->showPosts();
                 }
 
+            } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=mostrarPostsAdmin' ) {
+
+                if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+                    $objUsuarios = new userController();
+                    $objUsuarios->showPostsAdmin();
+                }
+
             } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=ingresarPost' ) {
 
 
@@ -175,8 +213,18 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
                 if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
                 $json=file_get_contents('php://input');
                 $datosarrary=json_decode($json,true);
-                $objUsuarios = new userController();
+                $objUsuarios = new adminController();
                 $objUsuarios->deletePost($datosarrary);
+                }
+
+            } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=darAltaPost' ) {
+
+
+                if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+                $json=file_get_contents('php://input');
+                $datosarrary=json_decode($json,true);
+                $objUsuarios = new adminController();
+                $objUsuarios->darAltaPost($datosarrary);
                 }
 
             } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=eliminarPostAdmin' ) {
