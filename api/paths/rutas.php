@@ -381,25 +381,25 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
                     $datosarrary=json_decode($json,true);
                     $objUsuarios = new userController();
                     $objUsuarios->deleteFav($datosarrary);
-              }
+                    }
 
-        }else if ( array_filter( $arrayRutas )[ 2 ] == '?u=Login' ) {
+            }else if ( array_filter( $arrayRutas )[ 2 ] == '?u=Login' ) {
 
-          if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+               if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
               $json=file_get_contents('php://input');
               $datosarrary=json_decode($json,true);
               $objUsuarios = new userController();
               $objUsuarios->login($datosarrary);
-        }
+            }
 
-    }else if ( array_filter( $arrayRutas )[ 2 ] == '?u=comentarPost' ) {
+            }else if ( array_filter( $arrayRutas )[ 2 ] == '?u=comentarPost' ) {
 
         if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
             $json=file_get_contents('php://input');
             $datosarrary=json_decode($json,true);
             $objUsuarios = new userController();
             $objUsuarios->comentarPost($datosarrary);
-      }
+          }
 
     }else if ( array_filter( $arrayRutas )[ 2 ] == '?u=verComentarios' ) {
 
@@ -426,8 +426,34 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
             $datosarrary=json_decode($json,true);
             $objUsuarios = new userController();
             $objUsuarios->postCategoria($datosarrary);
-      }
-        }else {
+       }
+        }else if ( array_filter( $arrayRutas )[ 2 ] == '?u=EnviarCorreoBan' ) {
+
+          if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+              $json=file_get_contents('php://input');
+              $datosarrary=json_decode($json,true);
+              $objMail = new CorreoController();
+              $objMail->sendcorreoban($datosarrary);
+         }
+          }else if ( array_filter( $arrayRutas )[ 2 ] == '?u=EnviarCorreodesBan' ) {
+
+            if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+                $json=file_get_contents('php://input');
+                $datosarrary=json_decode($json,true);
+                $objMail = new CorreoController();
+                $objMail->sendcorreodesban($datosarrary);
+           }
+
+
+          }else if ( array_filter( $arrayRutas )[ 2 ] == '?u=Login' ) {
+
+            if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+           $json=file_get_contents('php://input');
+           $datosarrary=json_decode($json,true);
+           $objUsuarios = new userController();
+           $objUsuarios->login($datosarrary);
+            }
+          }else {
             echo 'No existe la ruta especifica!';
         }
     }
