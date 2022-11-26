@@ -38,11 +38,11 @@ export class UsrService {
       return this.admin.asObservable();
     }
 
-    
+
   profile: Subject<any> = new BehaviorSubject<any>({});
   emit(value: any) {
     this.profile.next(value);
-  }   
+  }
 
     urlApi: string = 'http://localhost/api/';
     private _refresh$ = new Subject <void> ();
@@ -61,7 +61,7 @@ export class UsrService {
       ).pipe(
         tap(() => {
           this.refresh.next();
-          
+
         })
       );
     }
@@ -70,7 +70,7 @@ export class UsrService {
       const helper = new JwtHelperService();
       localStorage.setItem('data', JSON.stringify(helper.decodeToken(data)));
       const x = JSON.parse(JSON.stringify(helper.decodeToken(data)));
-      
+
       //localStorage.setItem('tipoUsuario',v.TipoUsuario);
       localStorage.setItem('tipoUser', x.data.tipoUsuario);
       this.admin.emit(true);
@@ -154,7 +154,7 @@ export class UsrService {
       return this.client.post<Tcategoria>(
         this.urlApi + '?u=modificarCategoria',
         JSON.stringify(data),
-      
+
       ).pipe(
         tap(() => {
           this.refresh.next();
@@ -436,6 +436,13 @@ export class UsrService {
       return localStorage.getItem('data')!=null;
     }
 
+    sendcorreoban(data:any){
+      return this.client.post(this.urlApi+'?u=EnviarCorreoBan',JSON.stringify(data));
+    }
+
+    sendcorreodesban(data:any){
+      return this.client.post(this.urlApi+'?u=EnviarCorreodesBan',JSON.stringify(data));
+    }
 
 
   }

@@ -59,9 +59,9 @@ ChStatus(data:any){
 
   if(this.userdata.data.idUsuario!=data.idUsuario){
     if(data.Estatus=='2'){
-      this.altastatus(data.idUsuario);
+      this.altastatus(data.idUsuario,data.Correo);
     }else{
-      this.bajastatus(data.idUsuario);
+      this.bajastatus(data.idUsuario,data.Correo);
     }
   }else{
     Swal.fire("ERROR","No puedes darte de alta / baja a ti mismo.","error");
@@ -71,7 +71,7 @@ ChStatus(data:any){
 }
 
 
-altastatus(data:number){
+altastatus(data:number,correo:string){
   Swal.fire({
     title: 'Alerta',
     html: '¿Está seguro de realizar la operación?',
@@ -91,6 +91,12 @@ altastatus(data:number){
         (x) => {
           Swal.fire('Enhorabuena', 'Estatus de usuario cambiado correctamente', 'success');
           this.obtenerusers();
+          this.usrService.sendcorreodesban({
+            correo:correo,
+          }).subscribe((x)=>{
+
+
+        })
         },
         (error) => console.log(error)
       );
@@ -99,12 +105,12 @@ altastatus(data:number){
 
 }
 
-bajastatus(data:number){
+bajastatus(data:number,correo:string){
 
   Swal.fire({
     title: 'Alerta',
-    html: '¿Está seguro de realizar la operación?',
-
+    html: '¿Está seguro de realizar la operación? (por favor ingrese un motivo de baneo)',
+    input:'text',
     showDenyButton: true,
     icon: 'info',
     customClass: {
@@ -120,6 +126,16 @@ bajastatus(data:number){
         (x) => {
           Swal.fire('Enhorabuena', 'Estatus de usuario cambiado correctamente', 'success');
           this.obtenerusers();
+          this.usrService.sendcorreoban({
+            correo:correo,
+            motivo:result.value,
+          }).subscribe((x)=>{
+
+
+        })
+
+
+
         },
         (error) => console.log(error)
       );
