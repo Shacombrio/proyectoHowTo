@@ -30,15 +30,15 @@ const routes: Routes = [
   {path:'chat',component:ChatComponent,canActivate:[GuardianLoginGuard]},
   {path:'posts', component: PostsComponent,canActivate:[GuardianLoginGuard]},
   {path:'crearPost',component:CrearPostComponent,canActivate:[GuardianLoginGuard]},
-  {path:'posts',component:PostsComponent},
-  {path:'verPost',component:VerPostComponent},
+  {path:'posts',component:PostsComponent,canActivate:[GuardianLoginGuard]},
+  {path:'verPost',component:VerPostComponent,canActivate:[GuardianLoginGuard]},
   {path:'gestionusers',component:GestionUsuariosComponent,canActivate:[GuardianAdminGuard]},
-  {path:'editarPost',component:EditarPostComponent},
+  {path:'editarPost',component:EditarPostComponent,canActivate:[GuardianLoginGuard]},
   {path:'Home',component:PrincipalComponent},
-  {path:'favs',component:FavsComponent},
-  {path:'misposts',component:MispostsComponent},
-  {path:'gestiosCategorias',component:GestionCategoriasComponent},
-  {path:'gestionPosts',component:GestionPublicacionesComponent}
+  {path:'favs',component:FavsComponent,canActivate:[GuardianLoginGuard]},
+  {path:'misposts',component:MispostsComponent,canActivate:[GuardianLoginGuard]},
+  {path:'gestiosCategorias',component:GestionCategoriasComponent,canActivate:[GuardianLoginGuard]},
+  {path:'gestionPosts',component:GestionPublicacionesComponent,canActivate:[GuardianLoginGuard]}
 ];
 
 
