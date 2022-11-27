@@ -38,6 +38,13 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
                     $objUsuarios->mostrarCatAdmin();
                 }
 
+            }else if ( array_filter( $arrayRutas )[ 2 ] == '?u=obtenerUsuariosAdmin' ) {
+
+                if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+                    $objUsuarios = new adminController();
+                    $objUsuarios->consultaUsers();
+                }
+
         } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=RegistrarCategoria' ) {
             if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
             $json=file_get_contents('php://input');
@@ -205,6 +212,16 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
                 $datosarrary=json_decode($json,true);
                 $objUsuarios = new userController();
                 $objUsuarios->Posting($datosarrary);
+                }
+
+            } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=Buscar' ) {
+
+
+                if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+                $json=file_get_contents('php://input');
+                $datosarrary=json_decode($json,true);
+                $objUsuarios = new userController();
+                $objUsuarios->Buscar($datosarrary);
                 }
 
             } else if ( array_filter( $arrayRutas )[ 2 ] == '?u=eliminarPost' ) {

@@ -44,7 +44,7 @@ export class ChatComponent implements OnInit {
   }
 
   obtenerUsuarios(){
-    this.userService.obtenerUser().subscribe((x)=>
+    this.userService.obtenerUserUser().subscribe((x)=>
     {
       this.usuario=x.data;
       console.log(this.usuario);

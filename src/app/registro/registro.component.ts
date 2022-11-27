@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { UsrService } from '../services/User.service';
 import { registro } from '../models/registroUsuario.model';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
@@ -15,7 +16,7 @@ export class RegistroComponent implements OnInit {
   sub!: Subscription;
   registro!: registro[];
   
-  constructor(private fb:FormBuilder, private userService: UsrService) { 
+  constructor(private fb:FormBuilder, private userService: UsrService,private router:Router) { 
     
   }
 
@@ -74,7 +75,7 @@ export class RegistroComponent implements OnInit {
          container: 'my-swal',
        },
      })
-    
+     this.router.navigate(['/login']); 
     } ) 
   }
 

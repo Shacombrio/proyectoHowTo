@@ -28,7 +28,7 @@ const routes: Routes = [
   {path:"login",component:LoginComponent},
   {path:"preChat",component:PreChatComponent,canActivate:[GuardianLoginGuard]},
   {path:'chat',component:ChatComponent,canActivate:[GuardianLoginGuard]},
-  {path:'posts', component: PostsComponent},
+  {path:'posts', component: PostsComponent,canActivate:[GuardianLoginGuard]},
   {path:'crearPost',component:CrearPostComponent,canActivate:[GuardianLoginGuard]},
   {path:'posts',component:PostsComponent},
   {path:'verPost',component:VerPostComponent},

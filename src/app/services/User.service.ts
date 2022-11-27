@@ -92,15 +92,20 @@ export class UsrService {
     }
 
     obtenerPostsCat(data:any):Observable<Tposts>{
-
         return this.client.post<Tposts>(
           this.urlApi + '?u=postCategoria',
           JSON.stringify(data),
           { headers: { 'Content-Type': 'application/json' } }
         )
-      
-
     }
+
+    Busqueda(data:any):Observable<Tposts>{
+      return this.client.post<Tposts>(
+        this.urlApi + '?u=Buscar',
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      )
+  }
 
     obtenerPostsUnico(data:any):Observable<Tposts>{
       return this.client.post<Tposts>(
@@ -332,10 +337,19 @@ export class UsrService {
 
     obtenerUser():Observable<TUsuario>{
       return this.client.post<TUsuario>(
+        this.urlApi + "?u=obtenerUsuariosAdmin",
+        ''
+      )
+    }
+
+    obtenerUserUser():Observable<TUsuario>{
+      return this.client.post<TUsuario>(
         this.urlApi + "?u=obtenerUsuarios",
         ''
       )
     }
+
+    
 
     obtenerChat(data:any):Observable<Tchat>{
       return this.client.post<Tchat>(

@@ -46,11 +46,11 @@
 <div class="container-lg" style="border: 10px solid #509b48; padding: 10px; border-radius: 10px;">
   <h1>Contenido del post</h1>
   <angular-editor value="seeeeesssss" [(ngModel)]="htmlContent" [config]="config"></angular-editor>
-  <h1>HTML Output</h1>
+
 
   </div>
   <div  class="container-lg" style="margin-top: 2%;">
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+    <button type="button" class="btn btn-secondary" (click)="cancelar()" data-bs-dismiss="modal">Cancelar</button>
     <button type="submit" class="btn btn-primary" (click)="publicar(title.value,conte.value)">Publicar</button> 
   </div>
 

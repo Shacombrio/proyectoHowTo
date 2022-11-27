@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TDataUser } from '../models/TDatauser.model';
+import { Router } from '@angular/router';
 import { UsrService } from '../services/User.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class NavbarComponent implements OnInit {
   admin = false;
   arraydatos!: TDataUser;
 
-  constructor(private usrService: UsrService, private auth: UsrService) {
+  constructor(private usrService: UsrService, private auth: UsrService,private router:Router) {
     
    }
 
@@ -26,7 +27,10 @@ export class NavbarComponent implements OnInit {
         });
   }
 
-  
+  cerrarSesion(){
+    localStorage.clear();
+    this.router.navigate(['/Home']); 
+  }
   
 
   verificaradmin() {

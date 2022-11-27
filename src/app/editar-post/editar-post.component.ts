@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { posts } from '../models/posts.model';
 import { post } from '../models/post.model';
 import { Tposts } from '../models/Tposts.model';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-editar-post',
   templateUrl: './editar-post.component.html',
@@ -32,7 +33,7 @@ export class EditarPostComponent implements OnInit {
   contenido!:any;
   imagen!:any;
   categoria2!:any;
-  constructor(private fb:FormBuilder, private userService: UsrService) { 
+  constructor(private fb:FormBuilder, private userService: UsrService,private router:Router) { 
 
   }
 
@@ -53,6 +54,9 @@ export class EditarPostComponent implements OnInit {
     };
   }
 
+  cancelar(){
+    this.router.navigate(['/posts']); 
+  }
   config: AngularEditorConfig = {
     
     editable: true,

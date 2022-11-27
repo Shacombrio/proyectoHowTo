@@ -4,7 +4,7 @@ use Firebase\JWT\JWT;
 class userModel{
 
     static public function addUser($data){
-        $stmt=Connection::connect()->prepare('insert into usuarios values (null,:Nombre,:Correo,:nombreUsuario,:Contra,:Estatus,:Imagen,:tipoUsuario)');
+        $stmt=Connection::connect()->prepare('insert into usuarios values (null,:Correo,:nombreUsuario,:Contra,:Estatus,:Imagen,:tipoUsuario,:Nombre)');
         $stmt->bindParam(':Nombre',$data['Nombre']);
         $stmt->bindParam(':Correo',$data['Correo']);
         $stmt->bindParam(':nombreUsuario',$data['nombreUsuario']);
@@ -99,7 +99,7 @@ class userModel{
     }
 
     static public function verComentarios($data){
-        $stmt=Connection::connect()->prepare('select * from comentarios inner join usuarios on comentarios.idUsuario = usuarios.idUsuario where idPost = :idPost');
+        $stmt=Connection::connect()->prepare('select * from comentarios inner join usuarios on comentarios.idUsuario = usuarios.idUsuario where idPost = :idPost and usuarios.Estatus = 1');
         $stmt->bindParam(':idPost',$data['idPost']);
         $stmt->execute();
 
@@ -217,8 +217,20 @@ class userModel{
 
     static public function postCategoria($data) {
         
-        $stmt = Connection::connect()->prepare( 'Select * from posts where idCategoria=:idCategoria ORDER BY idPosts DESC ' );
+        $stmt = Connection::connect()->prepare( 'Select * from posts where idCategoria=:idCategoria and Estatus = 1 ORDER BY idPosts DESC ' );
         $stmt->bindParam(':idCategoria',$data['idCategoria']);
+        $stmt->execute();
+
+        return $stmt->fetchAll( PDO::FETCH_ASSOC );
+        $stmt->close();
+        $stmt=null;
+
+    }
+
+    static public function Buscar($data) {
+        
+        $stmt = Connection::connect()->prepare( 'Select * from posts where Titulo LIKE "%":Titulo"%" ORDER BY idPosts DESC' );
+        $stmt->bindParam(':Titulo',$data['Titulo']);
         $stmt->execute();
 
         return $stmt->fetchAll( PDO::FETCH_ASSOC );
@@ -239,7 +251,18 @@ class userModel{
     }
 
     static public function GetUser() {
-        $stmt = Connection::connect()->prepare( 'select idUsuario,Imagen,Correo,nombreUsuario,Nombre,Estatus, tipousuario.nombreTipo from usuarios INNER join tipousuario on usuarios.tipoUsuario=tipoUsuario.idTipo' );
+        $stmt = Connection::connect()->prepare( 'select idUsuario,Imagen,Correo,nombreUsuario,Nombre,Estatus, tipousuario.nombreTipo from usuarios INNER join tipousuario on usuarios.tipoUsuario=tipoUsuario.idTipo where usuarios.Estatus = 1' );
+
+        $stmt->execute();
+
+        return $stmt->fetchAll( PDO::FETCH_ASSOC );
+        $stmt->close();
+        $stmt=null;
+
+    }
+
+    static public function GetUserAdmin() {
+        $stmt = Connection::connect()->prepare( 'select * from usuarios' );
 
         $stmt->execute();
 

@@ -105,11 +105,13 @@ export class PostsComponent implements OnInit {
         this.cond = idpost;
         if(re==1){
           this.positive(idpost);
+          this.eliminarReac(idpost,2);
         }else{
           this.negative(idpost);
+          this.eliminarReac(idpost,1);
         }
       }else{
-        
+        this.cond = 0;
         console.log("adios");
         if(re==1){
           this.eliminarReac(idpost,1);
@@ -135,9 +137,26 @@ export class PostsComponent implements OnInit {
     }
     )
   }
-  getColorCard(d: any,id:any) {
 
+  getColorCard(data:any) {
+    console.log("hola");
+    for(let i = 0 ; i < data.length ; i++){
+      console.log(data[i]);
+      console.log("hola");
   }
+  }
+
+  busqueda(title:any){
+    this.userService.Busqueda({
+      Titulo: title
+    }).subscribe((x)=>
+    {
+      this.post=x.data;
+      //console.log(this.categoria);
+    }
+    )
+  }
+
   verid(idpost:any): void{
     console.log(idpost);
     console.log("hola");
@@ -184,6 +203,7 @@ export class PostsComponent implements OnInit {
       
     })
     this.consulReaccion();
+    this.getColorCard(1);
   }
 
 consulReaccion(){
@@ -195,13 +215,10 @@ consulReaccion(){
     console.log(x.data);
     this.val = x.data;
     console.log(this.val);
+    this.getColorCard(this.val);
   }
   )
-  for(let i = 0 ; i < this.post.length ; i++){
-    if (this.post[i] = this.val[i]){
-      console.log("si")
-    }
-}
+
 }
 
 obtenerposts(){
@@ -248,7 +265,7 @@ obtenerCategoria(){
   this.userService.mostrarCat().subscribe((x)=>
   {
     this.categoria=x.data;
-    console.log(this.categoria);
+    //console.log(this.categoria);
   }
   )
 }

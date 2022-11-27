@@ -14,7 +14,7 @@ constructor(private usrService:UsrService,private router:Router){}
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
     if(!this.usrService.isadmin()){
-      this.router.navigate(["posts"]);
+      this.router.navigate(["Home"]);
       return false;
     }
     return true;

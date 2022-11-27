@@ -10,7 +10,7 @@ import { categoria } from '../models/cotegoria.model';
 import { angularEditorConfig } from '@kolkov/angular-editor/lib/config';
 import { config } from 'rxjs';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-crear-post',
   templateUrl: './crear-post.component.html',
@@ -26,7 +26,7 @@ export class CrearPostComponent implements OnInit {
   categoria!: categoria[];
   ncat!:string;
   idcat!:string;
-  constructor(private fb:FormBuilder, private userService: UsrService) { 
+  constructor(private fb:FormBuilder, private userService: UsrService,private router:Router) { 
 
   }
 
@@ -83,6 +83,10 @@ export class CrearPostComponent implements OnInit {
    this.submit();
    //else{alert("ta mal");}
    
+  }
+
+  cancelar(){
+    this.router.navigate(['/posts']); 
   }
 
   submit(){

@@ -94,6 +94,8 @@ class adminController {
         }
     }
 
+    
+
     public function deletePostAdmin($data){
         if(isset($data["idPosts"])){
 
