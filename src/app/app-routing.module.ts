@@ -23,6 +23,7 @@ import { GestionCategoriasComponent } from './gestion-categorias/gestion-categor
 import { GestionPublicacionesComponent } from './gestion-publicaciones/gestion-publicaciones.component';
 
 const routes: Routes = [
+  {path:"",component:PrincipalComponent},
   {path:"registro",component:RegistroComponent},
   {path:"editarperfil",component:EditarperfilComponent,canActivate:[GuardianLoginGuard]},
   {path:"login",component:LoginComponent},
