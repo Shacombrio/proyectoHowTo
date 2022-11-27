@@ -35,6 +35,7 @@ export class RegistroComponent implements OnInit {
   }
 
   registrar(){
+    if(this.frmRegistro.valid)
     if(this.frmRegistro.controls['contraseñaRegistro'].value == this.frmRegistro.controls['contraseña2Registro'].value){
       this.submit();
     }else{
@@ -51,6 +52,8 @@ export class RegistroComponent implements OnInit {
 
 
   }
+
+
 
  submit(){
   
