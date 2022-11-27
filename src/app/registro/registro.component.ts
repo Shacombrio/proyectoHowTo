@@ -64,8 +64,8 @@ export class RegistroComponent implements OnInit {
         nombreUsuario: this.frmRegistro.controls['usuarioRegistro'].value,
         Contra: this.frmRegistro.controls['contraseñaRegistro'].value,
         Estatus: 1,
-        Imagen: "imagen.png",
-        tipoUsuario: 1
+        Imagen: "",
+        tipoUsuario: 2
       }
 
     ).subscribe( (x) =>{

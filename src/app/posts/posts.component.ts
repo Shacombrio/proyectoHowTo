@@ -31,12 +31,14 @@ export class PostsComponent implements OnInit {
   pibote:any = 1;
   ncat!:string;
   idcat!:string;
+  condi:any;
   idReaccion:any;
   categoria!:categoria[];
   sub!: Subscription;
   post!: posts[];
   val!:any[];
-  tam:number=75;
+  pibote2:any = 1;
+  tam:number=25;
   masMenos:string="Leer mas";
   //count!:contLikes;
   reaccion!:reaccion[];
@@ -60,14 +62,23 @@ export class PostsComponent implements OnInit {
     this.tam = 200;
   }
 
-  leerMas(){
-    if(this.masMenos=="Leer mas"){
-      this.tam = 200;  
-      this.masMenos="Leer menos";
-    }else{
-      this.tam=75;
-      this.masMenos="Leer mas";
-    }
+  leerMas(data:any){
+  if (this.pibote2 == 1){
+  this.condi = data;
+  this.pibote2 = 0;
+  }else{
+  this.condi=0;
+  this.pibote2 = 1;
+  }
+  // if(data = this.condi){
+  //   if(this.masMenos=="Leer mas"){
+  //     this.tam = 200;  
+  //     this.masMenos="Leer menos";
+  //   }else{
+  //     this.tam=25;
+  //     this.masMenos="Leer mas";
+  //   }
+  // }
   }
 
   positive(idpost:any){

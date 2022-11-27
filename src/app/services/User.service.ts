@@ -321,6 +321,18 @@ export class UsrService {
       );
     }
 
+    buscarUser(data:any):Observable<TUsuario>{
+      return this.client.post<TUsuario>(
+        this.urlApi + '?u=buscarUser',
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
+      ).pipe(
+        tap(() => {
+          this.refresh.next();
+        })
+      );
+    }
+
     mostrarCat():Observable<Tcategoria>{
       return this.client.post<Tcategoria>(
         this.urlApi + '?u=mostrarCategria',

@@ -6,12 +6,15 @@ import { chat } from '../models/chat.model';
 import { Subscription } from 'rxjs';
 import { ListKeyManager } from '@angular/cdk/a11y';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { createPopper } from '@popperjs/core';
+
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
+ 
   sub!: Subscription;
   usuario!:Usuario[];
   nameUser!:any;
@@ -19,10 +22,11 @@ export class ChatComponent implements OnInit {
   clase!:string;
   user!:number;
   idDestino!:any;
-  imagenUser!:any;
+  imagenUser:any = '';
   frmMsj!:FormGroup;
+  fecha!:string;
   constructor(private fb:FormBuilder, private userService: UsrService) { }
-
+  
   ngOnInit(): void {
     this.createform();
     this.obtenerUsuarios();
@@ -30,6 +34,17 @@ export class ChatComponent implements OnInit {
     this.sub = this.userService.refresh.subscribe(() => {
       this.obtenerChat(this.idDestino,this.nameUser, this.imagenUser);
     })
+  }
+
+  buscarUser(data:any){
+    this.userService.buscarUser({
+      nombreUsuario: data
+    }).subscribe((x)=>
+    {
+      this.usuario=x.data;
+      console.log(this.usuario);
+    }
+    )
   }
 
   createform(){
@@ -43,6 +58,7 @@ export class ChatComponent implements OnInit {
     alert(dato);
   }
 
+  
   obtenerUsuarios(){
     this.userService.obtenerUserUser().subscribe((x)=>
     {
@@ -53,6 +69,7 @@ export class ChatComponent implements OnInit {
   }
 
   ingresarChat(){
+
     this.userService.ingresarChat(
       {
         idOrigen:JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario,
@@ -65,6 +82,8 @@ export class ChatComponent implements OnInit {
       this.obtenerChat(this.idDestino,this.nameUser, this.imagenUser);
 
     })
+
+    document.getElementById("textArea")!.textContent="";
   }
 
   obtenerChat(idDestino:any,nu:any,img:any){
@@ -82,6 +101,7 @@ export class ChatComponent implements OnInit {
     {
       this.chat=x.data;
       console.log(this.chat);
+      
       this.user= JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario
     }
     )

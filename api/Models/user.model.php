@@ -261,9 +261,20 @@ class userModel{
 
     }
 
+    static public function GetUserBuscar($data) {
+        $stmt = Connection::connect()->prepare( 'select idUsuario,Imagen,Correo,nombreUsuario,Nombre,Estatus, tipousuario.nombreTipo from usuarios INNER join tipousuario on usuarios.tipoUsuario=tipoUsuario.idTipo where usuarios.Estatus = 1 and usuarios.nombreUsuario Like "%":nombreUsuario"%"' );
+        $stmt->bindParam(':nombreUsuario',$data['nombreUsuario']);
+        $stmt->execute();
+
+        return $stmt->fetchAll( PDO::FETCH_ASSOC );
+        $stmt->close();
+        $stmt=null;
+
+    }
+
     static public function GetUserAdmin() {
         $stmt = Connection::connect()->prepare( 'select * from usuarios' );
-
+        
         $stmt->execute();
 
         return $stmt->fetchAll( PDO::FETCH_ASSOC );

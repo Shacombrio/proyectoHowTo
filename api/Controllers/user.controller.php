@@ -376,6 +376,22 @@ class userController {
 
     }
 
+    public function buscarUser($data){
+        if(isset($data["nombreUsuario"])){
+
+            $datos=userModel::GetUserBuscar($data);
+            $json=array('message'=>'Operacion correcta','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'compañero te falta un dato';
+        }
+
+    }
+
     public function Buscar($data){
         if(isset($data["Titulo"])){
 
