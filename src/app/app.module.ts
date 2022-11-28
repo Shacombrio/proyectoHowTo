@@ -31,7 +31,7 @@ import { MispostsComponent } from './misposts/misposts.component';
 import { FavsComponent } from './favs/favs.component';
 import { GestionPublicacionesComponent } from './gestion-publicaciones/gestion-publicaciones.component';
 import { GestionCategoriasComponent } from './gestion-categorias/gestion-categorias.component';
-
+import { PrincipalComponent } from './principal/principal.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +52,8 @@ import { GestionCategoriasComponent } from './gestion-categorias/gestion-categor
     FavsComponent,
     MispostsComponent,
     GestionPublicacionesComponent,
-    GestionCategoriasComponent
+    GestionCategoriasComponent,
+    PrincipalComponent
   
   ],
   imports: [
