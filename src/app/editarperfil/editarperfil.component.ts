@@ -97,7 +97,7 @@ export class EditarperfilComponent implements OnInit {
          container: 'my-swal',
        },
      })
-     window.location.reload();
+     //window.location.reload();
     } )
   }
 

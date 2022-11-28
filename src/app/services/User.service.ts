@@ -368,11 +368,7 @@ export class UsrService {
         this.urlApi + "?u=obtenerChat",
         JSON.stringify(data),
         { headers: { 'Content-Type': 'application/json' } }
-      ).pipe(
-        tap(() => {
-          this.refresh.next();
-        })
-      );;
+      );
     }
 
     ingresarChat(data:any):Observable<Tchat>{
@@ -461,7 +457,6 @@ export class UsrService {
       return this.client.post<Teditarperfil>(
         this.urlApi + '?u=modificarUsuario',
         JSON.stringify(data),
-        { headers: { 'Content-Type': 'application/json' } }
       ).pipe(
         tap(() => {
           this.refresh.next();
