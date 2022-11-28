@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
         (error) =>
           Swal.fire({
             title: 'Alerta',
-            html: 'Error: ' + error.error.data,
+            html: 'Error: ' + 'verifique los datos',
             icon: 'error',
             customClass: {
               container: 'my-swal',
