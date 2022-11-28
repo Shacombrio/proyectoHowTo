@@ -38,8 +38,8 @@ Copiar esto
     background-color: #fff;
     margin-left: auto;
     margin-right: auto;
-    width: 80%;
-    height: 80%;
+    width: 90%;
+    height: 90%;
     border-radius: 8px;
 }
 .seccion-titulo {
@@ -56,7 +56,7 @@ Copiar esto
     margin-right: .5rem;
 }
 .seccion-usuarios {
-    width: 320px;
+    width: auto;
     margin-right: 1.5rem;
     border-right: 1px solid #E7E7E7;
     padding-right: 15px;
