@@ -97,8 +97,16 @@ export class EditarperfilComponent implements OnInit {
          container: 'my-swal',
        },
      })
-     //window.location.reload();
-    } )
+     window.location.reload();
+    }    ,     (error) =>
+    Swal.fire({
+      title: 'Alerta',
+      html: 'Error: ' + 'verifique los datos',
+      icon: 'error',
+      customClass: {
+        container: 'my-swal',
+      },
+    }))
   }
 
 

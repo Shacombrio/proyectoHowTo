@@ -121,7 +121,15 @@ export class CrearPostComponent implements OnInit {
          container: 'my-swal',
        },
      })
-    } )
+    } ,        (error) =>
+    Swal.fire({
+      title: 'Alerta',
+      html: 'Error: ' + 'verifique los datos',
+      icon: 'error',
+      customClass: {
+        container: 'my-swal',
+      },
+    }));
   //sortedArticles(): Posts[] {
     //return this.posts.sort((a:Posts,b:Posts)=>b.likes-a.likes);
   //}
