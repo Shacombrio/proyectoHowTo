@@ -41,7 +41,6 @@ export class EditarPostComponent implements OnInit {
     this.obtenerLocalStorage();
     this.obtenerPostEditar();
     this.obtenerCategoria();
-    this.verpost();
     //this.createform();
   }
 
@@ -165,7 +164,7 @@ export class EditarPostComponent implements OnInit {
     }).subscribe((x)=>{
       this.post=x.data;
       console.log(this.post);
-    
+      this.verpost();
     })
   }
 
