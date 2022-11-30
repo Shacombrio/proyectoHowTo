@@ -32,6 +32,8 @@ export class FavsComponent implements OnInit {
   favoritos!:posts[];
   sub!: Subscription;
   post!: posts[];
+  condi:any;
+  pibote2:any = 1;
   tam:number=75;
   masMenos:string="Leer mas";
   count!:contLikes;
@@ -56,14 +58,14 @@ export class FavsComponent implements OnInit {
     this.tam = 200;
   }
 
-  leerMas(){
-    if(this.masMenos=="Leer mas"){
-      this.tam = 200;  
-      this.masMenos="Leer menos";
-    }else{
-      this.tam=75;
-      this.masMenos="Leer mas";
-    }
+  leerMas(data:any){
+  if (this.pibote2 == 1){
+  this.condi = data;
+  this.pibote2 = 0;
+  }else{
+  this.condi=0;
+  this.pibote2 = 1;
+  }
   }
 
 
