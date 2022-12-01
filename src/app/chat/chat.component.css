@@ -30,6 +30,7 @@ Copiar esto
 }
 .body-chat .avatar img {
     border-radius: 50%;
+    height: 100%;
 }
 .body-chat {
     display: flex;

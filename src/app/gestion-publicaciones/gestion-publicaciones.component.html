@@ -19,7 +19,7 @@
   
     </div>
   
-  <div *ngIf="flag" style="margin-bottom: 4%;">
+  <div *ngIf="flag" style="margin-bottom: 4%; padding: 2%;">
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z3" style="margin-bottom: 4%;">
   
       <ng-container matColumnDef="idPosts">
@@ -61,7 +61,6 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator style="margin-bottom: 4%;"  [pageSizeOptions]="[5,10, 20,40]" showFirstLastButtons #paginator ></mat-paginator>
   </div>
   
   </div>

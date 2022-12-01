@@ -85,6 +85,22 @@ class userController {
 
     }
 
+    public function validarFav($data){
+        if(isset($data["idPosts"])){
+
+            $datos=userModel::validarFav($data);
+            $json=array('message'=>'Operacion buena','status'=>200,'data'=>$datos);
+            echo json_encode($json);
+            return;
+
+
+        }else{
+            header('HTTP/1.0 500');
+            echo 'compañero te falta un dato';
+        }
+
+    }
+
 
     public function altaUser($data){
       if(isset($data["idUsuario"])){

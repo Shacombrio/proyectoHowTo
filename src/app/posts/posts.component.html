@@ -14,8 +14,8 @@
         </button>
         
         <ul class="dropdown-menu">
-          <li *ngFor="let item of categoria;" [value]="item.idCategoria"><a (click)="selecCat(item.nombreCategoria,item.idCategoria)" class="dropdown-item"><img src={{item.Icono}} alt="">{{item.nombreCategoria}}</a></li>
-          <li><a (click)="selecCat(0,0)" class="dropdown-item">Ninguna</a></li>
+          <li *ngFor="let item of categoria;"  [value]="item.idCategoria"><a style="cursor: pointer;" (click)="selecCat(item.nombreCategoria,item.idCategoria)" class="dropdown-item"><img src={{item.Icono}} alt="">{{item.nombreCategoria}}</a></li>
+          <li style="cursor: pointer;"><a (click)="selecCat(0,0)" class="dropdown-item" >Ninguna</a></li>
 
         </ul>
         <label for="" style="margin-left: 10px; font-size: 20px;">  Categoria: </label>

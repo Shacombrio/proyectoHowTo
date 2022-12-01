@@ -25,6 +25,8 @@ export class MispostsComponent implements OnInit {
   toastLiveExample!:any;
   bootstrap!:any;
   pibote:any = 1;
+  pibote2:any = 1;
+  condi:any;
   ncat!:string;
   idcat!:number;
   categoria!:categoria[];
@@ -56,15 +58,15 @@ export class MispostsComponent implements OnInit {
     this.tam = 200;
   }
 
-  leerMas(){
-    if(this.masMenos=="Leer mas"){
-      this.tam = 200;  
-      this.masMenos="Leer menos";
-    }else{
-      this.tam=75;
-      this.masMenos="Leer mas";
-    }
+  leerMas(data:any){
+  if (this.pibote2 == 1){
+  this.condi = data;
+  this.pibote2 = 0;
+  }else{
+  this.condi=0;
+  this.pibote2 = 1;
   }
+}
 
 
 

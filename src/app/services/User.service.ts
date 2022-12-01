@@ -368,6 +368,10 @@ export class UsrService {
         this.urlApi + "?u=obtenerChat",
         JSON.stringify(data),
         { headers: { 'Content-Type': 'application/json' } }
+      ).pipe(
+        tap(() => {
+          this.refresh.next();
+        })
       );
     }
 
@@ -380,6 +384,14 @@ export class UsrService {
         tap(() => {
           this.refresh.next();
         })
+      );
+    }
+
+    validarFav(data:any):Observable<Tfav>{
+      return this.client.post<Tfav>(
+        this.urlApi + "?u=validarFav",
+        JSON.stringify(data),
+        { headers: { 'Content-Type': 'application/json' } }
       );
     }
 

@@ -420,6 +420,18 @@ class userModel{
 
     }
 
+    static public function validarFav($data){
+        $stmt=Connection::connect()->prepare('select * from favoritos where idPosts = :idPosts and idUsuario = :idUsuario');
+        $stmt->bindParam(':idPosts',$data['idPosts']);
+        $stmt->bindParam(':idUsuario',$data['idUsuario']);
+        $stmt->execute();
+
+        return $stmt->fetchAll( PDO::FETCH_ASSOC );
+        $stmt->close();
+        $stmt=null;
+
+    }
+
     static public function updatePostUser($data){
         $stmt=Connection::connect()->prepare('update posts set Titulo = :Titulo, textoPost = :textoPost, idCategoria = :idCategoria where idPosts = :idPosts');
         $stmt->bindParam(':Titulo',$data['Titulo']);

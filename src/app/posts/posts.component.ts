@@ -187,20 +187,36 @@ export class PostsComponent implements OnInit {
   }
 
   obtenerfav(idpost:any){
-    this.userService.ingresarfav(
-      { 
-        idUsuario:JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario,
-        idPosts: idpost
+    this.userService.validarFav({
+      idPosts: idpost,
+      idUsuario:JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario
+    }).subscribe((x)=>{
+      console.log(x.data[0]);
+      if(x.data[0]==null){
+        this.userService.ingresarfav(
+          { 
+            idUsuario:JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario,
+            idPosts: idpost
+          }
+        ).subscribe( (x) =>{
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Añadido a favoritos',
+            showConfirmButton: false,
+            timer: 1300
+          })
+        } )
+      }else{
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: 'Ya está añadido a favoritos',
+          showConfirmButton: false,
+          timer: 1300
+        })
       }
-    ).subscribe( (x) =>{
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Añadido a favoritos',
-        showConfirmButton: false,
-        timer: 1500
-      })
-    } )
+    })
     
   }
 

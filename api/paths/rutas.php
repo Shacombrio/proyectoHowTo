@@ -452,6 +452,16 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
             $objUsuarios = new userController();
             $objUsuarios->postCategoria($datosarrary);
        }
+
+    }else if ( array_filter( $arrayRutas )[ 2 ] == '?u=validarFav' ) {
+
+        if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+            $json=file_get_contents('php://input');
+            $datosarrary=json_decode($json,true);
+            $objUsuarios = new userController();
+            $objUsuarios->validarFav($datosarrary);
+       }
+       
         }else if ( array_filter( $arrayRutas )[ 2 ] == '?u=EnviarCorreoBan' ) {
 
           if ( isset( $_SERVER[ 'REQUEST_METHOD' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
@@ -468,6 +478,8 @@ if ( count( array_filter( $arrayRutas ) ) == 1 ) {
                 $objMail = new CorreoController();
                 $objMail->sendcorreodesban($datosarrary);
            }
+
+           
 
 
           }else if ( array_filter( $arrayRutas )[ 2 ] == '?u=Login' ) {
