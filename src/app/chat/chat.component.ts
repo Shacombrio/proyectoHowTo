@@ -25,9 +25,10 @@ export class ChatComponent implements OnInit {
   imagenUser:any = '';
   frmMsj!:FormGroup;
   fecha!:string;
+  usuarioActual:any;
   constructor(private fb:FormBuilder, private userService: UsrService) { }
-  
   ngOnInit(): void {
+    this.usuarioActual = JSON.parse( localStorage.getItem("data") || '{}' ).data.idUsuario;
     this.createform();
     this.obtenerUsuarios();
     this.obtenerChat(this.idDestino,this.nameUser,this.imagenUser);

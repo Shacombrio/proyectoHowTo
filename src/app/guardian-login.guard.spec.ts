@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
+import { GuardianLoginGuard } from './guardianes/guardian-login.guard';
 
-import { GuardianLoginGuard } from './guardian-login.guard';
+//import { GuardianLoginGuard } from './guardian-login.guard.spec';
 
 describe('GuardianLoginGuard', () => {
   let guard: GuardianLoginGuard;

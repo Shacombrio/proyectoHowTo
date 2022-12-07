@@ -16,9 +16,9 @@
               <button class="btn btn-success" (click)="buscarUser(name.value)"><i class="fas fa-search"></i></button>
           </div>
       </div>
-      <div *ngFor="let data of usuario" class="seccion-lista-usuarios">
-        <a (click)="obtenerChat(data.idUsuario,data.nombreUsuario,data.Imagen)">
-          <div class="usuario">
+      <div  *ngFor="let data of usuario" class="seccion-lista-usuarios">
+        <a *ngIf="data.idUsuario != usuarioActual" (click)="obtenerChat(data.idUsuario,data.nombreUsuario,data.Imagen)">
+          <div  class="usuario">
               <div class="avatar">
 
                   <img *ngIf="data.Imagen != ''" src={{data.Imagen}} alt="img">

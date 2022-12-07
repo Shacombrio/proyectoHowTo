@@ -26,6 +26,7 @@ export class PostsComponent implements OnInit {
   toastTrigger!:any;
   cond:any;
   nl:any;
+  varB:boolean = false;
   toastLiveExample!:any;
   bootstrap!:any;
   pibote:any = 1;
@@ -113,9 +114,9 @@ export class PostsComponent implements OnInit {
       if (x.data[0] == null){
 
         console.log("hola");
-        this.cond = idpost;
         if(re==1){
           this.positive(idpost);
+          this.varB = true;
           this.eliminarReac(idpost,2);
         }else{
           this.negative(idpost);
